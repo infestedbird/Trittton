@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UCSD Course Browser</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0a0c10;
+    --surface:  #12151c;
+    --card:     #181c26;
+    --border:   #252a38;
+    --border2:  #2e3448;
+    --accent:   #4f8ef7;
+    --accent2:  #7c5cfc;
+    --gold:     #f5c842;
+    --green:    #3dd68c;
+    --red:      #f25f5c;
+    --text:     #e8ecf4;
+    --muted:    #7a82a0;
+    --dim:      #3d4460;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Instrument Sans', sans-serif;
+    font-size: 15px;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+    position: sticky;
+    top: 0;
+    background: rgba(10,12,16,0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+  .logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .logo span { color: var(--muted); }
+  .stats-bar {
+    display: flex;
+    gap: 1.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .stats-bar b { color: var(--text); font-weight: 500; }
+
+  /* ── Layout ── */
+  .shell {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    height: calc(100vh - 56px);
+  }
+
+  /* ── Sidebar ── */
+  aside {
+    border-right: 1px solid var(--border);
+    overflow-y: auto;
+    padding: 1.25rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  aside::-webkit-scrollbar { width: 4px; }
+  aside::-webkit-scrollbar-thumb { background: var(--dim); border-radius: 4px; }
+
+  .search-wrap {
+    position: relative;
+  }
+  .search-wrap svg {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+  }
+  input[type=search], input[type=text], select {
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 13px;
+    padding: 8px 10px 8px 32px;
+    outline: none;
+    transition: border-color .15s;
+  }
+  input[type=search]:focus, input[type=text]:focus, select:focus {
+    border-color: var(--accent);
+  }
+  select { padding-left: 10px; cursor: pointer; }
+
+  .filter-label {
+    font-size: 10px;
+    font-family: 'DM Mono', monospace;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .dept-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .dept-btn {
+    background: none;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    text-align: left;
+    cursor: pointer;
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background .1s, color .1s;
+  }
+  .dept-btn:hover { background: var(--surface); color: var(--text); }
+  .dept-btn.active { background: rgba(79,142,247,0.12); color: var(--accent); }
+  .dept-btn .count {
+    font-size: 10px;
+    background: var(--surface);
+    border-radius: 4px;
+    padding: 1px 6px;
+    color: var(--dim);
+  }
+  .dept-btn.active .count { background: rgba(79,142,247,0.2); color: var(--accent); }
+
+  /* ── Main ── */
+  main {
+    overflow-y: auto;
+    padding: 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  main::-webkit-scrollbar { width: 4px; }
+  main::-webkit-scrollbar-thumb { background: var(--dim); border-radius: 4px; }
+
+  /* ── Upload zone ── */
+  #upload-zone {
+    border: 1.5px dashed var(--border2);
+    border-radius: 16px;
+    padding: 4rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: auto;
+    width: 100%;
+    max-width: 480px;
+  }
+  #upload-zone:hover, #upload-zone.drag { border-color: var(--accent); background: rgba(79,142,247,0.04); }
+  #upload-zone .icon {
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: rgba(79,142,247,0.12);
+    display: flex; align-items: center; justify-content: center;
+  }
+  #upload-zone h2 { font-size: 18px; font-weight: 500; }
+  #upload-zone p { color: var(--muted); font-size: 13px; line-height: 1.6; }
+  #upload-zone .hint {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--dim);
+    background: var(--surface);
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  /* ── Controls bar ── */
+  .controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .controls input[type=search] { max-width: 280px; }
+  .controls select { width: auto; padding: 8px 28px 8px 10px; }
+  .result-count {
+    margin-left: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* ── Course card ── */
+  .course-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color .15s;
+  }
+  .course-card:hover { border-color: var(--border2); }
+
+  .course-header {
+    padding: 14px 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    user-select: none;
+  }
+  .course-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    background: rgba(79,142,247,0.12);
+    color: var(--accent);
+    border-radius: 6px;
+    padding: 4px 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .course-info { flex: 1; min-width: 0; }
+  .course-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1.4;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .course-meta {
+    display: flex;
+    gap: 10px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+  }
+  .pill {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    color: var(--muted);
+  }
+  .pill.units { color: var(--gold); border-color: rgba(245,200,66,0.2); background: rgba(245,200,66,0.05); }
+  .pill.restrict { color: var(--accent2); border-color: rgba(124,92,252,0.2); background: rgba(124,92,252,0.05); }
+
+  .course-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    flex-shrink: 0;
+  }
+  .seat-info {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .seat-avail { font-weight: 500; }
+  .seat-avail.open { color: var(--green); }
+  .seat-avail.waitlist { color: var(--gold); }
+  .seat-avail.full { color: var(--red); }
+
+  .chevron {
+    color: var(--dim);
+    font-size: 12px;
+    margin-top: auto;
+    transition: transform .2s;
+  }
+  .course-card.open .chevron { transform: rotate(180deg); }
+
+  /* ── Sections table ── */
+  .sections-wrap {
+    display: none;
+    border-top: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .course-card.open .sections-wrap { display: block; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  thead tr {
+    background: var(--surface);
+  }
+  th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+  td {
+    padding: 8px 12px;
+    border-top: 1px solid var(--border);
+    color: var(--text);
+    font-size: 12px;
+  }
+  tr:hover td { background: rgba(255,255,255,0.015); }
+
+  .type-badge {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 500;
+  }
+  .type-LE { background: rgba(79,142,247,0.15); color: #78a9f7; }
+  .type-DI { background: rgba(61,214,140,0.15); color: #3dd68c; }
+  .type-LA { background: rgba(245,200,66,0.15); color: #f5c842; }
+  .type-SE { background: rgba(124,92,252,0.15); color: #a07cf5; }
+  .type-default { background: rgba(122,130,160,0.15); color: var(--muted); }
+
+  .avail-cell { font-family: 'DM Mono', monospace; }
+  .avail-cell.open { color: var(--green); }
+  .avail-cell.waitlist { color: var(--gold); }
+  .avail-cell.full { color: var(--red); }
+
+  .sec-id { font-family: 'DM Mono', monospace; color: var(--muted); }
+
+  /* ── Empty state ── */
+  .empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: var(--muted);
+  }
+  .empty h3 { font-size: 16px; font-weight: 500; color: var(--text); margin-bottom: 8px; }
+  .empty p { font-size: 13px; }
+
+  /* ── Scrollbar for main content ── */
+  ::-webkit-scrollbar { width: 4px; height: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--dim); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">UCSD <span>/</span> course browser</div>
+  <div class="stats-bar" id="header-stats">
+    <span>drop your <b>all_courses.json</b> to get started</span>
+  </div>
+</header>
+
+<div class="shell">
+  <aside id="sidebar" style="display:none;">
+    <div>
+      <div class="filter-label">Department</div>
+      <div class="dept-list" id="dept-list"></div>
+    </div>
+  </aside>
+
+  <main id="main-content">
+    <!-- Upload zone -->
+    <div id="upload-zone">
+      <div class="icon">
+        <svg width="24" height="24" fill="none" stroke="#4f8ef7" stroke-width="1.5" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5"/>
+        </svg>
+      </div>
+      <h2>Drop your JSON file here</h2>
+      <p>Drag and drop <code style="background:var(--surface);padding:2px 6px;border-radius:4px;font-size:12px;">all_courses.json</code> anywhere on this page,<br>or click to pick it from your computer.</p>
+      <div class="hint">generated by tritonlink_scraper.py</div>
+      <input type="file" id="file-input" accept=".json" style="display:none;">
+    </div>
+
+    <!-- Course list (hidden until file loaded) -->
+    <div id="course-list-wrap" style="display:none; flex-direction:column; gap:.75rem;">
+      <div class="controls">
+        <div class="search-wrap" style="flex:1;max-width:340px;">
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.35-4.35"/>
+          </svg>
+          <input type="search" id="course-search" placeholder="Search courses, titles, instructors…">
+        </div>
+        <select id="type-filter">
+          <option value="">All types</option>
+          <option value="LE">Lecture (LE)</option>
+          <option value="DI">Discussion (DI)</option>
+          <option value="LA">Lab (LA)</option>
+        </select>
+        <select id="avail-filter">
+          <option value="">All availability</option>
+          <option value="open">Has open seats</option>
+          <option value="waitlist">Waitlist available</option>
+          <option value="full">Full / closed</option>
+        </select>
+        <div class="result-count" id="result-count"></div>
+      </div>
+      <div id="course-list"></div>
+    </div>
+  </main>
+</div>
+
+<script>
+let allCourses = [];
+let activeDept = 'ALL';
+
+// ── File loading ──────────────────────────────────────────────────────────────
+const uploadZone = document.getElementById('upload-zone');
+const fileInput  = document.getElementById('file-input');
+
+uploadZone.addEventListener('click', () => fileInput.click());
+fileInput.addEventListener('change', e => loadFile(e.target.files[0]));
+
+document.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag'); });
+document.addEventListener('dragleave', () => uploadZone.classList.remove('drag'));
+document.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('drag');
+  const f = e.dataTransfer.files[0];
+  if (f && f.name.endsWith('.json')) loadFile(f);
+});
+
+function loadFile(file) {
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      allCourses = Array.isArray(data) ? data : [];
+      initUI();
+    } catch {
+      alert('Could not parse JSON — make sure it\'s a valid all_courses.json file.');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ── Init UI ───────────────────────────────────────────────────────────────────
+function initUI() {
+  uploadZone.style.display = 'none';
+  document.getElementById('sidebar').style.display = 'flex';
+  const wrap = document.getElementById('course-list-wrap');
+  wrap.style.display = 'flex';
+
+  // Stats
+  const totalSections = allCourses.reduce((s, c) => s + c.sections.length, 0);
+  const depts = [...new Set(allCourses.map(c => c.subject))].sort();
+  document.getElementById('header-stats').innerHTML =
+    `<span><b>${allCourses.length.toLocaleString()}</b> courses</span>
+     <span><b>${totalSections.toLocaleString()}</b> sections</span>
+     <span><b>${depts.length}</b> departments</span>`;
+
+  // Dept sidebar
+  buildDeptList(depts);
+
+  // Events
+  document.getElementById('course-search').addEventListener('input', render);
+  document.getElementById('type-filter').addEventListener('change', render);
+  document.getElementById('avail-filter').addEventListener('change', render);
+
+  render();
+}
+
+function buildDeptList(depts) {
+  const list = document.getElementById('dept-list');
+  const allBtn = makeBtn('ALL', 'All Departments', allCourses.length);
+  list.appendChild(allBtn);
+
+  const byDept = {};
+  allCourses.forEach(c => { byDept[c.subject] = (byDept[c.subject] || 0) + 1; });
+  depts.forEach(d => list.appendChild(makeBtn(d, d, byDept[d] || 0)));
+}
+
+function makeBtn(code, label, count) {
+  const b = document.createElement('button');
+  b.className = 'dept-btn' + (code === 'ALL' ? ' active' : '');
+  b.dataset.dept = code;
+  b.innerHTML = `<span>${label}</span><span class="count">${count}</span>`;
+  b.addEventListener('click', () => {
+    activeDept = code;
+    document.querySelectorAll('.dept-btn').forEach(x => x.classList.remove('active'));
+    b.classList.add('active');
+    render();
+  });
+  return b;
+}
+
+// ── Filtering ─────────────────────────────────────────────────────────────────
+function courseAvailStatus(course) {
+  // Check sections for availability summary
+  let totalAvail = 0, hasWait = false, hasFull = false;
+  course.sections.forEach(s => {
+    const a = parseInt(s.available) || 0;
+    const w = parseInt(s.waitlisted) || 0;
+    totalAvail += a;
+    if (w > 0) hasWait = true;
+    if (s.available === '0' && w === 0) hasFull = true;
+  });
+  if (totalAvail > 0) return { status: 'open', seats: totalAvail };
+  if (hasWait) return { status: 'waitlist', seats: 0 };
+  return { status: 'full', seats: 0 };
+}
+
+function render() {
+  const q      = document.getElementById('course-search').value.toLowerCase().trim();
+  const typeF  = document.getElementById('type-filter').value;
+  const availF = document.getElementById('avail-filter').value;
+  const list   = document.getElementById('course-list');
+  list.innerHTML = '';
+
+  let filtered = allCourses.filter(c => {
+    if (activeDept !== 'ALL' && c.subject !== activeDept) return false;
+
+    if (q) {
+      const hay = [
+        c.course_code, c.title, c.subject,
+        ...c.sections.map(s => s.instructor)
+      ].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+
+    if (typeF) {
+      if (!c.sections.some(s => s.type === typeF)) return false;
+    }
+
+    if (availF) {
+      const { status } = courseAvailStatus(c);
+      if (availF === 'open' && status !== 'open') return false;
+      if (availF === 'waitlist' && status !== 'waitlist') return false;
+      if (availF === 'full' && status !== 'full') return false;
+    }
+
+    return true;
+  });
+
+  document.getElementById('result-count').textContent =
+    `${filtered.length.toLocaleString()} course${filtered.length !== 1 ? 's' : ''}`;
+
+  if (filtered.length === 0) {
+    list.innerHTML = `<div class="empty"><h3>No courses found</h3><p>Try adjusting your search or filters.</p></div>`;
+    return;
+  }
+
+  // Render up to 200 at a time for performance
+  filtered.slice(0, 200).forEach(c => list.appendChild(buildCard(c)));
+
+  if (filtered.length > 200) {
+    const note = document.createElement('div');
+    note.className = 'empty';
+    note.innerHTML = `<p>Showing first 200 of ${filtered.length} — narrow your search to see more.</p>`;
+    list.appendChild(note);
+  }
+}
+
+// ── Card builder ──────────────────────────────────────────────────────────────
+function buildCard(course) {
+  const { status, seats } = courseAvailStatus(course);
+
+  const card = document.createElement('div');
+  card.className = 'course-card';
+
+  // Summarise instructors
+  const instructors = [...new Set(
+    course.sections.map(s => s.instructor).filter(Boolean)
+  )].slice(0, 2).join(', ') || 'TBA';
+
+  // Seat label
+  let seatLabel = '';
+  let seatClass = '';
+  if (status === 'open') { seatLabel = `${seats} seat${seats !== 1 ? 's' : ''} open`; seatClass = 'open'; }
+  else if (status === 'waitlist') { seatLabel = 'waitlist'; seatClass = 'waitlist'; }
+  else { seatLabel = 'full'; seatClass = 'full'; }
+
+  const header = document.createElement('div');
+  header.className = 'course-header';
+  header.innerHTML = `
+    <div class="course-badge">${escHtml(course.course_code)}</div>
+    <div class="course-info">
+      <div class="course-title">${escHtml(course.title || 'Untitled')}</div>
+      <div class="course-meta">
+        ${course.units ? `<span class="pill units">${course.units} units</span>` : ''}
+        ${course.restrictions ? `<span class="pill restrict">${escHtml(course.restrictions)}</span>` : ''}
+        <span class="pill">${escHtml(instructors)}</span>
+        <span class="pill">${course.sections.length} section${course.sections.length !== 1 ? 's' : ''}</span>
+      </div>
+    </div>
+    <div class="course-right">
+      <div class="seat-info"><span class="seat-avail ${seatClass}">${seatLabel}</span></div>
+      <div class="chevron">▼</div>
+    </div>`;
+
+  header.addEventListener('click', () => card.classList.toggle('open'));
+
+  // Sections table
+  const wrap = document.createElement('div');
+  wrap.className = 'sections-wrap';
+
+  if (course.sections.length === 0) {
+    wrap.innerHTML = `<div style="padding:12px 16px;color:var(--muted);font-size:12px;">No section data available.</div>`;
+  } else {
+    const table = document.createElement('table');
+    table.innerHTML = `
+      <thead>
+        <tr>
+          <th>ID</th><th>Type</th><th>Section</th><th>Days</th>
+          <th>Time</th><th>Building</th><th>Room</th>
+          <th>Instructor</th><th>Available</th><th>Limit</th><th>Waitlist</th>
+        </tr>
+      </thead>
+      <tbody>${course.sections.map(s => {
+        const typeClass = ['LE','DI','LA','SE'].includes(s.type)
+          ? `type-${s.type}` : 'type-default';
+        const aInt = parseInt(s.available) || 0;
+        const wInt = parseInt(s.waitlisted) || 0;
+        let aClass = aInt > 0 ? 'open' : (wInt > 0 ? 'waitlist' : 'full');
+        let aText  = s.available || '—';
+        return `<tr>
+          <td class="sec-id">${escHtml(s.section_id) || '—'}</td>
+          <td><span class="type-badge ${typeClass}">${escHtml(s.type)}</span></td>
+          <td class="sec-id">${escHtml(s.section)}</td>
+          <td>${escHtml(s.days) || '—'}</td>
+          <td>${escHtml(s.time) || '—'}</td>
+          <td>${escHtml(s.building) || '—'}</td>
+          <td>${escHtml(s.room) || '—'}</td>
+          <td>${escHtml(s.instructor) || 'TBA'}</td>
+          <td class="avail-cell ${aClass}">${escHtml(aText)}</td>
+          <td class="sec-id">${escHtml(s.limit) || '—'}</td>
+          <td class="sec-id">${wInt > 0 ? wInt : '—'}</td>
+        </tr>`;
+      }).join('')}</tbody>`;
+    wrap.appendChild(table);
+  }
+
+  card.appendChild(header);
+  card.appendChild(wrap);
+  return card;
+}
+
+function escHtml(str) {
+  return String(str ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>

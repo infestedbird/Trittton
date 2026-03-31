@@ -1,0 +1,164 @@
+[
+  {
+    "subject": "CSE",
+    "course_code": "CSE 12",
+    "title": "Basic Data Struct & OO Design",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "80001",
+        "type": "LE",
+        "section": "A00",
+        "days": "MWF",
+        "time": "9:00a-9:50a",
+        "building": "CENTR",
+        "room": "109",
+        "instructor": "Politz, Joe",
+        "available": "15",
+        "limit": "200",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "80002",
+        "type": "DI",
+        "section": "A01",
+        "days": "Tu",
+        "time": "3:00p-3:50p",
+        "building": "CSB",
+        "room": "002",
+        "instructor": "Politz, Joe",
+        "available": "8",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CSE",
+    "course_code": "CSE 30",
+    "title": "Computer Organization & Systems",
+    "units": "4",
+    "restrictions": "FR SO",
+    "sections": [
+      {
+        "section_id": "80010",
+        "type": "LE",
+        "section": "B00",
+        "days": "TuTh",
+        "time": "2:00p-3:20p",
+        "building": "WLH",
+        "room": "2001",
+        "instructor": "Cao, Yingjun",
+        "available": "0",
+        "limit": "180",
+        "waitlisted": "12"
+      },
+      {
+        "section_id": "80011",
+        "type": "DI",
+        "section": "B01",
+        "days": "W",
+        "time": "5:00p-5:50p",
+        "building": "CENTR",
+        "room": "214",
+        "instructor": "Cao, Yingjun",
+        "available": "0",
+        "limit": "40",
+        "waitlisted": "3"
+      }
+    ]
+  },
+  {
+    "subject": "ECE",
+    "course_code": "ECE 15",
+    "title": "Eng Computation: Prgrm in C",
+    "units": "4",
+    "restrictions": "FR JR SO",
+    "sections": [
+      {
+        "section_id": "90971",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "5:00p-6:20p",
+        "building": "CENTR",
+        "room": "109",
+        "instructor": "Sahay, Rajeev",
+        "available": "9",
+        "limit": "146",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "90972",
+        "type": "LA",
+        "section": "A01",
+        "days": "F",
+        "time": "10:00a-11:50a",
+        "building": "EBU1",
+        "room": "2315",
+        "instructor": "Sahay, Rajeev",
+        "available": "3",
+        "limit": "35",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MATH",
+    "course_code": "MATH 20C",
+    "title": "Calculus & Analyt Geom/Sci & Engnrs",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "85001",
+        "type": "LE",
+        "section": "A00",
+        "days": "MWF",
+        "time": "11:00a-11:50a",
+        "building": "PETER",
+        "room": "110",
+        "instructor": "Smith, John",
+        "available": "0",
+        "limit": "250",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MATH",
+    "course_code": "MATH 18",
+    "title": "Linear Algebra",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "85010",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "8:00a-9:20a",
+        "building": "CENTR",
+        "room": "119",
+        "instructor": "Lee, Alice",
+        "available": "25",
+        "limit": "300",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "85011",
+        "type": "DI",
+        "section": "A01",
+        "days": "M",
+        "time": "1:00p-1:50p",
+        "building": "APM",
+        "room": "B402A",
+        "instructor": "Lee, Alice",
+        "available": "10",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  }
+]
