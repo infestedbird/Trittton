@@ -28,3 +28,8 @@ frontend/playwright-report/
 
 # Claude plans (local only)
 .claude/plans/
+
+# Secrets (never commit)
+gcal_credentials.json
+gcal_token.json
+.env

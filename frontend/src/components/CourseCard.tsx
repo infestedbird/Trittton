@@ -24,7 +24,6 @@ export function CourseCard({ course, index, onAddToSchedule, isInSchedule, hasSe
   const [prereqs, setPrereqs] = useState<{ prerequisites: string; description: string } | null>(null)
   const { status, seats } = courseAvailStatus(course)
 
-  // Fetch prereqs when card is expanded
   useEffect(() => {
     if (!open || prereqs) return
     fetch(`/api/prereqs?course=${encodeURIComponent(course.course_code)}`)
@@ -40,7 +39,7 @@ export function CourseCard({ course, index, onAddToSchedule, isInSchedule, hasSe
   let seatLabel = ''
   let seatClass = ''
   if (status === 'open') {
-    seatLabel = `${seats} seat${seats !== 1 ? 's' : ''} open`
+    seatLabel = `${seats} open`
     seatClass = 'text-green'
   } else if (status === 'waitlist') {
     seatLabel = 'waitlist'
@@ -54,10 +53,8 @@ export function CourseCard({ course, index, onAddToSchedule, isInSchedule, hasSe
     e.stopPropagation()
     if (!onAddToSchedule) return
     if (isInSchedule) return
-    // Open picker instead of adding all
     setShowPicker(true)
     setOpen(true)
-    // Pre-select all sections
     setSelectedSections(new Set(course.sections.map((_, i) => i)))
   }
 
@@ -93,161 +90,140 @@ export function CourseCard({ course, index, onAddToSchedule, isInSchedule, hasSe
     setShowPicker(false)
   }
 
-  // Check if prereqs are unmet (only if we have prereq data and hasCompleted)
   const hasUnmetPrereqs = (() => {
     if (!prereqs?.prerequisites || !hasCompleted) return false
     const codes = prereqs.prerequisites.match(/[A-Z]{2,5}\s+\d{1,3}[A-Z]*/g) || []
     return codes.some((code) => !hasCompleted(code))
   })()
 
+  // Get primary instructor rating
+  const mainInstructor = instructors.split(',')[0].trim()
+  const rating = mainInstructor !== 'TBA' ? getRating?.(mainInstructor) : null
+
   return (
     <div
-      className={`bg-card border rounded-xl overflow-hidden transition-colors duration-150 hover:border-border2 animate-fade-in ${
-        hasUnmetPrereqs ? 'border-red/40' : 'border-border'
+      className={`bg-card border rounded-xl overflow-hidden card-hover animate-fade-in ${
+        hasUnmetPrereqs ? 'border-red/30' : 'border-border hover:border-border2'
       }`}
       data-testid="course-card"
-      style={{ animationDelay: `${Math.min(index * 20, 200)}ms` }}
+      style={{ animationDelay: `${Math.min(index * 15, 150)}ms` }}
     >
       {/* Header */}
       <div
         onClick={() => setOpen(!open)}
-        className="px-4 py-3.5 cursor-pointer flex items-start gap-3.5 select-none"
+        className="px-4 py-3.5 cursor-pointer flex items-center gap-3 select-none"
         data-testid="course-header"
       >
-        {/* Course badge with hover tooltip */}
-        <div className="relative group shrink-0 mt-px">
-          <a
-            href={socSearchUrl(courseCodeToSubject(course.course_code))}
-            target="_blank"
-            rel="noopener"
-            onClick={(e) => e.stopPropagation()}
-            className="font-mono text-[12px] font-medium bg-accent/12 text-accent rounded-md px-2.5 py-1 whitespace-nowrap hover:bg-accent/20 transition-colors block"
-            title={`View ${course.subject} on Schedule of Classes`}
-          >
-            {course.course_code}
-          </a>
-          {/* Tooltip */}
-          <div className="invisible group-hover:visible opacity-0 group-hover:opacity-100 transition-all duration-150
-            absolute left-0 top-full mt-1 z-50 w-72 bg-card border border-border2 rounded-xl p-3 shadow-2xl pointer-events-none">
-            <div className="text-[13px] font-medium text-text mb-1">{course.title || 'Untitled'}</div>
-            <div className="flex flex-wrap gap-1.5 mb-2">
-              {course.units && <span className="font-mono text-[10px] px-1.5 py-px rounded bg-gold/10 text-gold">{course.units} units</span>}
-              {course.restrictions && <span className="font-mono text-[10px] px-1.5 py-px rounded bg-accent2/10 text-accent2">{course.restrictions}</span>}
-              <span className={`font-mono text-[10px] px-1.5 py-px rounded ${status === 'open' ? 'bg-green/10 text-green' : status === 'waitlist' ? 'bg-gold/10 text-gold' : 'bg-red/10 text-red'}`}>
-                {seatLabel}
-              </span>
-            </div>
-            <div className="text-[11px] text-muted">
-              {course.sections.length} section{course.sections.length !== 1 ? 's' : ''} &middot; {instructors}
-            </div>
-            {instructors !== 'TBA' && (
-              <div className="text-[10px] text-dim mt-1">Hover instructor names for RMP links</div>
-            )}
-          </div>
-        </div>
+        {/* Course code */}
+        <a
+          href={socSearchUrl(courseCodeToSubject(course.course_code))}
+          target="_blank"
+          rel="noopener"
+          onClick={(e) => e.stopPropagation()}
+          className="font-mono text-[13px] font-bold bg-accent/12 text-accent rounded-lg px-3 py-1.5 whitespace-nowrap hover:bg-accent/20 hover:shadow-[0_0_10px_rgba(79,142,247,0.15)] shrink-0"
+          title={`View ${course.subject} on Schedule of Classes`}
+        >
+          {course.course_code}
+        </a>
 
+        {/* Title + meta */}
         <div className="flex-1 min-w-0">
-          <div className="text-[14px] font-medium text-text leading-snug truncate">
+          <div className="text-[14px] font-semibold text-text leading-snug truncate">
             {course.title || 'Untitled'}
           </div>
-          <div className="flex gap-2 mt-1 flex-wrap">
-            {course.units && (
-              <span className="font-mono text-[10px] px-2 py-px rounded border border-gold/20 bg-gold/5 text-gold">
-                {course.units} units
-              </span>
-            )}
+          <div className="flex items-center gap-1.5 mt-1 text-[11px] font-mono text-muted">
+            {course.units && <span className="text-gold/80 font-medium">{course.units} units</span>}
+            <span className="text-dim">&middot;</span>
+            <span>{course.sections.length} sec</span>
             {course.restrictions && (
-              <span className="font-mono text-[10px] px-2 py-px rounded border border-accent2/20 bg-accent2/5 text-accent2">
-                {course.restrictions}
-              </span>
+              <>
+                <span className="text-dim">&middot;</span>
+                <span className="text-accent2">{course.restrictions}</span>
+              </>
             )}
-            <a
-              href={capeUrl(course.course_code)}
-              target="_blank"
-              rel="noopener"
-              onClick={(e) => e.stopPropagation()}
-              className="font-mono text-[10px] px-2 py-px rounded border border-accent2/20 bg-accent2/5 text-accent2 hover:bg-accent2/10 transition-colors"
-            >
-              CAPEs
-            </a>
-            {instructors !== 'TBA' && (() => {
-              const mainInstructor = instructors.split(',')[0].trim()
-              const rating = getRating?.(mainInstructor)
-              return rating ? (
+            {rating && (
+              <>
+                <span className="text-dim">&middot;</span>
                 <a
                   href={rating.rmpUrl}
                   target="_blank"
                   rel="noopener"
                   onClick={(e) => e.stopPropagation()}
-                  className={`font-mono text-[10px] px-2 py-px rounded border flex items-center gap-1 hover:opacity-80 transition-colors ${
-                    rating.rating >= 4 ? 'border-green/20 bg-green/5 text-green'
-                    : rating.rating >= 3 ? 'border-gold/20 bg-gold/5 text-gold'
-                    : 'border-red/20 bg-red/5 text-red'
+                  className={`hover:underline ${
+                    rating.rating >= 4 ? 'text-green' : rating.rating >= 3 ? 'text-gold' : 'text-red'
                   }`}
-                  title={`${rating.name}: ${rating.rating}/5 rating, ${rating.difficulty}/5 difficulty, ${rating.numRatings} reviews`}
+                  title={`${rating.name}: ${rating.rating}/5, ${rating.numRatings} reviews`}
                 >
-                  <span>&#9733; {rating.rating.toFixed(1)}</span>
-                  <span className="text-dim">|</span>
-                  <span className={rating.difficulty <= 3 ? 'text-green' : rating.difficulty <= 4 ? 'text-gold' : 'text-red'}>
-                    {rating.difficulty.toFixed(1)} diff
-                  </span>
+                  &#9733;{rating.rating.toFixed(1)}
                 </a>
-              ) : (
-                <a
-                  href={rmpUrl(mainInstructor)}
-                  target="_blank"
-                  rel="noopener"
-                  onClick={(e) => e.stopPropagation()}
-                  className="font-mono text-[10px] px-2 py-px rounded border border-green/20 bg-green/5 text-green hover:bg-green/10 transition-colors"
-                >
-                  RMP
-                </a>
-              )
-            })()}
-            <span className="font-mono text-[10px] px-2 py-px rounded border border-border text-muted">
-              {course.sections.length} section{course.sections.length !== 1 ? 's' : ''}
-            </span>
+              </>
+            )}
           </div>
         </div>
 
-        <div className="flex items-start gap-2 shrink-0">
+        {/* Right side: actions + status */}
+        <div className="flex items-center gap-2.5 shrink-0">
+          {/* Quick links */}
+          <div className="flex gap-1">
+            <a
+              href={capeUrl(course.course_code)}
+              target="_blank"
+              rel="noopener"
+              onClick={(e) => e.stopPropagation()}
+              className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-accent2/8 text-accent2/70 hover:text-accent2 hover:bg-accent2/12"
+            >
+              CAPEs
+            </a>
+            {mainInstructor !== 'TBA' && !rating && (
+              <a
+                href={rmpUrl(mainInstructor)}
+                target="_blank"
+                rel="noopener"
+                onClick={(e) => e.stopPropagation()}
+                className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-green/8 text-green/70 hover:text-green hover:bg-green/12"
+              >
+                RMP
+              </a>
+            )}
+          </div>
+
+          {/* Add button — filled pill */}
           {onAddToSchedule && (
             <button
               onClick={handleAddClick}
-              className={`font-mono text-[11px] font-medium px-2 py-1 rounded-md transition-all cursor-pointer
+              className={`font-mono text-[11px] font-semibold px-3.5 py-1.5 rounded-full cursor-pointer
                 ${isInSchedule
-                  ? 'bg-green/15 text-green border border-green/20'
+                  ? 'bg-green text-white shadow-[0_0_10px_rgba(61,214,140,0.25)]'
                   : showPicker
-                    ? 'bg-accent/20 text-accent border border-accent/30'
-                    : 'bg-accent/10 text-accent border border-accent/20 hover:bg-accent/20'
+                    ? 'bg-accent/20 text-accent border border-accent/25'
+                    : 'bg-accent text-white hover:bg-accent/85 hover:shadow-[0_0_12px_rgba(79,142,247,0.3)]'
                 }`}
               title={isInSchedule ? 'Already in My Schedule' : 'Pick sections to add'}
             >
-              {isInSchedule ? 'Added' : showPicker ? 'Picking...' : '+ Add'}
+              {isInSchedule ? '✓ Added' : showPicker ? 'Picking' : '+ Add'}
             </button>
           )}
-          <div className="flex flex-col items-end gap-1">
+
+          {/* Seat status + chevron */}
+          <div className="flex items-center gap-2">
             <span className={`font-mono text-[11px] font-medium ${seatClass}`} data-testid="seat-status">
               {seatLabel}
             </span>
-            <span
-              className={`text-dim text-[12px] transition-transform duration-200 ${open ? 'rotate-180' : ''}`}
-            >
+            <span className={`text-dim text-[10px] transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>
               &#x25BC;
             </span>
           </div>
         </div>
       </div>
 
-      {/* Sections */}
+      {/* Expanded content */}
       <div
-        className={`border-t border-border overflow-hidden transition-all duration-250 ease-in-out ${
+        className={`border-t border-border overflow-hidden transition-all duration-200 ease-in-out ${
           open ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0 border-t-transparent'
         }`}
       >
-        {/* Prerequisites & Description */}
+        {/* Prerequisites */}
         {prereqs && (prereqs.prerequisites || prereqs.description) && (() => {
-          // Check if prereqs are met
           const prereqText = prereqs.prerequisites || ''
           const prereqCodes = prereqText.match(/[A-Z]{2,5}\s+\d{1,3}[A-Z]*/g) || []
           const unmet = hasCompleted
@@ -256,7 +232,7 @@ export function CourseCard({ course, index, onAddToSchedule, isInSchedule, hasSe
           const hasUnmet = hasCompleted && unmet.length > 0
 
           return (
-            <div className={`px-4 py-2.5 border-b border-border ${hasUnmet ? 'bg-red/5' : 'bg-surface/50'}`}>
+            <div className={`px-4 py-2.5 border-b border-border/50 ${hasUnmet ? 'bg-red/4' : 'bg-surface/30'}`}>
               {prereqs.description && (
                 <div className="text-[12px] text-muted leading-relaxed mb-1.5">
                   {prereqs.description.length > 200 ? prereqs.description.slice(0, 200) + '...' : prereqs.description}
@@ -273,13 +249,12 @@ export function CourseCard({ course, index, onAddToSchedule, isInSchedule, hasSe
                 </div>
               )}
               {hasUnmet && (
-                <div className="mt-2 flex items-start gap-2 bg-red/10 border border-red/20 rounded-lg px-3 py-2">
+                <div className="mt-2 flex items-start gap-2 bg-red/8 border border-red/15 rounded-lg px-3 py-2">
                   <span className="text-red text-sm shrink-0">&#9888;</span>
                   <div>
                     <div className="text-[12px] text-red font-medium">Missing prerequisites</div>
                     <div className="text-[11px] text-muted mt-0.5">
                       You need to complete {unmet.join(', ')} first.
-                      You can still add this course to plan ahead.
                     </div>
                   </div>
                 </div>
@@ -337,24 +312,24 @@ function SectionPicker({
     <div className="p-3">
       <div className="flex items-center justify-between mb-2">
         <div className="font-mono text-[11px] text-accent font-medium">
-          Select sections to add ({selected.size} selected)
+          Select sections ({selected.size} selected)
         </div>
         <div className="flex gap-2">
           <button
             onClick={onCancel}
-            className="font-mono text-[11px] px-2 py-1 rounded-md text-muted hover:text-text
-              bg-surface border border-border hover:border-border2 transition-all cursor-pointer"
+            className="font-mono text-[11px] px-2.5 py-1 rounded-lg text-muted hover:text-text
+              bg-surface border border-border hover:border-border2 cursor-pointer"
           >
             Cancel
           </button>
           <button
             onClick={onConfirm}
             disabled={selected.size === 0}
-            className="font-mono text-[11px] px-3 py-1 rounded-md font-medium
-              bg-green/15 text-green border border-green/20 hover:bg-green/25
-              disabled:opacity-40 disabled:cursor-not-allowed transition-all cursor-pointer"
+            className="font-mono text-[11px] px-3 py-1 rounded-lg font-medium
+              bg-green/12 text-green border border-green/15 hover:bg-green/20
+              disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
           >
-            Add {selected.size} section{selected.size !== 1 ? 's' : ''}
+            Add {selected.size}
           </button>
         </div>
       </div>
@@ -368,18 +343,16 @@ function SectionPicker({
             <button
               key={i}
               onClick={() => onToggle(i)}
-              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-all cursor-pointer
+              className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left cursor-pointer
                 ${isSelected
-                  ? 'bg-accent/8 border border-accent/20'
-                  : 'bg-surface/50 border border-transparent hover:border-border'
+                  ? 'bg-accent/6 border border-accent/15'
+                  : 'bg-surface/30 border border-transparent hover:border-border'
                 }`}
             >
-              {/* Checkbox */}
-              <div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0 transition-all
+              <div className={`w-4 h-4 rounded border-2 flex items-center justify-center shrink-0
                 ${isSelected ? 'bg-accent border-accent' : 'border-dim'}`}>
                 {isSelected && <span className="text-white text-[10px]">&#10003;</span>}
               </div>
-              {/* Type badge */}
               <span
                 className="font-mono text-[10px] px-1.5 py-0.5 rounded font-medium shrink-0"
                 style={typeColor
@@ -388,15 +361,10 @@ function SectionPicker({
               >
                 {s.type}
               </span>
-              {/* Section */}
               <span className="font-mono text-[11px] text-muted w-10 shrink-0">{s.section}</span>
-              {/* Days + Time */}
               <span className="text-[12px] text-text w-28 shrink-0">{s.days} {s.time}</span>
-              {/* Location */}
               <span className="text-[12px] text-muted w-24 shrink-0">{s.building} {s.room}</span>
-              {/* Instructor */}
               <span className="text-[12px] text-muted flex-1 truncate">{s.instructor || 'TBA'}</span>
-              {/* Availability */}
               <span className={`font-mono text-[11px] shrink-0 ${aInt > 0 ? 'text-green' : wInt > 0 ? 'text-gold' : 'text-red'}`}>
                 {s.available}/{s.limit}
               </span>

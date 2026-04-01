@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react'
 import type { ScheduleProposal } from '../lib/schedule'
+import { TERM_OPTIONS } from '../lib/links'
 
 export interface SavedCourse {
   course_code: string
@@ -19,41 +20,64 @@ export interface SavedCourse {
   }[]
 }
 
-const STORAGE_KEY = 'ucsd-my-schedule'
+// Stores all terms' schedules: { "SP26": [...], "FA26": [...], ... }
+type AllSchedules = Record<string, SavedCourse[]>
 
-function loadFromStorage(): SavedCourse[] {
+const STORAGE_KEY = 'ucsd-my-schedules'
+
+function loadAllFromStorage(): AllSchedules {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
-    return raw ? JSON.parse(raw) : []
+    if (raw) return JSON.parse(raw)
+    // Migrate old single-schedule format
+    const legacy = localStorage.getItem('ucsd-my-schedule')
+    if (legacy) {
+      const courses = JSON.parse(legacy)
+      if (Array.isArray(courses) && courses.length > 0) {
+        const defaultTerm = localStorage.getItem('ucsd-term') || 'SP26'
+        localStorage.removeItem('ucsd-my-schedule')
+        return { [defaultTerm]: courses }
+      }
+    }
+    return {}
   } catch {
-    return []
+    return {}
   }
 }
 
-export function useMySchedule() {
-  const [schedule, setSchedule] = useState<SavedCourse[]>(loadFromStorage)
+export function useMySchedule(currentTerm: string) {
+  const [allSchedules, setAllSchedules] = useState<AllSchedules>(loadAllFromStorage)
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(schedule))
-  }, [schedule])
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(allSchedules))
+  }, [allSchedules])
+
+  // Current term's schedule
+  const schedule = allSchedules[currentTerm] || []
+
+  const setSchedule = useCallback((updater: (prev: SavedCourse[]) => SavedCourse[]) => {
+    setAllSchedules((all) => ({
+      ...all,
+      [currentTerm]: updater(all[currentTerm] || []),
+    }))
+  }, [currentTerm])
 
   const addCourse = useCallback((course: SavedCourse) => {
     setSchedule((prev) => {
       if (prev.some((c) => c.course_code === course.course_code)) {
-        // Replace existing
         return prev.map((c) => (c.course_code === course.course_code ? course : c))
       }
       return [...prev, course]
     })
-  }, [])
+  }, [setSchedule])
 
   const removeCourse = useCallback((courseCode: string) => {
     setSchedule((prev) => prev.filter((c) => c.course_code !== courseCode))
-  }, [])
+  }, [setSchedule])
 
   const clearSchedule = useCallback(() => {
-    setSchedule([])
-  }, [])
+    setSchedule(() => [])
+  }, [setSchedule])
 
   const addFromProposal = useCallback((proposal: ScheduleProposal) => {
     setSchedule((prev) => {
@@ -75,21 +99,20 @@ export function useMySchedule() {
       }
       return newSchedule
     })
-  }, [])
+  }, [setSchedule])
 
-  // Convert to ScheduleProposal for calendar rendering
+  const termLabel = TERM_OPTIONS.find((t) => t.value === currentTerm)?.label || currentTerm
+
   const asProposal: ScheduleProposal = {
-    quarter: 'Spring 2026',
+    quarter: termLabel,
     total_units: schedule.reduce((s, c) => s + c.units, 0),
     courses: schedule,
   }
 
-  // Add a single section to a course (creates the course entry if needed)
   const addSection = useCallback((courseCode: string, title: string, units: number, section: SavedCourse['sections'][0]) => {
     setSchedule((prev) => {
       const existing = prev.find((c) => c.course_code === courseCode)
       if (existing) {
-        // Add section if not already there
         if (existing.sections.some((s) => s.section === section.section && s.type === section.type)) return prev
         return prev.map((c) =>
           c.course_code === courseCode ? { ...c, sections: [...c.sections, section] } : c
@@ -103,9 +126,8 @@ export function useMySchedule() {
         sections: [section],
       }]
     })
-  }, [])
+  }, [setSchedule])
 
-  // Remove a single section from a course (removes course if no sections left)
   const removeSection = useCallback((courseCode: string, sectionCode: string, sectionType: string) => {
     setSchedule((prev) => {
       return prev
@@ -116,7 +138,7 @@ export function useMySchedule() {
         })
         .filter((c) => c.sections.length > 0)
     })
-  }, [])
+  }, [setSchedule])
 
   const hasCourse = useCallback(
     (courseCode: string) => schedule.some((c) => c.course_code === courseCode),
@@ -129,5 +151,8 @@ export function useMySchedule() {
     [schedule],
   )
 
-  return { schedule, asProposal, addCourse, removeCourse, clearSchedule, addFromProposal, hasCourse, hasSection, addSection, removeSection }
+  // Get count of all courses across all terms (for header badge)
+  const totalCount = schedule.length
+
+  return { schedule, allSchedules, asProposal, addCourse, removeCourse, clearSchedule, addFromProposal, hasCourse, hasSection, addSection, removeSection, totalCount }
 }

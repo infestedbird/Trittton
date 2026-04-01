@@ -40,11 +40,21 @@ export function courseCodeToSubject(courseCode: string): string {
   return courseCode.split(' ')[0] || courseCode
 }
 
-export const TERM_OPTIONS = [
-  { value: 'WI26', label: 'Winter 2026' },
+// Fallback terms if the API hasn't loaded yet
+export const DEFAULT_TERM_OPTIONS = [
   { value: 'SP26', label: 'Spring 2026' },
   { value: 'S126', label: 'Summer I 2026' },
   { value: 'S226', label: 'Summer II 2026' },
-  { value: 'FA26', label: 'Fall 2026' },
-  { value: 'WI27', label: 'Winter 2027' },
 ]
+
+// Mutable term options — gets replaced by API data
+export let TERM_OPTIONS: { value: string; label: string }[] = [...DEFAULT_TERM_OPTIONS]
+
+export function setTermOptions(terms: { value: string; label: string }[]) {
+  TERM_OPTIONS = terms
+}
+
+export function getTermLabel(termCode: string): string {
+  const found = TERM_OPTIONS.find((t) => t.value === termCode)
+  return found?.label || termCode
+}

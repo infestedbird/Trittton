@@ -17,8 +17,14 @@ import { useScraper } from './hooks/useScraper'
 import { useChat } from './hooks/useChat'
 import { useMySchedule } from './hooks/useMySchedule'
 import { useCompletedCourses } from './hooks/useCompletedCourses'
-import { setCurrentTerm } from './lib/links'
+import { setCurrentTerm, setTermOptions, TERM_OPTIONS } from './lib/links'
 import { useRmpRatings } from './hooks/useRmpRatings'
+import { useFourYearPlan } from './hooks/useFourYearPlan'
+import { FourYearPlan } from './components/FourYearPlan'
+import { LiveStatus } from './components/LiveStatus'
+import { AutoScheduler } from './components/AutoScheduler'
+import { EventsCalendar } from './components/EventsCalendar'
+import { Councillor } from './components/Councillor'
 
 export default function App() {
   const { courses, isLoaded, isLoading, error, loadFromFile, loadFromServer, autoLoad, loadFromData } =
@@ -42,14 +48,36 @@ export default function App() {
     } catch { /* */ }
   }
 
-  const { progress, showPanel, setShowPanel, startScrape } = useScraper(handleScrapeComplete)
-  const { messages, isStreaming, thinkingPhase, error: chatError, sendMessage, clearChat } = useChat()
-  const mySchedule = useMySchedule()
-  const completedCourses = useCompletedCourses()
-  const { getRating } = useRmpRatings(courses)
   const [activeView, setActiveView] = useState<ViewType>('browse')
   const [model, setModel] = useState(() => localStorage.getItem('ucsd-ai-model') || 'sonnet')
   const [term, setTerm] = useState(() => localStorage.getItem('ucsd-term') || 'SP26')
+
+  const { progress, showPanel, setShowPanel, startScrape } = useScraper(handleScrapeComplete)
+  const { messages, isStreaming, thinkingPhase, error: chatError, sendMessage, clearChat } = useChat()
+  const mySchedule = useMySchedule(term)
+  const completedCourses = useCompletedCourses()
+  const { getRating } = useRmpRatings(courses)
+  const fourYearPlan = useFourYearPlan()
+
+  const [termOptions, setTermOpts] = useState(TERM_OPTIONS)
+
+  // Fetch available terms from UCSD, poll every 10 min
+  useEffect(() => {
+    const fetchTerms = () => {
+      fetch('/api/terms')
+        .then((r) => r.json())
+        .then((data) => {
+          if (data.terms?.length) {
+            setTermOptions(data.terms)
+            setTermOpts(data.terms)
+          }
+        })
+        .catch(() => {})
+    }
+    fetchTerms()
+    const interval = setInterval(fetchTerms, 600_000) // 10 minutes
+    return () => clearInterval(interval)
+  }, [])
 
   useEffect(() => {
     localStorage.setItem('ucsd-ai-model', model)
@@ -100,9 +128,12 @@ export default function App() {
         onTermChange={handleTermChange}
         scheduleCount={mySchedule.schedule.length}
         completedCount={completedCourses.completed.length}
+        termOptions={termOptions}
       />
 
-      {activeView === 'ai' && isLoaded ? (
+      {activeView === 'councillor' ? (
+        <Councillor model={model} />
+      ) : activeView === 'ai' && isLoaded ? (
         <ChatPanel
           messages={messages}
           isStreaming={isStreaming}
@@ -120,10 +151,27 @@ export default function App() {
         <MySchedule
           schedule={mySchedule.schedule}
           proposal={mySchedule.asProposal}
+          term={term}
           onRemove={mySchedule.removeCourse}
           onRemoveSection={mySchedule.removeSection}
           onClear={mySchedule.clearSchedule}
         />
+      ) : activeView === 'planner' ? (
+        <FourYearPlan
+          plan={fourYearPlan.plan}
+          allCourses={courses}
+          onAddCourse={fourYearPlan.addCourse}
+          onRemoveCourse={fourYearPlan.removeCourse}
+          onClearQuarter={fourYearPlan.clearQuarter}
+          onClearAll={fourYearPlan.clearAll}
+          totalUnits={fourYearPlan.totalUnits}
+        />
+      ) : activeView === 'live' ? (
+        <LiveStatus />
+      ) : activeView === 'scheduler' ? (
+        <AutoScheduler model={model} />
+      ) : activeView === 'events' ? (
+        <EventsCalendar />
       ) : activeView === 'progress' && isLoaded ? (
         <GradProgress completedCodes={completedCourses.completed.map((c) => c.course_code)} />
       ) : activeView === 'completed' && isLoaded ? (

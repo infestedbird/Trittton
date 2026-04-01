@@ -1,21 +1,95 @@
+import { useState, useEffect, useCallback } from 'react'
 import type { SavedCourse } from '../hooks/useMySchedule'
 import type { ScheduleProposal } from '../lib/schedule'
 import { buildCalendarBlocks, detectConflicts, assignColors } from '../lib/schedule'
 import { WeeklyCalendar } from './WeeklyCalendar'
 import { socSearchUrl, capeUrl, rmpUrl, courseCodeToSubject } from '../lib/links'
+import { downloadICS } from '../lib/icsExport'
 
 interface MyScheduleProps {
   schedule: SavedCourse[]
   proposal: ScheduleProposal
+  term: string
   onRemove: (courseCode: string) => void
   onRemoveSection: (courseCode: string, sectionCode: string, sectionType: string) => void
   onClear: () => void
 }
 
-export function MySchedule({ schedule, proposal, onRemove, onRemoveSection, onClear }: MyScheduleProps) {
+const GCAL_EMAIL = 'joshhatzer@gmail.com'
+
+type GCalStatus = { configured: boolean; connected: boolean; email: string }
+
+export function MySchedule({ schedule, proposal, term, onRemove, onRemoveSection, onClear }: MyScheduleProps) {
   const blocks = buildCalendarBlocks(proposal)
   const colors = assignColors(proposal.courses)
   const conflicts = detectConflicts(blocks)
+  const [gcalStatus, setGcalStatus] = useState<GCalStatus | null>(null)
+  const [syncing, setSyncing] = useState(false)
+  const [syncMsg, setSyncMsg] = useState<string | null>(null)
+
+  // Check gcal status on mount
+  useEffect(() => {
+    fetch('/api/gcal/status').then((r) => r.json()).then(setGcalStatus).catch(() => {})
+  }, [])
+
+  // Check for OAuth callback redirect
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    if (params.get('gcal') === 'connected') {
+      window.history.replaceState({}, '', window.location.pathname)
+      fetch('/api/gcal/status').then((r) => r.json()).then((s) => {
+        setGcalStatus(s)
+        if (s.connected) setSyncMsg('Google Calendar connected!')
+      }).catch(() => {})
+    }
+  }, [])
+
+  const handleGCalConnect = useCallback(async () => {
+    try {
+      const res = await fetch('/api/gcal/auth')
+      const data = await res.json()
+      if (data.auth_url) {
+        window.location.href = data.auth_url
+      } else if (data.error) {
+        setSyncMsg(data.error)
+      }
+    } catch {
+      setSyncMsg('Failed to start authorization')
+    }
+  }, [])
+
+  const handleGCalSync = useCallback(async () => {
+    setSyncing(true)
+    setSyncMsg(null)
+    try {
+      const res = await fetch('/api/gcal/sync', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ term, courses: schedule }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setSyncMsg(`Synced ${data.events_created} events to "${data.calendar}"`)
+      } else {
+        setSyncMsg(data.error || 'Sync failed')
+      }
+    } catch {
+      setSyncMsg('Failed to sync')
+    } finally {
+      setSyncing(false)
+    }
+  }, [term, schedule])
+
+  // Auto-sync when schedule changes (if connected)
+  const scheduleHash = JSON.stringify(schedule.map((c) => c.course_code + c.sections.length))
+  useEffect(() => {
+    if (!gcalStatus?.connected || schedule.length === 0) return
+    // Debounce: sync 2s after last change
+    const timer = setTimeout(() => {
+      handleGCalSync()
+    }, 2000)
+    return () => clearTimeout(timer)
+  }, [scheduleHash, gcalStatus?.connected]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleExport = () => {
     const html = generateMyScheduleHtml(proposal, schedule)
@@ -28,6 +102,10 @@ export function MySchedule({ schedule, proposal, onRemove, onRemoveSection, onCl
     URL.revokeObjectURL(url)
   }
 
+  const handleGoogleCalendarICS = () => {
+    downloadICS(schedule, term, GCAL_EMAIL)
+  }
+
   if (schedule.length === 0) {
     return (
       <div className="h-[calc(100vh-56px)] flex items-center justify-center">
@@ -38,6 +116,9 @@ export function MySchedule({ schedule, proposal, onRemove, onRemoveSection, onCl
             </svg>
           </div>
           <h2 className="text-xl font-medium text-text mb-2">My Schedule is Empty</h2>
+          <p className="text-[13px] text-muted leading-relaxed mb-1">
+            <b className="text-text">{proposal.quarter}</b>
+          </p>
           <p className="text-[14px] text-muted leading-relaxed">
             Add courses from the <b className="text-text">Browse</b> tab using the "+ Add" button,
             or ask the <b className="text-accent2">AI Planner</b> to build you a schedule.
@@ -55,6 +136,7 @@ export function MySchedule({ schedule, proposal, onRemove, onRemoveSection, onCl
           <div>
             <h2 className="text-lg font-medium text-text">My Schedule</h2>
             <div className="flex gap-4 mt-1 font-mono text-[11px] text-muted">
+              <span className="text-accent">{proposal.quarter}</span>
               <span><b className="text-text">{proposal.total_units}</b> units</span>
               <span><b className="text-text">{schedule.length}</b> courses</span>
               <span><b className="text-text">{schedule.reduce((s, c) => s + c.sections.length, 0)}</b> sections</span>
@@ -64,6 +146,52 @@ export function MySchedule({ schedule, proposal, onRemove, onRemoveSection, onCl
             </div>
           </div>
           <div className="flex gap-2">
+            {/* Google Calendar sync */}
+            {gcalStatus?.connected ? (
+              <button
+                onClick={handleGCalSync}
+                disabled={syncing}
+                className="px-3 py-1.5 rounded-lg text-[12px] font-mono font-medium
+                  bg-green/10 text-green border border-green/20
+                  hover:bg-green/20 transition-all cursor-pointer flex items-center gap-1.5
+                  disabled:opacity-50"
+                title={`Sync to Google Calendar (${GCAL_EMAIL})`}
+              >
+                {syncing ? (
+                  <span className="w-3 h-3 border-2 border-green/30 border-t-green rounded-full animate-spin" />
+                ) : (
+                  <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                  </svg>
+                )}
+                {syncing ? 'Syncing...' : 'Sync Calendar'}
+              </button>
+            ) : gcalStatus?.configured ? (
+              <button
+                onClick={handleGCalConnect}
+                className="px-3 py-1.5 rounded-lg text-[12px] font-mono font-medium
+                  bg-green/10 text-green border border-green/20
+                  hover:bg-green/20 transition-all cursor-pointer flex items-center gap-1.5"
+              >
+                <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-2.688a4.5 4.5 0 00-1.242-7.244l4.5-4.5a4.5 4.5 0 016.364 6.364l-1.757 1.757" />
+                </svg>
+                Connect Google Calendar
+              </button>
+            ) : (
+              <button
+                onClick={handleGoogleCalendarICS}
+                className="px-3 py-1.5 rounded-lg text-[12px] font-mono font-medium
+                  bg-green/10 text-green border border-green/20
+                  hover:bg-green/20 transition-all cursor-pointer flex items-center gap-1.5"
+                title={`Download .ics for Google Calendar (${GCAL_EMAIL})`}
+              >
+                <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+                </svg>
+                Export .ics
+              </button>
+            )}
             <button
               onClick={handleExport}
               className="px-3 py-1.5 rounded-lg text-[12px] font-mono font-medium
@@ -152,6 +280,23 @@ export function MySchedule({ schedule, proposal, onRemove, onRemoveSection, onCl
             )
           })}
         </div>
+
+        {/* Sync status */}
+        {syncMsg && (
+          <div className={`text-[11px] font-mono text-center py-2 px-3 rounded-lg ${
+            syncMsg.includes('Synced') || syncMsg.includes('connected') ? 'text-green bg-green/5' : 'text-red bg-red/5'
+          }`}>
+            {syncMsg}
+          </div>
+        )}
+
+        <div className="text-[11px] text-dim font-mono text-center pb-4">
+          {gcalStatus?.connected
+            ? `Auto-syncing to Google Calendar (${GCAL_EMAIL}) · Each term gets its own calendar`
+            : gcalStatus?.configured
+              ? `Connect Google Calendar to auto-sync · ${GCAL_EMAIL}`
+              : `Export .ics to import into Google Calendar · ${GCAL_EMAIL}`}
+        </div>
       </div>
     </div>
   )
@@ -167,5 +312,5 @@ function generateMyScheduleHtml(proposal: ScheduleProposal, schedule: SavedCours
     return `<div class="course"><div class="course-header"><span class="badge" style="background:${color?.bg};color:${color?.text};border-left:3px solid ${color?.border}">${c.course_code}</span><span class="title">${c.title}</span><span class="units">${c.units} units</span></div><table><thead><tr><th>Type</th><th>Section</th><th>Days</th><th>Time</th><th>Location</th><th>Instructor</th><th>Seats</th></tr></thead><tbody>${secs}</tbody></table></div>`
   }).join('\n')
 
-  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>My UCSD Schedule</title><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0}body{background:#0a0c10;color:#e8ecf4;font-family:'Instrument Sans',sans-serif;padding:2rem;max-width:900px;margin:0 auto}h1{font-family:'DM Mono',monospace;font-size:18px;color:#3dd68c;margin-bottom:4px}.stats{display:flex;gap:1.5rem;font-family:'DM Mono',monospace;font-size:11px;color:#7a82a0;margin-bottom:1.5rem}.stats b{color:#e8ecf4}.course{background:#181c26;border:1px solid #252a38;border-radius:10px;margin-bottom:12px;overflow:hidden}.course-header{padding:12px 14px;display:flex;align-items:center;gap:10px}.badge{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;padding:3px 8px;border-radius:5px}.title{font-size:13px;font-weight:500}.units{font-family:'DM Mono',monospace;font-size:10px;color:#f5c842}table{width:100%;border-collapse:collapse;font-size:11px}th{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;color:#7a82a0;text-align:left;padding:6px 10px;background:#12151c;font-weight:500}td{padding:6px 10px;border-top:1px solid #252a38;font-family:'DM Mono',monospace}.footer{margin-top:2rem;font-family:'DM Mono',monospace;font-size:10px;color:#3d4460;text-align:center}</style></head><body><h1>My UCSD Schedule</h1><div class="stats"><span><b>${proposal.total_units}</b> units</span><span><b>${schedule.length}</b> courses</span></div>${rows}<div class="footer">Generated by UCSD Course Browser &middot; ${new Date().toLocaleDateString()}</div></body></html>`
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>My UCSD Schedule - ${proposal.quarter}</title><link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0}body{background:#0a0c10;color:#e8ecf4;font-family:'Instrument Sans',sans-serif;padding:2rem;max-width:900px;margin:0 auto}h1{font-family:'DM Mono',monospace;font-size:18px;color:#3dd68c;margin-bottom:4px}.stats{display:flex;gap:1.5rem;font-family:'DM Mono',monospace;font-size:11px;color:#7a82a0;margin-bottom:1.5rem}.stats b{color:#e8ecf4}.course{background:#181c26;border:1px solid #252a38;border-radius:10px;margin-bottom:12px;overflow:hidden}.course-header{padding:12px 14px;display:flex;align-items:center;gap:10px}.badge{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;padding:3px 8px;border-radius:5px}.title{font-size:13px;font-weight:500}.units{font-family:'DM Mono',monospace;font-size:10px;color:#f5c842}table{width:100%;border-collapse:collapse;font-size:11px}th{font-family:'DM Mono',monospace;font-size:9px;text-transform:uppercase;color:#7a82a0;text-align:left;padding:6px 10px;background:#12151c;font-weight:500}td{padding:6px 10px;border-top:1px solid #252a38;font-family:'DM Mono',monospace}.footer{margin-top:2rem;font-family:'DM Mono',monospace;font-size:10px;color:#3d4460;text-align:center}</style></head><body><h1>My UCSD Schedule — ${proposal.quarter}</h1><div class="stats"><span><b>${proposal.total_units}</b> units</span><span><b>${schedule.length}</b> courses</span></div>${rows}<div class="footer">Generated by Trittton &middot; ${new Date().toLocaleDateString()}</div></body></html>`
 }
