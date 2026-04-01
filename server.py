@@ -204,6 +204,38 @@ def start_scrape(term: str = Query(default="SP26")):
     return {"message": "Scrape started", "total": len(ALL_SUBJECTS)}
 
 
+GITHUB_TOKEN = _os.environ.get("GITHUB_TOKEN", "")
+GITHUB_REPO = _os.environ.get("GITHUB_REPO", "infestedbird/Trittton")
+
+
+def _persist_to_github(file_path: str, content: str, message: str):
+    """Commit a file to GitHub to persist data across deploys."""
+    if not GITHUB_TOKEN:
+        logger.info("No GITHUB_TOKEN set — skipping GitHub persist")
+        return
+    import requests as req_lib
+    try:
+        # Get current file SHA (needed for updates)
+        headers = {"Authorization": f"token {GITHUB_TOKEN}", "Accept": "application/vnd.github.v3+json"}
+        url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{file_path}"
+        existing = req_lib.get(url, headers=headers, timeout=10)
+        sha = existing.json().get("sha", "") if existing.status_code == 200 else ""
+
+        import base64
+        encoded = base64.b64encode(content.encode("utf-8")).decode("utf-8")
+        payload = {"message": message, "content": encoded, "branch": "main"}
+        if sha:
+            payload["sha"] = sha
+
+        resp = req_lib.put(url, headers=headers, json=payload, timeout=30)
+        if resp.status_code in (200, 201):
+            logger.info("Persisted %s to GitHub (%d bytes)", file_path, len(content))
+        else:
+            logger.error("GitHub persist failed: %s %s", resp.status_code, resp.text[:200])
+    except Exception as e:
+        logger.error("GitHub persist error: %s", e)
+
+
 def _run_scrape(term: str):
     import requests
     session = requests.Session()
@@ -237,8 +269,12 @@ def _run_scrape(term: str):
         if i < len(ALL_SUBJECTS):
             time.sleep(DELAY)
 
+    course_json = json.dumps(all_courses, indent=2, ensure_ascii=False)
     with open(OUTPUT, "w", encoding="utf-8") as f:
-        json.dump(all_courses, f, indent=2, ensure_ascii=False)
+        f.write(course_json)
+
+    # Persist to GitHub so data survives container restarts
+    _persist_to_github("all_courses.json", course_json, f"Update course data ({term}, {len(all_courses)} courses)")
 
     with scrape_lock:
         scrape_state["status"] = "done"

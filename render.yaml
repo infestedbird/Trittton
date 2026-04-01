@@ -6,3 +6,9 @@ services:
     envVars:
       - key: GEMINI_API_KEY
         sync: false
+      - key: GITHUB_TOKEN
+        sync: false
+      - key: AUTH_EMAIL
+        sync: false
+      - key: AUTH_HASH
+        sync: false
