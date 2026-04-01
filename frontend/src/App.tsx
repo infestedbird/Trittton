@@ -90,17 +90,17 @@ export default function App() {
 
   const handleTermChange = (newTerm: string) => {
     setTerm(newTerm)
-    startScrape(newTerm)
+    // Don't auto-scrape on term change — just try loading existing data
+    loadFromServer().catch(() => {})
   }
 
   const didAutoLoad = useRef(false)
   useEffect(() => {
     if (didAutoLoad.current) return
     didAutoLoad.current = true
-    autoLoad().then((loaded) => {
-      if (!loaded) startScrape(term)
-    })
-  }, [autoLoad, startScrape, term])
+    autoLoad()
+    // Don't auto-scrape if no data — user can click Scrape manually
+  }, [autoLoad])
 
   const handleScrapeClick = () => {
     if (progress.status === 'running') {

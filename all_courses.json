@@ -1,0 +1,6511 @@
+[
+  {
+    "subject": "ANBI",
+    "course_code": "ANBI 143GS",
+    "title": "The Human Skeleton in Paris",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": []
+  },
+  {
+    "subject": "ANBI",
+    "course_code": "ANBI 144GS",
+    "title": "The Human Anatomy in Paris",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": []
+  },
+  {
+    "subject": "ANSC",
+    "course_code": "ANSC 120",
+    "title": "Religion and Culture Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "258631",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R01",
+        "instructor": "Staff",
+        "available": "18",
+        "limit": "18",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ANSC",
+    "course_code": "ANSC 121",
+    "title": "Psychological Anthropology Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "258632",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R01",
+        "instructor": "Sloane, Julia Kathryn",
+        "available": "16",
+        "limit": "16",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ANSC",
+    "course_code": "ANSC 144",
+    "title": "Immigrant and Refugee Health Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "258633",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R01",
+        "instructor": "Staff",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ANSC",
+    "course_code": "ANSC 148",
+    "title": "Global Health&Cultrl Diversity Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "258634",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R01",
+        "instructor": "Staff",
+        "available": "18",
+        "limit": "18",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ANTH",
+    "course_code": "ANTH 1",
+    "title": "Introduction to Culture Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "258635",
+        "type": "LE",
+        "section": "B00",
+        "days": "MW",
+        "time": "8:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R02",
+        "instructor": "Staff",
+        "available": "18",
+        "limit": "18",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ANTH",
+    "course_code": "ANTH 2",
+    "title": "Human Origins Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R07",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258637",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "5:00p-5:50p",
+        "building": "RCLAS",
+        "room": "R02",
+        "instructor": "",
+        "available": "18",
+        "limit": "18",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ANTH",
+    "course_code": "ANTH 21",
+    "title": "Race and Racisms Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "8:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R01",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258639",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "11:00a-11:50a",
+        "building": "RCLAS",
+        "room": "R02",
+        "instructor": "",
+        "available": "18",
+        "limit": "18",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ANTH",
+    "course_code": "ANTH 23",
+    "title": "Debating Multiculturalism Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R03",
+        "instructor": "Pedersen, David",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258642",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "1:00p-1:50p",
+        "building": "RCLAS",
+        "room": "R04",
+        "instructor": "Pedersen, David",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ANTH",
+    "course_code": "ANTH 43",
+    "title": "Intro/Bio & Culture of Race Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "258643",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R03",
+        "instructor": "Non, Amy L",
+        "available": "34",
+        "limit": "34",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ANTH",
+    "course_code": "ANTH 102",
+    "title": "Humans Are Cultural Animals Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "258644",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R05",
+        "instructor": "Wilder, Linnea Lorene",
+        "available": "16",
+        "limit": "16",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ANTH",
+    "course_code": "ANTH 103",
+    "title": "Sociocultural Anthropology Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "258645",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R04",
+        "instructor": "Staff",
+        "available": "18",
+        "limit": "18",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ANAR",
+    "course_code": "ANAR 144",
+    "title": "Pharaohs,Mummies,Pyramds:Egypt Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "258627",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "8:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R01",
+        "instructor": "Braswell, Geoffrey E.",
+        "available": "39",
+        "limit": "39",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ANAR",
+    "course_code": "ANAR 146",
+    "title": "Feeding the World Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "XFR XSO",
+    "sections": [
+      {
+        "section_id": "258628",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R02",
+        "instructor": "Staff",
+        "available": "18",
+        "limit": "18",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "BENG",
+    "course_code": "BENG 98",
+    "title": "Directed Group Study ( 1 -4 Units) Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "",
+    "restrictions": "FR SO D",
+    "sections": []
+  },
+  {
+    "subject": "BENG",
+    "course_code": "BENG 99",
+    "title": "Independent Study/Undergraduat Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "FR SO D",
+    "sections": []
+  },
+  {
+    "subject": "BENG",
+    "course_code": "BENG 186B",
+    "title": "Princpls/Bioinstrumentatn Desn Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "O",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "2:00p-4:50p",
+        "building": "WLH",
+        "room": "2206",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "270498",
+        "type": "DI",
+        "section": "A01",
+        "days": "W",
+        "time": "5:00p-6:50p",
+        "building": "WLH",
+        "room": "2206",
+        "instructor": "",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "BENG",
+    "course_code": "BENG 198",
+    "title": "Directed Group Study",
+    "units": "",
+    "restrictions": "D",
+    "sections": []
+  },
+  {
+    "subject": "BILD",
+    "course_code": "BILD 1",
+    "title": "The Cell Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "11:00a-12:20p",
+        "building": "CSB",
+        "room": "001",
+        "instructor": "Cooper, Andrew Michael",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261543",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "1:00p-1:50p",
+        "building": "MALK",
+        "room": "B92",
+        "instructor": "Cooper, Andrew Michael",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261544",
+        "type": "DI",
+        "section": "A02",
+        "days": "TuTh",
+        "time": "2:00p-2:50p",
+        "building": "MALK",
+        "room": "B92",
+        "instructor": "Cooper, Andrew Michael",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261545",
+        "type": "DI",
+        "section": "A03",
+        "days": "TuTh",
+        "time": "3:00p-3:50p",
+        "building": "MALK",
+        "room": "B92",
+        "instructor": "Cooper, Andrew Michael",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261546",
+        "type": "DI",
+        "section": "A04",
+        "days": "TuTh",
+        "time": "4:00p-4:50p",
+        "building": "MALK",
+        "room": "B92",
+        "instructor": "Cooper, Andrew Michael",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "BILD",
+    "course_code": "BILD 2",
+    "title": "Multicellular Life Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "FAH",
+        "room": "1450",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261548",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "3:00p-3:50p",
+        "building": "WLH",
+        "room": "2208",
+        "instructor": "",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261549",
+        "type": "DI",
+        "section": "A02",
+        "days": "MW",
+        "time": "4:00p-4:50p",
+        "building": "WLH",
+        "room": "2208",
+        "instructor": "",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261550",
+        "type": "DI",
+        "section": "A03",
+        "days": "TuTh",
+        "time": "9:00a-9:50a",
+        "building": "PODEM",
+        "room": "0133",
+        "instructor": "",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261551",
+        "type": "DI",
+        "section": "A04",
+        "days": "TuTh",
+        "time": "10:00a-10:50a",
+        "building": "PODEM",
+        "room": "0133",
+        "instructor": "",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "BILD",
+    "course_code": "BILD 3",
+    "title": "Organismic&Evolutionary Biol Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "2:00p-3:20p",
+        "building": "FAH",
+        "room": "1450",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261553",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "9:00a-9:50a",
+        "building": "COA",
+        "room": "124",
+        "instructor": "",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261554",
+        "type": "DI",
+        "section": "A02",
+        "days": "MW",
+        "time": "10:00a-10:50a",
+        "building": "COA",
+        "room": "124",
+        "instructor": "",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261555",
+        "type": "DI",
+        "section": "A03",
+        "days": "TuTh",
+        "time": "11:00a-11:50a",
+        "building": "PODEM",
+        "room": "0133",
+        "instructor": "",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261556",
+        "type": "DI",
+        "section": "A04",
+        "days": "TuTh",
+        "time": "12:00p-12:50p",
+        "building": "PODEM",
+        "room": "0133",
+        "instructor": "",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "BILD",
+    "course_code": "BILD 4",
+    "title": "Introductory Biology Lab",
+    "units": "2",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-12:20p",
+        "building": "RWAC",
+        "room": "0103",
+        "instructor": "Gonzalez Gamboa, Ivonne",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261558",
+        "type": "LA",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "1:00p-3:50p",
+        "building": "TATA",
+        "room": "2301",
+        "instructor": "Gonzalez Gamboa, Ivonne",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261559",
+        "type": "LA",
+        "section": "A02",
+        "days": "TuTh",
+        "time": "1:00p-3:50p",
+        "building": "TATA",
+        "room": "2302",
+        "instructor": "Gonzalez Gamboa, Ivonne",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "BILD",
+    "course_code": "BILD 10",
+    "title": "Fundamental Concepts/Modrn Bio Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "N",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "8:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R34",
+        "instructor": "Pirino, Giorgia",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261561",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "12:00p-12:50p",
+        "building": "RCLAS",
+        "room": "R25",
+        "instructor": "Pirino, Giorgia",
+        "available": "45",
+        "limit": "45",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "BILD",
+    "course_code": "BILD 24",
+    "title": "Microbiology through Food Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "8:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R25",
+        "instructor": "Pirino, Giorgia",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261568",
+        "type": "DI",
+        "section": "A02",
+        "days": "MW",
+        "time": "12:00p-12:50p",
+        "building": "RCLAS",
+        "room": "R25",
+        "instructor": "Pirino, Giorgia",
+        "available": "45",
+        "limit": "45",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "BILD",
+    "course_code": "BILD 60GS",
+    "title": "DEI in Bio & Global Contexts",
+    "units": "4",
+    "restrictions": "D",
+    "sections": []
+  },
+  {
+    "subject": "BIMM",
+    "course_code": "BIMM 100R",
+    "title": "Molecular Biology Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": []
+  },
+  {
+    "subject": "BIMM",
+    "course_code": "BIMM 101",
+    "title": "Recombinant DNA Techniques",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuWThF",
+        "time": "9:30a-10:50a",
+        "building": "TATA",
+        "room": "2501",
+        "instructor": "Grossman, Emily N",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261581",
+        "type": "LA",
+        "section": "A01",
+        "days": "WF",
+        "time": "1:00p-4:50p",
+        "building": "YORK",
+        "room": "2310",
+        "instructor": "Grossman, Emily N",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261582",
+        "type": "LA",
+        "section": "A02",
+        "days": "WF",
+        "time": "1:00p-4:50p",
+        "building": "YORK",
+        "room": "2332",
+        "instructor": "Grossman, Emily N",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "B00",
+        "days": "TuWThF",
+        "time": "11:00a-12:20p",
+        "building": "TATA",
+        "room": "2501",
+        "instructor": "Grossman, Emily N",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261584",
+        "type": "LA",
+        "section": "B01",
+        "days": "WF",
+        "time": "1:00p-4:50p",
+        "building": "YORK",
+        "room": "4318",
+        "instructor": "Grossman, Emily N",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261585",
+        "type": "LA",
+        "section": "B02",
+        "days": "WF",
+        "time": "1:00p-4:50p",
+        "building": "YORK",
+        "room": "4332",
+        "instructor": "Grossman, Emily N",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "BIMM",
+    "course_code": "BIMM 120",
+    "title": "Microbiology Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "11:00a-12:20p",
+        "building": "WLH",
+        "room": "2204",
+        "instructor": "Gustafson-Brown, Cindy",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261652",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "10:00a-10:50a",
+        "building": "WLH",
+        "room": "2204",
+        "instructor": "Gustafson-Brown, Cindy",
+        "available": "75",
+        "limit": "75",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "BIMM",
+    "course_code": "BIMM 134",
+    "title": "Biology of Cancer Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "LEDDN",
+        "room": "AUD",
+        "instructor": "Burg, Michael",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261656",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "12:00p-12:50p",
+        "building": "CSB",
+        "room": "004",
+        "instructor": "Burg, Michael",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261658",
+        "type": "DI",
+        "section": "A02",
+        "days": "MW",
+        "time": "1:00p-1:50p",
+        "building": "CSB",
+        "room": "004",
+        "instructor": "Burg, Michael",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261659",
+        "type": "DI",
+        "section": "A03",
+        "days": "TuTh",
+        "time": "3:00p-3:50p",
+        "building": "CSB",
+        "room": "004",
+        "instructor": "Burg, Michael",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261663",
+        "type": "DI",
+        "section": "A04",
+        "days": "TuTh",
+        "time": "4:00p-4:50p",
+        "building": "CSB",
+        "room": "004",
+        "instructor": "Burg, Michael",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "BIMM",
+    "course_code": "BIMM 143R",
+    "title": "Bioinformatics Laboratory Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "11:00a-11:50a",
+        "building": "RCLAS",
+        "room": "R43",
+        "instructor": "Bozinovic, Goran",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261665",
+        "type": "LA",
+        "section": "A01",
+        "days": "MTuWTh",
+        "time": "12:00p-2:50p",
+        "building": "RCLAS",
+        "room": "R26",
+        "instructor": "Bozinovic, Goran",
+        "available": "75",
+        "limit": "75",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "BIMM",
+    "course_code": "BIMM 194",
+    "title": "Adv Topics-Molecular Bio",
+    "units": "2",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "261672",
+        "type": "SE",
+        "section": "A00",
+        "days": "MW",
+        "time": "9:00a-10:20a",
+        "building": "RCLAS",
+        "room": "R34",
+        "instructor": "Bozinovic, Goran",
+        "available": "35",
+        "limit": "35",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CHEM",
+    "course_code": "CHEM 6A",
+    "title": "General Chemistry I Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "11:00a-12:20p",
+        "building": "COA",
+        "room": "127",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258747",
+        "type": "DI",
+        "section": "A01",
+        "days": "Tu",
+        "time": "2:00p-3:50p",
+        "building": "COA",
+        "room": "123",
+        "instructor": "",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CHEM",
+    "course_code": "CHEM 6B",
+    "title": "General Chemistry II Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "9:30a-10:50a",
+        "building": "COA",
+        "room": "127",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258754",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "12:00p-12:50p",
+        "building": "YORK",
+        "room": "4080A",
+        "instructor": "",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CHEM",
+    "course_code": "CHEM 6C",
+    "title": "General Chemistry III Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "9:30a-10:50a",
+        "building": "CSB",
+        "room": "002",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258762",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "11:00a-11:50a",
+        "building": "CSB",
+        "room": "004",
+        "instructor": "",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CHEM",
+    "course_code": "CHEM 7L",
+    "title": "General Chemistry Laboratory",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-12:50p",
+        "building": "PODEM",
+        "room": "1A20",
+        "instructor": "Schurmeier, Kimberly",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258766",
+        "type": "LA",
+        "section": "A01",
+        "days": "MTuWTh",
+        "time": "8:00a-10:50a",
+        "building": "YORK",
+        "room": "2108",
+        "instructor": "Schurmeier, Kimberly",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258768",
+        "type": "LA",
+        "section": "A02",
+        "days": "MTuWTh",
+        "time": "8:00a-10:50a",
+        "building": "YORK",
+        "room": "2124",
+        "instructor": "Schurmeier, Kimberly",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258777",
+        "type": "LA",
+        "section": "A03",
+        "days": "MTuWTh",
+        "time": "8:00a-10:50a",
+        "building": "YORK",
+        "room": "2208",
+        "instructor": "Schurmeier, Kimberly",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258778",
+        "type": "LA",
+        "section": "A04",
+        "days": "MTuWTh",
+        "time": "8:00a-10:50a",
+        "building": "YORK",
+        "room": "2224",
+        "instructor": "Schurmeier, Kimberly",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "B00",
+        "days": "MW",
+        "time": "2:00p-3:50p",
+        "building": "PODEM",
+        "room": "1A20",
+        "instructor": "Schurmeier, Kimberly",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258780",
+        "type": "LA",
+        "section": "B01",
+        "days": "MTuWTh",
+        "time": "11:00a-1:50p",
+        "building": "YORK",
+        "room": "2108",
+        "instructor": "Schurmeier, Kimberly",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258782",
+        "type": "LA",
+        "section": "B02",
+        "days": "MTuWTh",
+        "time": "11:00a-1:50p",
+        "building": "YORK",
+        "room": "2124",
+        "instructor": "Schurmeier, Kimberly",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258783",
+        "type": "LA",
+        "section": "B03",
+        "days": "MTuWTh",
+        "time": "11:00a-1:50p",
+        "building": "YORK",
+        "room": "2208",
+        "instructor": "Schurmeier, Kimberly",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258784",
+        "type": "LA",
+        "section": "B04",
+        "days": "MTuWTh",
+        "time": "11:00a-1:50p",
+        "building": "YORK",
+        "room": "2224",
+        "instructor": "Schurmeier, Kimberly",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CHEM",
+    "course_code": "CHEM 11",
+    "title": "The Periodic Table Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "8:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R02",
+        "instructor": "Stallings, Dontarie M",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258786",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "11:00a-11:50a",
+        "building": "RCLAS",
+        "room": "R05",
+        "instructor": "Stallings, Dontarie M",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CHEM",
+    "course_code": "CHEM 40A",
+    "title": "Organic Chem for Life Sci I Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "11:00a-12:20p",
+        "building": "CSB",
+        "room": "002",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258792",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "2:00p-2:50p",
+        "building": "CSB",
+        "room": "004",
+        "instructor": "",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CHEM",
+    "course_code": "CHEM 40B",
+    "title": "Organic Chem for Life Sci II Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "2:00p-3:20p",
+        "building": "CSB",
+        "room": "002",
+        "instructor": "Weizman, Haim",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258927",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "4:00p-4:50p",
+        "building": "CSB",
+        "room": "004",
+        "instructor": "Weizman, Haim",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CHEM",
+    "course_code": "CHEM 41A",
+    "title": "Organic I: Struct & React Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "5:00p-6:20p",
+        "building": "RWAC",
+        "room": "0115",
+        "instructor": "Albizati, Kim F.",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258931",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "4:00a-4:50a",
+        "building": "RWAC",
+        "room": "0115",
+        "instructor": "Albizati, Kim F.",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "COGS",
+    "course_code": "COGS 2",
+    "title": "Cognitive NeuroEconomics Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "TBA",
+        "room": "TBA",
+        "instructor": "Boyle, Mary E. T.",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "258950",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "2:00p-2:50p",
+        "building": "TBA",
+        "room": "TBA",
+        "instructor": "Boyle, Mary E. T.",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "COGS",
+    "course_code": "COGS 9",
+    "title": "Introduction to Data Science Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "3:30p-4:50p",
+        "building": "COA",
+        "room": "B21",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259025",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "2:30p-3:20p",
+        "building": "COA",
+        "room": "B21",
+        "instructor": "",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "COGS",
+    "course_code": "COGS 11",
+    "title": "Minds & Brains Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "DIB",
+        "room": "121",
+        "instructor": "Boyle, Mary E. T.",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259029",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "2:00p-2:50p",
+        "building": "DIB",
+        "room": "121",
+        "instructor": "Boyle, Mary E. T.",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "COGS",
+    "course_code": "COGS 14A",
+    "title": "Intro. to Research Methods Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "9:30a-10:50a",
+        "building": "COA",
+        "room": "B21",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259032",
+        "type": "LA",
+        "section": "A01",
+        "days": "MW",
+        "time": "11:00a-11:50a",
+        "building": "COA",
+        "room": "B21",
+        "instructor": "",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "COGS",
+    "course_code": "COGS 14B",
+    "title": "Intro. to Statistical Analysis Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "8:00a-9:20a",
+        "building": "RCLAS",
+        "room": "R09",
+        "instructor": "Hoffman, Drew Ellen",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259037",
+        "type": "LA",
+        "section": "A01",
+        "days": "MW",
+        "time": "9:30a-10:20a",
+        "building": "RCLAS",
+        "room": "R11",
+        "instructor": "Hoffman, Drew Ellen",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "COGS",
+    "course_code": "COGS 17",
+    "title": "Neurobiology of Cognition Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "12:30p-1:50p",
+        "building": "COA",
+        "room": "B21",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259040",
+        "type": "LA",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "2:00p-4:50p",
+        "building": "TBA",
+        "room": "TBA",
+        "instructor": "",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "COGS",
+    "course_code": "COGS 101C",
+    "title": "Language Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "HSS",
+        "room": "2321",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259042",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "2:00p-2:50p",
+        "building": "HSS",
+        "room": "2321",
+        "instructor": "",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "COGS",
+    "course_code": "COGS 107B",
+    "title": "Systems Neuroscience Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "TBA",
+        "room": "TBA",
+        "instructor": "Mooshagian, Eric Frederick",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259044",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "2:00p-2:50p",
+        "building": "TBA",
+        "room": "TBA",
+        "instructor": "Mooshagian, Eric Frederick",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "COGS",
+    "course_code": "COGS 118B",
+    "title": "Intro to Machine Learning Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "5:00p-7:50p",
+        "building": "RCLAS",
+        "room": "R03",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259047",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "4:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R02",
+        "instructor": "",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "COMM",
+    "course_code": "COMM 10",
+    "title": "Introduction to Communication Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R06",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259169",
+        "type": "DI",
+        "section": "A01",
+        "days": "M",
+        "time": "9:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R04",
+        "instructor": "",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259216",
+        "type": "DI",
+        "section": "A02",
+        "days": "W",
+        "time": "9:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R05",
+        "instructor": "",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "COMM",
+    "course_code": "COMM 100A",
+    "title": "Comm, the Person&Everyday Life Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R04",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259218",
+        "type": "DI",
+        "section": "A01",
+        "days": "Tu",
+        "time": "3:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R05",
+        "instructor": "",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259219",
+        "type": "DI",
+        "section": "A02",
+        "days": "Th",
+        "time": "3:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R04",
+        "instructor": "",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "COMM",
+    "course_code": "COMM 100C",
+    "title": "Comm, Institutions & Power Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R06",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259224",
+        "type": "DI",
+        "section": "A01",
+        "days": "Tu",
+        "time": "9:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R03",
+        "instructor": "",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259225",
+        "type": "DI",
+        "section": "A02",
+        "days": "Th",
+        "time": "9:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R04",
+        "instructor": "",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "COMM",
+    "course_code": "COMM 106N",
+    "title": "Journalism/News Industry Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "259226",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "5:00p-7:50p",
+        "building": "RCLAS",
+        "room": "R01",
+        "instructor": "Staff",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "COMM",
+    "course_code": "COMM 110M",
+    "title": "LLC: Comm & Community Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "259227",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R06",
+        "instructor": "Campion, Camille E",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "COMM",
+    "course_code": "COMM 113T",
+    "title": "Intm Topics in Communication",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "259233",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "5:00p-7:50p",
+        "building": "RCLAS",
+        "room": "R03",
+        "instructor": "Staff",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "274095",
+        "type": "LE",
+        "section": "B00",
+        "days": "MW",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R107",
+        "instructor": "Staff",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "COMM",
+    "course_code": "COMM 117GS",
+    "title": "Community and Ethnography",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": []
+  },
+  {
+    "subject": "COMM",
+    "course_code": "COMM 140GS",
+    "title": "Cinema in Latin America",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": []
+  },
+  {
+    "subject": "CGS",
+    "course_code": "CGS 2A",
+    "title": "Intro/CGS: Key Terms, Concepts Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R101",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259339",
+        "type": "DI",
+        "section": "A01",
+        "days": "Tu",
+        "time": "2:00p-3:50p",
+        "building": "RCLAS",
+        "room": "R100",
+        "instructor": "",
+        "available": "35",
+        "limit": "35",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CGS",
+    "course_code": "CGS 106",
+    "title": "Gender & the Law Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": []
+  },
+  {
+    "subject": "CGS",
+    "course_code": "CGS 114",
+    "title": "Gender,Race,Ethnicity & Class Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "259343",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "RWAC",
+        "room": "0115",
+        "instructor": "Staff",
+        "available": "17",
+        "limit": "17",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CGS",
+    "course_code": "CGS 137",
+    "title": "Latina Issues & Cultural Prod. Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "273041",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "2:00p-4:50p",
+        "building": "PODEM",
+        "room": "1A23",
+        "instructor": "Staff",
+        "available": "15",
+        "limit": "15",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CSE",
+    "course_code": "CSE 8A",
+    "title": "Intro to Programming 1",
+    "units": "4",
+    "restrictions": "FR JR SO",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "8:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R05",
+        "instructor": "Cao, Yingjun",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "",
+        "type": "DI",
+        "section": "A01",
+        "days": "W",
+        "time": "9:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R04",
+        "instructor": "Cao, Yingjun",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259244",
+        "type": "LA",
+        "section": "A50",
+        "days": "M",
+        "time": "9:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R05",
+        "instructor": "Cao, Yingjun",
+        "available": "100",
+        "limit": "100",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CSE",
+    "course_code": "CSE 100R",
+    "title": "Advanced Data Structures",
+    "units": "4",
+    "restrictions": "FR JR SO",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "8:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R06",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259312",
+        "type": "DI",
+        "section": "A01",
+        "days": "Th",
+        "time": "1:00p-2:50p",
+        "building": "RCLAS",
+        "room": "R05",
+        "instructor": "",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CSE",
+    "course_code": "CSE 134B",
+    "title": "Web Client Languages Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "O",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "8:00a-9:20a",
+        "building": "RWAC",
+        "room": "0103",
+        "instructor": "Powell, Thomas Allan",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259321",
+        "type": "DI",
+        "section": "A01",
+        "days": "W",
+        "time": "10:00a-11:50a",
+        "building": "RWAC",
+        "room": "0103",
+        "instructor": "Powell, Thomas Allan",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CSE",
+    "course_code": "CSE 151A",
+    "title": "ML: Learning Algorithms Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "O",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "3:30p-4:50p",
+        "building": "COA",
+        "room": "B30",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259326",
+        "type": "DI",
+        "section": "A01",
+        "days": "W",
+        "time": "5:00p-6:50p",
+        "building": "COA",
+        "room": "B30",
+        "instructor": "",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CSE",
+    "course_code": "CSE 151B",
+    "title": "Deep Learning Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "O",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "11:00a-12:20p",
+        "building": "COA",
+        "room": "B30",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259333",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "2:00p-2:50p",
+        "building": "COA",
+        "room": "B30",
+        "instructor": "",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CSE",
+    "course_code": "CSE 153R",
+    "title": "Machine Learning for Music Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "O",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R08",
+        "instructor": "Dubnov, Shlomo",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "CAT",
+    "course_code": "CAT 125GS",
+    "title": "Public Rhetoric & Prac Comm GS",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": []
+  },
+  {
+    "subject": "CAT",
+    "course_code": "CAT 125R",
+    "title": "Pub Rhet & Prac Comm Online",
+    "units": "4",
+    "restrictions": "JR SR SI",
+    "sections": [
+      {
+        "section_id": "259359",
+        "type": "SE",
+        "section": "A00",
+        "days": "MW",
+        "time": "9:00a-12:00p",
+        "building": "RCLAS",
+        "room": "R100",
+        "instructor": "Hyland, Tina Mae",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259360",
+        "type": "SE",
+        "section": "B00",
+        "days": "TuTh",
+        "time": "10:00a-1:00p",
+        "building": "RCLAS",
+        "room": "R100",
+        "instructor": "Rose, Becca Rae",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259361",
+        "type": "SE",
+        "section": "C00",
+        "days": "MW",
+        "time": "10:00a-1:00p",
+        "building": "RCLAS",
+        "room": "R101",
+        "instructor": "Tosun, Adriana",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "DSGN",
+    "course_code": "DSGN 1",
+    "title": "Design of Everyday Things Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "DIB",
+        "room": "121",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259158",
+        "type": "ST",
+        "section": "A01",
+        "days": "MW",
+        "time": "2:00p-2:50p",
+        "building": "DIB",
+        "room": "121",
+        "instructor": "",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "DOC",
+    "course_code": "DOC 100D",
+    "title": "Promises&Contradictions/USCult",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "259405",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "COA",
+        "room": "124",
+        "instructor": "Staff",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "EDS",
+    "course_code": "EDS 112",
+    "title": "U.S. Urban Education Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": []
+  },
+  {
+    "subject": "EDS",
+    "course_code": "EDS 117",
+    "title": "Language, Culture & Education Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "XFR XSO",
+    "sections": [
+      {
+        "section_id": "259476",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "MOS",
+        "room": "0204",
+        "instructor": "Staff",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "EDS",
+    "course_code": "EDS 124BR",
+    "title": "Teach Computational Thinking Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": []
+  },
+  {
+    "subject": "EDS",
+    "course_code": "EDS 125",
+    "title": "Hist,Polic&Theory/Bilingual Ed Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "XFR XSO",
+    "sections": [
+      {
+        "section_id": "259480",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R07",
+        "instructor": "Staff",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "EDS",
+    "course_code": "EDS 126",
+    "title": "Social Organization/Education Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": []
+  },
+  {
+    "subject": "ECE",
+    "course_code": "ECE 15",
+    "title": "Eng Computation: Prgrm in C Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "9:30a-10:50a",
+        "building": "WLH",
+        "room": "2207",
+        "instructor": "Sahay, Rajeev",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259486",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "11:00a-11:50a",
+        "building": "WLH",
+        "room": "2207",
+        "instructor": "Sahay, Rajeev",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ECE",
+    "course_code": "ECE 17",
+    "title": "Object-Oriented Programming Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "11:00a-12:20p",
+        "building": "WLH",
+        "room": "2111",
+        "instructor": "Sahay, Rajeev",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259488",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "12:30p-1:20p",
+        "building": "WLH",
+        "room": "2111",
+        "instructor": "Sahay, Rajeev",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ECE",
+    "course_code": "ECE 65",
+    "title": "Components & Circuits Lab",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "6:00p-8:50p",
+        "building": "WLH",
+        "room": "2111",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "",
+        "type": "DI",
+        "section": "A01",
+        "days": "W",
+        "time": "4:00p-5:50p",
+        "building": "WLH",
+        "room": "2207",
+        "instructor": "",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259491",
+        "type": "LA",
+        "section": "A50",
+        "days": "MW",
+        "time": "6:00p-8:50p",
+        "building": "WLH",
+        "room": "2213A",
+        "instructor": "",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259493",
+        "type": "LA",
+        "section": "A51",
+        "days": "MW",
+        "time": "6:00p-8:50p",
+        "building": "WLH",
+        "room": "2215",
+        "instructor": "",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ECE",
+    "course_code": "ECE 101",
+    "title": "Linear Systems Fundamentals Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "O",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "MOS",
+        "room": "0204",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "273598",
+        "type": "DI",
+        "section": "A01",
+        "days": "Tu",
+        "time": "3:00p-4:50p",
+        "building": "WLH",
+        "room": "2204",
+        "instructor": "",
+        "available": "75",
+        "limit": "75",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ECE",
+    "course_code": "ECE 180",
+    "title": "Topics in ECE Intro to AI at the Edge Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": [
+      {
+        "section_id": "273447",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "5:30p-8:20p",
+        "building": "DIB",
+        "room": "253",
+        "instructor": "Staff",
+        "available": "36",
+        "limit": "36",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ECON",
+    "course_code": "ECON 1",
+    "title": "Principles of Microeconomics Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "2:00p-3:20p",
+        "building": "MALK",
+        "room": "B90",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259407",
+        "type": "DI",
+        "section": "A01",
+        "days": "F",
+        "time": "2:00p-3:50p",
+        "building": "MALK",
+        "room": "B90",
+        "instructor": "",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ECON",
+    "course_code": "ECON 3",
+    "title": "Principles of Macroeconomics Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "8:00a-10:50a",
+        "building": "MALK",
+        "room": "B90",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259414",
+        "type": "DI",
+        "section": "A01",
+        "days": "F",
+        "time": "10:00a-11:50a",
+        "building": "MALK",
+        "room": "B90",
+        "instructor": "",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ECON",
+    "course_code": "ECON 5",
+    "title": "Data Analytics/Social Sciences Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "MALK",
+        "room": "B90",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259416",
+        "type": "LA",
+        "section": "A01",
+        "days": "F",
+        "time": "12:00p-1:50p",
+        "building": "MALK",
+        "room": "B90",
+        "instructor": "",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ECON",
+    "course_code": "ECON 100A",
+    "title": "Microeconomics A Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "11:00a-12:20p",
+        "building": "MALK",
+        "room": "520",
+        "instructor": "Newhouse, Herbert S",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259418",
+        "type": "DI",
+        "section": "A01",
+        "days": "F",
+        "time": "12:00p-1:50p",
+        "building": "MALK",
+        "room": "520",
+        "instructor": "Newhouse, Herbert S",
+        "available": "80",
+        "limit": "80",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ECON",
+    "course_code": "ECON 110B",
+    "title": "Short Run Macroeconomics Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "2:00p-4:50p",
+        "building": "COA",
+        "room": "130",
+        "instructor": "Levkoff, Steven B.",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259466",
+        "type": "DI",
+        "section": "A01",
+        "days": "W",
+        "time": "5:00p-6:50p",
+        "building": "COA",
+        "room": "130",
+        "instructor": "Levkoff, Steven B.",
+        "available": "100",
+        "limit": "100",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ECON",
+    "course_code": "ECON 120A",
+    "title": "Econometrics A Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "8:00a-10:50a",
+        "building": "COA",
+        "room": "130",
+        "instructor": "Dai, Yinlin",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259468",
+        "type": "DI",
+        "section": "A01",
+        "days": "F",
+        "time": "8:00a-9:50a",
+        "building": "COA",
+        "room": "130",
+        "instructor": "Dai, Yinlin",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ECON",
+    "course_code": "ECON 120B",
+    "title": "Econometrics B Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "2:00p-4:50p",
+        "building": "MALK",
+        "room": "520",
+        "instructor": "Ma, Xinwei",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259471",
+        "type": "DI",
+        "section": "A01",
+        "days": "Th",
+        "time": "5:00p-6:50p",
+        "building": "MALK",
+        "room": "520",
+        "instructor": "Ma, Xinwei",
+        "available": "75",
+        "limit": "75",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ECON",
+    "course_code": "ECON 129",
+    "title": "Cities, Inequality, Innovation Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "259472",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "8:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R101",
+        "instructor": "Eckert, Fabian Paul",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ECON",
+    "course_code": "ECON 175",
+    "title": "InternationalFinancialMarkets Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "259473",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "5:00p-7:50p",
+        "building": "RCLAS",
+        "room": "R100",
+        "instructor": "Wu, Pak Yeung",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ETHN",
+    "course_code": "ETHN 2R",
+    "title": "R-Intro:CirculationsofDifferen Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "272957",
+        "type": "DI",
+        "section": "A01",
+        "days": "Tu",
+        "time": "3:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R03",
+        "instructor": "Espiritu, Yen",
+        "available": "28",
+        "limit": "28",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "272958",
+        "type": "DI",
+        "section": "A02",
+        "days": "Th",
+        "time": "3:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R03",
+        "instructor": "Espiritu, Yen",
+        "available": "28",
+        "limit": "28",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "272960",
+        "type": "DI",
+        "section": "A03",
+        "days": "Tu",
+        "time": "4:00p-5:50p",
+        "building": "RCLAS",
+        "room": "R10",
+        "instructor": "Espiritu, Yen",
+        "available": "28",
+        "limit": "28",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "272961",
+        "type": "DI",
+        "section": "A04",
+        "days": "Th",
+        "time": "4:00p-5:50p",
+        "building": "RCLAS",
+        "room": "R05",
+        "instructor": "Espiritu, Yen",
+        "available": "28",
+        "limit": "28",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ETHN",
+    "course_code": "ETHN 113",
+    "title": "Decolonizing Education Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "272964",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "PODEM",
+        "room": "1A22",
+        "instructor": "Staff",
+        "available": "35",
+        "limit": "35",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ETHN",
+    "course_code": "ETHN 121R",
+    "title": "R-Contemp Asian American Hist Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "272965",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R111",
+        "instructor": "Sasaki, Christen T",
+        "available": "35",
+        "limit": "35",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ETHN",
+    "course_code": "ETHN 137",
+    "title": "Latina Issues & Cultural Prod. Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "273043",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "2:00p-4:50p",
+        "building": "PODEM",
+        "room": "1A23",
+        "instructor": "Staff",
+        "available": "15",
+        "limit": "15",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ETHN",
+    "course_code": "ETHN 139",
+    "title": "Chicano Literature in English Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "259494",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "8:00a-10:50a",
+        "building": "RWAC",
+        "room": "0115",
+        "instructor": "Staff",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "ETHN",
+    "course_code": "ETHN 163FR",
+    "title": "Playing Indian:Native Am Cinem Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": []
+  },
+  {
+    "subject": "ETHN",
+    "course_code": "ETHN 183",
+    "title": "Gender,Race,Ethnicity & Class Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "265619",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "RWAC",
+        "room": "0115",
+        "instructor": "Staff",
+        "available": "17",
+        "limit": "17",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "GLBH",
+    "course_code": "GLBH 20",
+    "title": "Introduction to Global Health Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "259495",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "9:00a-11:50a",
+        "building": "RCLAS",
+        "room": "R08",
+        "instructor": "Staff",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "GLBH",
+    "course_code": "GLBH 111",
+    "title": "Health Frontiers in Tijuana",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "SE",
+        "section": "A00",
+        "days": "M",
+        "time": "1:00p-2:50p",
+        "building": "TBA",
+        "room": "TBA",
+        "instructor": "Burgos, Jose L.",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "GLBH",
+    "course_code": "GLBH 148",
+    "title": "Global Health&Cultrl Diversity Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "265618",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R01",
+        "instructor": "Staff",
+        "available": "19",
+        "limit": "19",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "HISC",
+    "course_code": "HISC 102",
+    "title": "Technology in World History Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": []
+  },
+  {
+    "subject": "HITO",
+    "course_code": "HITO 155",
+    "title": "Race/Sport/Inequality 20th Cen Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": []
+  },
+  {
+    "subject": "HIUS",
+    "course_code": "HIUS 117",
+    "title": "History of Los Angeles Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "259632",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R11",
+        "instructor": "Kwak, Nancy",
+        "available": "31",
+        "limit": "31",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "HIUS",
+    "course_code": "HIUS 126",
+    "title": "History of Race in the U.S. Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "259633",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "2:00p-4:50p",
+        "building": "COA",
+        "room": "124",
+        "instructor": "Staff",
+        "available": "32",
+        "limit": "32",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "HIEU",
+    "course_code": "HIEU 103",
+    "title": "Decline and Fall/Roman Empire Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": []
+  },
+  {
+    "subject": "HIEU",
+    "course_code": "HIEU 124GS",
+    "title": "The City in Italy",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": []
+  },
+  {
+    "subject": "HIEU",
+    "course_code": "HIEU 147",
+    "title": "Europe and the World I Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": []
+  },
+  {
+    "subject": "HIEU",
+    "course_code": "HIEU 149GS",
+    "title": "Medieval Spain",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": []
+  },
+  {
+    "subject": "HIEU",
+    "course_code": "HIEU 154GS",
+    "title": "Mod German/Bismarck to Hitler",
+    "units": "4",
+    "restrictions": "D",
+    "sections": []
+  },
+  {
+    "subject": "HIEA",
+    "course_code": "HIEA 131",
+    "title": "China/War & Revolution 1911-49 Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "259499",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "6:00p-8:50p",
+        "building": "RCLAS",
+        "room": "R02",
+        "instructor": "Staff",
+        "available": "32",
+        "limit": "32",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "HIEA",
+    "course_code": "HIEA 137",
+    "title": "Women & Family/Chinese History Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": []
+  },
+  {
+    "subject": "HILA",
+    "course_code": "HILA 114",
+    "title": "Dictatorships in Latin America Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "259505",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R10",
+        "instructor": "Staff",
+        "available": "32",
+        "limit": "32",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "HILA",
+    "course_code": "HILA 135",
+    "title": "Knowledge & Science 1500-1800 Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": []
+  },
+  {
+    "subject": "HINE",
+    "course_code": "HINE 116",
+    "title": "Middle East (1798-1914) Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "259626",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R09",
+        "instructor": "Shafir, Nir",
+        "available": "32",
+        "limit": "32",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "HINE",
+    "course_code": "HINE 129",
+    "title": "Hist of Mideast:Late Medieval Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "259628",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R11",
+        "instructor": "Shafir, Nir",
+        "available": "32",
+        "limit": "32",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "HUM",
+    "course_code": "HUM 3",
+    "title": "Renaissance,Reform&Early Europ Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "RE",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "CSB",
+        "room": "005",
+        "instructor": "Crum, Matthew Stephen",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "272320",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "2:00p-2:50p",
+        "building": "CSB",
+        "room": "005",
+        "instructor": "Crum, Matthew Stephen",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "HUM",
+    "course_code": "HUM 3GS",
+    "title": "Renaissance,Reform&Early Europ",
+    "units": "4",
+    "restrictions": "D",
+    "sections": []
+  },
+  {
+    "subject": "HUM",
+    "course_code": "HUM 3R",
+    "title": "Renaissance,Reform&Early Europ Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "RE",
+    "sections": [
+      {
+        "section_id": "272949",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "10:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R09",
+        "instructor": "Rodriguez, Bretton Sigfred",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "HUM",
+    "course_code": "HUM 4R",
+    "title": "EnlightmntRomantic&Revolution Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "RE",
+    "sections": [
+      {
+        "section_id": "272926",
+        "type": "DI",
+        "section": "A01",
+        "days": "WF",
+        "time": "12:00p-12:50p",
+        "building": "RCLAS",
+        "room": "R106",
+        "instructor": "Crum, Matthew Stephen",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "HUM",
+    "course_code": "HUM 5",
+    "title": "Modern Culture Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "RE",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "COA",
+        "room": "B17",
+        "instructor": "West, Geoffrey Scott",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "272955",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "2:00p-2:50p",
+        "building": "COA",
+        "room": "B26",
+        "instructor": "West, Geoffrey Scott",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "HUM",
+    "course_code": "HUM 5R",
+    "title": "Modern Culture Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "RE",
+    "sections": [
+      {
+        "section_id": "272526",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "1:00p-1:50p",
+        "building": "RCLAS",
+        "room": "R10",
+        "instructor": "Zavodny, Tatiana Sophia",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "JAPN",
+    "course_code": "JAPN 180",
+    "title": "Special Topics in Japanese St Religion, Politics, Capitalism Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "259636",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "5:00p-7:50p",
+        "building": "RCLAS",
+        "room": "R04",
+        "instructor": "Staff",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "LIGN",
+    "course_code": "LIGN 8",
+    "title": "Languages & Cultures/America Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "259955",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R28",
+        "instructor": "Staff",
+        "available": "100",
+        "limit": "100",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "LIGN",
+    "course_code": "LIGN 9GS",
+    "title": "Sign & Deaf Culture US/France",
+    "units": "4",
+    "restrictions": "D",
+    "sections": []
+  },
+  {
+    "subject": "LIGN",
+    "course_code": "LIGN 101",
+    "title": "Introduction/Study of Language",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R17",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "LIGN",
+    "course_code": "LIGN 149GS",
+    "title": "Historical Roots of ASL",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": []
+  },
+  {
+    "subject": "LISP",
+    "course_code": "LISP 1B",
+    "title": "Spanish Conversation",
+    "units": "2.5",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "259639",
+        "type": "TU",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R13",
+        "instructor": "Staff",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "LISP",
+    "course_code": "LISP 1BX",
+    "title": "Analysis of Spanish",
+    "units": "2.5",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "259640",
+        "type": "DI",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R14",
+        "instructor": "Staff",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "LISP",
+    "course_code": "LISP 1D",
+    "title": "Spanish Conversation",
+    "units": "2.5",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "259641",
+        "type": "TU",
+        "section": "A00",
+        "days": "MW",
+        "time": "8:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R13",
+        "instructor": "Staff",
+        "available": "16",
+        "limit": "16",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259643",
+        "type": "TU",
+        "section": "B00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R14",
+        "instructor": "Staff",
+        "available": "16",
+        "limit": "16",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259644",
+        "type": "TU",
+        "section": "C00",
+        "days": "MW",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R14",
+        "instructor": "Staff",
+        "available": "16",
+        "limit": "16",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259645",
+        "type": "TU",
+        "section": "D00",
+        "days": "MW",
+        "time": "5:00p-7:50p",
+        "building": "RCLAS",
+        "room": "R14",
+        "instructor": "Staff",
+        "available": "16",
+        "limit": "16",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "LISP",
+    "course_code": "LISP 1DX",
+    "title": "Analysis of Spanish",
+    "units": "2.5",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "259809",
+        "type": "DI",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R15",
+        "instructor": "Staff",
+        "available": "32",
+        "limit": "32",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "259810",
+        "type": "DI",
+        "section": "B00",
+        "days": "TuTh",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R14",
+        "instructor": "Staff",
+        "available": "32",
+        "limit": "32",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "LTCS",
+    "course_code": "LTCS 172GS",
+    "title": "Topics/Screening Race/Ethnicty",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": []
+  },
+  {
+    "subject": "LTEN",
+    "course_code": "LTEN 144GS",
+    "title": "British Novel: 1890-present",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": []
+  },
+  {
+    "subject": "LTEN",
+    "course_code": "LTEN 149",
+    "title": "Topics: English-Language Lit AIDS Pandemic & Queer Survival Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "259985",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "RWAC",
+        "room": "0115",
+        "instructor": "Staff",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "LTEN",
+    "course_code": "LTEN 180",
+    "title": "Chicano Literature in English Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "259988",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "8:00a-10:50a",
+        "building": "RWAC",
+        "room": "0115",
+        "instructor": "Staff",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "LTEN",
+    "course_code": "LTEN 189GS",
+    "title": "20th Century Postcolonial Lits Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": []
+  },
+  {
+    "subject": "LTSP",
+    "course_code": "LTSP 123GS",
+    "title": "Topics in Modern Spanish Cult",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": []
+  },
+  {
+    "subject": "LTSP",
+    "course_code": "LTSP 174GS",
+    "title": "Topics in Culture and Politics",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": []
+  },
+  {
+    "subject": "LTWR",
+    "course_code": "LTWR 100C",
+    "title": "Short Fiction Craft Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR O",
+    "sections": [
+      {
+        "section_id": "260021",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "RWAC",
+        "room": "0292",
+        "instructor": "Staff",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MAE",
+    "course_code": "MAE 8",
+    "title": "MATLAB Program for Engr Analys Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R05",
+        "instructor": "Marinoni, Alessandro",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260492",
+        "type": "DI",
+        "section": "A01",
+        "days": "F",
+        "time": "10:00a-11:50a",
+        "building": "RCLAS",
+        "room": "R04",
+        "instructor": "Marinoni, Alessandro",
+        "available": "80",
+        "limit": "80",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MAE",
+    "course_code": "MAE 11",
+    "title": "Thermodynamics Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "O",
+    "sections": [
+      {
+        "section_id": "260493",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "12:30p-1:50p",
+        "building": "RCLAS",
+        "room": "R12",
+        "instructor": "Sadeghizadeh, Zahra",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MAE",
+    "course_code": "MAE 20",
+    "title": "Elements of Materials Science Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "260494",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "11:00a-12:20p",
+        "building": "RCLAS",
+        "room": "R19",
+        "instructor": "Evdokimenko, Ekaterina",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MAE",
+    "course_code": "MAE 30A",
+    "title": "Statics & Intro to Dynamics Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "FR JR SO",
+    "sections": [
+      {
+        "section_id": "260495",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "8:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R55",
+        "instructor": "Bewley, Thomas R",
+        "available": "80",
+        "limit": "80",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MAE",
+    "course_code": "MAE 101A",
+    "title": "Introductory Fluid Mechanics Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "O",
+    "sections": [
+      {
+        "section_id": "260496",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "2:00p-3:20p",
+        "building": "RCLAS",
+        "room": "R13",
+        "instructor": "Pham, Hieu Tan",
+        "available": "70",
+        "limit": "70",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MAE",
+    "course_code": "MAE 101C",
+    "title": "Heat Transfer Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "260497",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "5:00p-7:50p",
+        "building": "RCLAS",
+        "room": "R13",
+        "instructor": "Seshadri, Kalyanasundaram",
+        "available": "80",
+        "limit": "80",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MAE",
+    "course_code": "MAE 104",
+    "title": "Aerodynamics Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "O",
+    "sections": [
+      {
+        "section_id": "260498",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "11:00a-12:20p",
+        "building": "RCLAS",
+        "room": "R18",
+        "instructor": "Sanchez, Antonio Luis",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MAE",
+    "course_code": "MAE 107",
+    "title": "Computational Methods/Engineer Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "260521",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "11:00a-12:20p",
+        "building": "RCLAS",
+        "room": "R16",
+        "instructor": "Pham, Hieu Tan",
+        "available": "80",
+        "limit": "80",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MAE",
+    "course_code": "MAE 113",
+    "title": "Fundamentals of Propulsion Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "O",
+    "sections": [
+      {
+        "section_id": "260522",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "9:30a-10:50a",
+        "building": "RCLAS",
+        "room": "R14",
+        "instructor": "Sanchez, Antonio Luis",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MGT",
+    "course_code": "MGT 5",
+    "title": "Managerial Accounting Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": []
+  },
+  {
+    "subject": "MGT",
+    "course_code": "MGT 16",
+    "title": "Personal Ethics at Work Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": []
+  },
+  {
+    "subject": "MGT",
+    "course_code": "MGT 103",
+    "title": "Product Marketing & Management Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": []
+  },
+  {
+    "subject": "MGT",
+    "course_code": "MGT 119",
+    "title": "Topics in Business Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": []
+  },
+  {
+    "subject": "MGT",
+    "course_code": "MGT 129",
+    "title": "Topics in Entrepreneurship Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "2",
+    "restrictions": "JR SR",
+    "sections": []
+  },
+  {
+    "subject": "MGT",
+    "course_code": "MGT 131A",
+    "title": "Intermediate Accounting A Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "XFR XSO",
+    "sections": [
+      {
+        "section_id": "261201",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R24",
+        "instructor": "Anderson, John Charles",
+        "available": "98",
+        "limit": "98",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MGT",
+    "course_code": "MGT 153",
+    "title": "Info Tech - Business Analytics Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "261202",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "8:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R23",
+        "instructor": "Perols, Johan Lars",
+        "available": "90",
+        "limit": "90",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MGT",
+    "course_code": "MGT 172",
+    "title": "Business Project Management Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": []
+  },
+  {
+    "subject": "MGT",
+    "course_code": "MGT 172R",
+    "title": "Business Project Management Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": []
+  },
+  {
+    "subject": "MGT",
+    "course_code": "MGT 181",
+    "title": "Enterprise Finance Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": []
+  },
+  {
+    "subject": "MATH",
+    "course_code": "MATH 3B",
+    "title": "Foundations of Precalculus Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "12:30p-1:50p",
+        "building": "RWAC",
+        "room": "0103",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260193",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "2:00p-2:50p",
+        "building": "TBA",
+        "room": "TBA",
+        "instructor": "",
+        "available": "35",
+        "limit": "35",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MATH",
+    "course_code": "MATH 3C",
+    "title": "Precalculus Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "8:00a-10:50a",
+        "building": "COA",
+        "room": "121",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260195",
+        "type": "DI",
+        "section": "A01",
+        "days": "W",
+        "time": "8:00a-9:50a",
+        "building": "TBA",
+        "room": "TBA",
+        "instructor": "",
+        "available": "35",
+        "limit": "35",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MATH",
+    "course_code": "MATH 4C",
+    "title": "Precalculus for Sci & Engn Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "WLH",
+        "room": "2206",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260197",
+        "type": "DI",
+        "section": "A01",
+        "days": "Tu",
+        "time": "11:00a-12:50p",
+        "building": "TBA",
+        "room": "TBA",
+        "instructor": "",
+        "available": "35",
+        "limit": "35",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MATH",
+    "course_code": "MATH 10A",
+    "title": "Calculus I",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "9:30a-10:50a",
+        "building": "PETER",
+        "room": "104",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260199",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "11:00a-11:50a",
+        "building": "TBA",
+        "room": "TBA",
+        "instructor": "",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260200",
+        "type": "DI",
+        "section": "A02",
+        "days": "TuTh",
+        "time": "12:00p-12:50p",
+        "building": "TBA",
+        "room": "TBA",
+        "instructor": "",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MATH",
+    "course_code": "MATH 10B",
+    "title": "Calculus II Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "PETER",
+        "room": "102",
+        "instructor": "Goffer, Gil",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260203",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "11:00a-11:50a",
+        "building": "COA",
+        "room": "122",
+        "instructor": "Goffer, Gil",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260204",
+        "type": "DI",
+        "section": "A02",
+        "days": "TuTh",
+        "time": "12:00p-12:50p",
+        "building": "COA",
+        "room": "122",
+        "instructor": "Goffer, Gil",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "B00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "PETER",
+        "room": "103",
+        "instructor": "Goffer, Gil",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260206",
+        "type": "DI",
+        "section": "B01",
+        "days": "WF",
+        "time": "11:00a-11:50a",
+        "building": "COA",
+        "room": "122",
+        "instructor": "Goffer, Gil",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260207",
+        "type": "DI",
+        "section": "B02",
+        "days": "WF",
+        "time": "12:00p-12:50p",
+        "building": "COA",
+        "room": "122",
+        "instructor": "Goffer, Gil",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MATH",
+    "course_code": "MATH 18",
+    "title": "Linear Algebra",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MWF",
+        "time": "11:00a-12:50p",
+        "building": "COA",
+        "room": "123",
+        "instructor": "Ganesan, Priyanga",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260211",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "11:00a-11:50a",
+        "building": "HSS",
+        "room": "1315",
+        "instructor": "Ganesan, Priyanga",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260212",
+        "type": "DI",
+        "section": "A02",
+        "days": "TuTh",
+        "time": "12:00p-12:50p",
+        "building": "HSS",
+        "room": "1315",
+        "instructor": "Ganesan, Priyanga",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "B00",
+        "days": "MTuWTh",
+        "time": "9:30a-10:50a",
+        "building": "PETER",
+        "room": "102",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260248",
+        "type": "DI",
+        "section": "B01",
+        "days": "MW",
+        "time": "11:00a-11:50a",
+        "building": "TBA",
+        "room": "TBA",
+        "instructor": "",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260249",
+        "type": "DI",
+        "section": "B02",
+        "days": "MW",
+        "time": "12:00p-12:50p",
+        "building": "TBA",
+        "room": "TBA",
+        "instructor": "",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MATH",
+    "course_code": "MATH 20A",
+    "title": "Calculus/Science & Engineering",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MWF",
+        "time": "10:00a-11:50a",
+        "building": "TBA",
+        "room": "TBA",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260254",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "10:00a-10:50a",
+        "building": "TBA",
+        "room": "TBA",
+        "instructor": "",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "MMW",
+    "course_code": "MMW 14GS",
+    "title": "Divergent Paths to Modernity",
+    "units": "4",
+    "restrictions": "D",
+    "sections": []
+  },
+  {
+    "subject": "MMW",
+    "course_code": "MMW 15GS",
+    "title": "The Contemporary Era",
+    "units": "4",
+    "restrictions": "ER D",
+    "sections": []
+  },
+  {
+    "subject": "NANO",
+    "course_code": "NANO 4",
+    "title": "Experience NanoEngineering",
+    "units": "1",
+    "restrictions": "D",
+    "sections": []
+  },
+  {
+    "subject": "PHIL",
+    "course_code": "PHIL 1",
+    "title": "Introduction to Philosophy Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "260730",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "HSS",
+        "room": "1305",
+        "instructor": "Staff",
+        "available": "18",
+        "limit": "18",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PHIL",
+    "course_code": "PHIL 10",
+    "title": "Introduction to Logic Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "2:00p-3:50p",
+        "building": "RWAC",
+        "room": "0426",
+        "instructor": "Kocurek, Alexander William",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260742",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "4:00p-4:50p",
+        "building": "RWAC",
+        "room": "0426",
+        "instructor": "Kocurek, Alexander William",
+        "available": "27",
+        "limit": "27",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PHIL",
+    "course_code": "PHIL 12",
+    "title": "Scientific Reasoning Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "9:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R123",
+        "instructor": "Kovaka, Karenc",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260744",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "11:00a-11:50a",
+        "building": "RCLAS",
+        "room": "R09",
+        "instructor": "Kovaka, Karenc",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PHIL",
+    "course_code": "PHIL 13",
+    "title": "Intro to Philosophy: Ethics Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "6:00p-8:50p",
+        "building": "RWAC",
+        "room": "0426",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PHIL",
+    "course_code": "PHIL 27",
+    "title": "Ethics And Society",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-12:50p",
+        "building": "RCLAS",
+        "room": "R10",
+        "instructor": "Bazargan-Forward, Saba",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260748",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "1:00p-1:50p",
+        "building": "RCLAS",
+        "room": "R18",
+        "instructor": "Bazargan-Forward, Saba",
+        "available": "33",
+        "limit": "33",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260749",
+        "type": "DI",
+        "section": "A02",
+        "days": "TuTh",
+        "time": "1:00p-1:50p",
+        "building": "RCLAS",
+        "room": "R19",
+        "instructor": "Bazargan-Forward, Saba",
+        "available": "33",
+        "limit": "33",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260750",
+        "type": "DI",
+        "section": "A03",
+        "days": "TuTh",
+        "time": "1:00p-1:50p",
+        "building": "RCLAS",
+        "room": "R16",
+        "instructor": "Bazargan-Forward, Saba",
+        "available": "33",
+        "limit": "33",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PHIL",
+    "course_code": "PHIL 28",
+    "title": "Ethics And Society II",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-12:50p",
+        "building": "RCLAS",
+        "room": "R109",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260800",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "1:00p-1:50p",
+        "building": "RCLAS",
+        "room": "R109",
+        "instructor": "",
+        "available": "33",
+        "limit": "33",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260828",
+        "type": "DI",
+        "section": "A02",
+        "days": "MW",
+        "time": "1:00p-1:50p",
+        "building": "RCLAS",
+        "room": "R18",
+        "instructor": "",
+        "available": "33",
+        "limit": "33",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "260932",
+        "type": "DI",
+        "section": "A03",
+        "days": "MW",
+        "time": "1:00p-1:50p",
+        "building": "RCLAS",
+        "room": "R19",
+        "instructor": "",
+        "available": "33",
+        "limit": "33",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PHIL",
+    "course_code": "PHIL 28GS",
+    "title": "Ethics and Society II",
+    "units": "4",
+    "restrictions": "D",
+    "sections": []
+  },
+  {
+    "subject": "PHIL",
+    "course_code": "PHIL 51",
+    "title": "Climate Ethics Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "FR JR SO",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "COA",
+        "room": "121",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PHIL",
+    "course_code": "PHIL 60",
+    "title": "Philosophy of Love and Sex Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "FR JR SO",
+    "sections": [
+      {
+        "section_id": "261009",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R18",
+        "instructor": "Staff",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PHYS",
+    "course_code": "PHYS 1A",
+    "title": "Mechanics Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "3",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261014",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "9:30a-10:50a",
+        "building": "MOS",
+        "room": "0114",
+        "instructor": "Staff",
+        "available": "240",
+        "limit": "240",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PHYS",
+    "course_code": "PHYS 1AL",
+    "title": "Mechanics Laboratory Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "2",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261015",
+        "type": "LA",
+        "section": "001",
+        "days": "TuTh",
+        "time": "12:30p-2:20p",
+        "building": "MAYER",
+        "room": "2306",
+        "instructor": "Staff",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261016",
+        "type": "LA",
+        "section": "002",
+        "days": "TuTh",
+        "time": "2:30p-4:20p",
+        "building": "MAYER",
+        "room": "2306",
+        "instructor": "Staff",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PHYS",
+    "course_code": "PHYS 1B",
+    "title": "Electricity and Magnetism Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "3",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261017",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "9:30a-10:50a",
+        "building": "CTL",
+        "room": "0125",
+        "instructor": "Staff",
+        "available": "240",
+        "limit": "240",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PHYS",
+    "course_code": "PHYS 1BL",
+    "title": "Electricity & Magnetism Lab",
+    "units": "2",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261018",
+        "type": "LA",
+        "section": "001",
+        "days": "TuTh",
+        "time": "12:30p-2:20p",
+        "building": "MAYER",
+        "room": "2326",
+        "instructor": "Staff",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261019",
+        "type": "LA",
+        "section": "002",
+        "days": "TuTh",
+        "time": "2:30p-4:20p",
+        "building": "MAYER",
+        "room": "2326",
+        "instructor": "Staff",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PHYS",
+    "course_code": "PHYS 1C",
+    "title": "Waves, Optics & Modern Physics Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "3",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261020",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "9:30a-10:50a",
+        "building": "MOS",
+        "room": "0113",
+        "instructor": "Staff",
+        "available": "240",
+        "limit": "240",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PHYS",
+    "course_code": "PHYS 1CL",
+    "title": "Waves,Optics&Modrn Phys Lab",
+    "units": "2",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261021",
+        "type": "LA",
+        "section": "001",
+        "days": "TuTh",
+        "time": "12:30p-2:20p",
+        "building": "MAYER",
+        "room": "2130",
+        "instructor": "Staff",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261022",
+        "type": "LA",
+        "section": "002",
+        "days": "TuTh",
+        "time": "2:30p-4:20p",
+        "building": "MAYER",
+        "room": "2130",
+        "instructor": "Staff",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "POLI",
+    "course_code": "POLI 5D",
+    "title": "Data Analytics/Social Sciences Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "MALK",
+        "room": "B90",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261035",
+        "type": "LA",
+        "section": "A01",
+        "days": "F",
+        "time": "12:00p-1:50p",
+        "building": "MALK",
+        "room": "B90",
+        "instructor": "",
+        "available": "5",
+        "limit": "5",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "POLI",
+    "course_code": "POLI 5R",
+    "title": "Data Analytics/Social Sciences Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-12:50p",
+        "building": "RCLAS",
+        "room": "R20",
+        "instructor": "Desposato, Scott",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261037",
+        "type": "LA",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "1:00p-1:50p",
+        "building": "RCLAS",
+        "room": "R20",
+        "instructor": "Desposato, Scott",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "POLI",
+    "course_code": "POLI 10R",
+    "title": "Intro/Poli Sci:Amer Politics Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261038",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R21",
+        "instructor": "Staff",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "POLI",
+    "course_code": "POLI 12",
+    "title": "Intro/Poli Sci:Int'l Relations Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261039",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "8:00a-10:50a",
+        "building": "RWAC",
+        "room": "0121",
+        "instructor": "Staff",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "POLI",
+    "course_code": "POLI 13R",
+    "title": "Power and Justice Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261040",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "8:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R08",
+        "instructor": "Forman, Fonna",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "POLI",
+    "course_code": "POLI 27R",
+    "title": "Ethics and Society I Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-12:20p",
+        "building": "RCLAS",
+        "room": "R22",
+        "instructor": "Ingham, Sean",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261042",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "1:00p-1:50p",
+        "building": "RCLAS",
+        "room": "R22",
+        "instructor": "Ingham, Sean",
+        "available": "100",
+        "limit": "100",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "POLI",
+    "course_code": "POLI 30R",
+    "title": "Political Inquiry Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261043",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R33",
+        "instructor": "Staff",
+        "available": "100",
+        "limit": "100",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "POLI",
+    "course_code": "POLI 100AR",
+    "title": "The Presidency Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "261044",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "2:00p-3:20p",
+        "building": "RCLAS",
+        "room": "R44",
+        "instructor": "Staff",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "POLI",
+    "course_code": "POLI 100X",
+    "title": "Data Analysis & U.S. Politics Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "261045",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R11",
+        "instructor": "Staff",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PSYC",
+    "course_code": "PSYC 1",
+    "title": "Psychology Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261060",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "COA",
+        "room": "117",
+        "instructor": "Staff",
+        "available": "45",
+        "limit": "45",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PSYC",
+    "course_code": "PSYC 2",
+    "title": "Gen Psych:Biological Foundatns Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261102",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "8:00a-10:50a",
+        "building": "PODEM",
+        "room": "1A22",
+        "instructor": "Moranton, Nirelia Melbina-",
+        "available": "37",
+        "limit": "37",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PSYC",
+    "course_code": "PSYC 60",
+    "title": "Introduction to Statistics Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "11:00a-12:20p",
+        "building": "MCGIL",
+        "room": "1350",
+        "instructor": "Lowe, Angela Beth",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261110",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "12:30p-1:20p",
+        "building": "MCGIL",
+        "room": "1350",
+        "instructor": "Lowe, Angela Beth",
+        "available": "45",
+        "limit": "45",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PSYC",
+    "course_code": "PSYC 70",
+    "title": "Research Methods in Psychology Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "1:00p-2:20p",
+        "building": "MNDLR",
+        "room": "1539",
+        "instructor": "Geller, Emma Harlan",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261113",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "2:30p-3:20p",
+        "building": "MNDLR",
+        "room": "1539",
+        "instructor": "Geller, Emma Harlan",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PSYC",
+    "course_code": "PSYC 71",
+    "title": "Lab/Psych Research Methods Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR O",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "9:00a-10:50a",
+        "building": "MNDLR",
+        "room": "1539",
+        "instructor": "Pilegard, Celeste Cristine",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261115",
+        "type": "LA",
+        "section": "A01",
+        "days": "MW",
+        "time": "11:00a-12:50p",
+        "building": "MNDLR",
+        "room": "1539",
+        "instructor": "Pilegard, Celeste Cristine",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PSYC",
+    "course_code": "PSYC 100",
+    "title": "Clinical Psychology Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "261116",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "8:00a-10:50a",
+        "building": "CSB",
+        "room": "001",
+        "instructor": "Chapman, Eddie Nathaniel",
+        "available": "112",
+        "limit": "112",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PSYC",
+    "course_code": "PSYC 101",
+    "title": "Developmental Psychology Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "261120",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "COA",
+        "room": "130",
+        "instructor": "Heyman, Gail D.",
+        "available": "97",
+        "limit": "97",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PSYC",
+    "course_code": "PSYC 102",
+    "title": "Sensory Neuroscience Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "261121",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "8:00a-10:50a",
+        "building": "COA",
+        "room": "117",
+        "instructor": "Moranton, Nirelia Melbina-",
+        "available": "45",
+        "limit": "45",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "PSYC",
+    "course_code": "PSYC 105",
+    "title": "Cognitive Psychology Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "261122",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "11:00a-12:20p",
+        "building": "COA",
+        "room": "B23",
+        "instructor": "Geller, Emma Harlan",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "RELI",
+    "course_code": "RELI 149",
+    "title": "Islam in America Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "261059",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "COA",
+        "room": "117",
+        "instructor": "Staff",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "SOCI",
+    "course_code": "SOCI 2",
+    "title": "The Study of Society Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "8:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R102",
+        "instructor": "Raudenbush, Danielle",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "275375",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "10:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R07",
+        "instructor": "Raudenbush, Danielle",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "275448",
+        "type": "DI",
+        "section": "A02",
+        "days": "TuTh",
+        "time": "11:00a-11:50a",
+        "building": "RCLAS",
+        "room": "R114",
+        "instructor": "Raudenbush, Danielle",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "SOCI",
+    "course_code": "SOCI 40",
+    "title": "Sociology/Health Care Issues Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R106",
+        "instructor": "Raudenbush, Danielle",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "275301",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "10:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R09",
+        "instructor": "Raudenbush, Danielle",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "275456",
+        "type": "DI",
+        "section": "A02",
+        "days": "TuTh",
+        "time": "11:00a-11:50a",
+        "building": "RCLAS",
+        "room": "R116",
+        "instructor": "Raudenbush, Danielle",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "SOCI",
+    "course_code": "SOCI 100",
+    "title": "Classical Sociological Theory Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "XFR XSO",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "5:00p-7:50p",
+        "building": "RCLAS",
+        "room": "R07",
+        "instructor": "Payne, Christine Anna",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "275446",
+        "type": "DI",
+        "section": "A01",
+        "days": "WF",
+        "time": "11:00a-11:50a",
+        "building": "RCLAS",
+        "room": "R106",
+        "instructor": "",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "SOCI",
+    "course_code": "SOCI 117",
+    "title": "Language, Culture & Education Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "XFR XSO",
+    "sections": [
+      {
+        "section_id": "265748",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "MOS",
+        "room": "0204",
+        "instructor": "Staff",
+        "available": "0",
+        "limit": "0",
+        "waitlisted": "0"
+      }
+    ]
+  },
+  {
+    "subject": "SOCI",
+    "course_code": "SOCI 126",
+    "title": "Social Organization/Education Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": []
+  },
+  {
+    "subject": "SOCI",
+    "course_code": "SOCI 135",
+    "title": "Medical Sociology Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "XFR XSO",
+    "sections": [
+      {
+        "section_id": "275380",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "5:00p-7:50p",
+        "building": "RCLAS",
+        "room": "R09",
+        "instructor": "Payne, Christine Anna",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "SOCI",
+    "course_code": "SOCI 138GS",
+    "title": "Genetics and Society",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": []
+  },
+  {
+    "subject": "SOCI",
+    "course_code": "SOCI 148GS",
+    "title": "Political Sociology",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": []
+  },
+  {
+    "subject": "SOCI",
+    "course_code": "SOCI 160E",
+    "title": "Law and Culture Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "XFR XSO",
+    "sections": [
+      {
+        "section_id": "274120",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "SSB",
+        "room": "101",
+        "instructor": "Ng, Kwai",
+        "available": "35",
+        "limit": "35",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "SIO",
+    "course_code": "SIO 40",
+    "title": "Life and Climate on Earth Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261808",
+        "type": "LE",
+        "section": "A00",
+        "days": "MTuWTh",
+        "time": "11:00a-12:20p",
+        "building": "TBA",
+        "room": "TBA",
+        "instructor": "Staff",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "SIO",
+    "course_code": "SIO 46GS",
+    "title": "Global Volcanism",
+    "units": "4",
+    "restrictions": "D",
+    "sections": []
+  },
+  {
+    "subject": "SIO",
+    "course_code": "SIO 109R",
+    "title": "Bending/Curve: Climate Change Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "261810",
+        "type": "LE",
+        "section": "A00",
+        "days": "F",
+        "time": "10:00a-11:50a",
+        "building": "RCLAS",
+        "room": "R45",
+        "instructor": "Forman, Fonna",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "SIO",
+    "course_code": "SIO 121GS",
+    "title": "Geology of the Alps",
+    "units": "4",
+    "restrictions": "D",
+    "sections": []
+  },
+  {
+    "subject": "SIO",
+    "course_code": "SIO 139",
+    "title": "Current Research in Marine Bio Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "2",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "261813",
+        "type": "SE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "9:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R123",
+        "instructor": "Kacev, David",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "TDAC",
+    "course_code": "TDAC 1",
+    "title": "Introduction to Acting Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261827",
+        "type": "LA",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "12:00p-2:50p",
+        "building": "GH",
+        "room": "23",
+        "instructor": "Harting, Carla Kelso",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "TDGE",
+    "course_code": "TDGE 1",
+    "title": "Introduction to Theatre Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "1:00p-2:50p",
+        "building": "YORK",
+        "room": "4080A",
+        "instructor": "Salovey, Todd",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261830",
+        "type": "DI",
+        "section": "A01",
+        "days": "TuTh",
+        "time": "3:00p-3:50p",
+        "building": "YORK",
+        "room": "4080A",
+        "instructor": "Salovey, Todd",
+        "available": "50",
+        "limit": "50",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "TDGE",
+    "course_code": "TDGE 10",
+    "title": "Theatre and Film",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261832",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R55",
+        "instructor": "Fulton, Julia",
+        "available": "200",
+        "limit": "200",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "TDGE",
+    "course_code": "TDGE 11",
+    "title": "Great Performances on Film Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261833",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "1:30p-4:20p",
+        "building": "RCLAS",
+        "room": "R123",
+        "instructor": "Mehrishi, Rishika",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261834",
+        "type": "LE",
+        "section": "B00",
+        "days": "MW",
+        "time": "10:00a-12:50p",
+        "building": "RCLAS",
+        "room": "R45",
+        "instructor": "Castro, Robert Jess",
+        "available": "100",
+        "limit": "100",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "TDGE",
+    "course_code": "TDGE 25",
+    "title": "Public Speaking Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261836",
+        "type": "LA",
+        "section": "A00",
+        "days": "MW",
+        "time": "12:00p-2:50p",
+        "building": "GH",
+        "room": "155",
+        "instructor": "Harting, Carla Kelso",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "TDGE",
+    "course_code": "TDGE 124",
+    "title": "Cult Films: Weirdly Dramatic Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "261837",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R45",
+        "instructor": "Fulton, Julia",
+        "available": "200",
+        "limit": "200",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "TDGE",
+    "course_code": "TDGE 125",
+    "title": "Topics in Theatre and Film American Jewish Film Directors Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "261839",
+        "type": "LE",
+        "section": "A00",
+        "days": "WF",
+        "time": "9:00a-11:50a",
+        "building": "RCLAS",
+        "room": "R44",
+        "instructor": "Havis, Allan",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "TDGE",
+    "course_code": "TDGE 127",
+    "title": "The Films of Spike Lee Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "XFR XSO",
+    "sections": [
+      {
+        "section_id": "261841",
+        "type": "LE",
+        "section": "A00",
+        "days": "WF",
+        "time": "12:00p-2:50p",
+        "building": "RCLAS",
+        "room": "R43",
+        "instructor": "Havis, Allan",
+        "available": "60",
+        "limit": "60",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261844",
+        "type": "LE",
+        "section": "B00",
+        "days": "TuTh",
+        "time": "12:00p-2:50p",
+        "building": "RCLAS",
+        "room": "R43",
+        "instructor": "Anderson, Mysia Anyse",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "TDGE",
+    "course_code": "TDGE 131R",
+    "title": "Playing Indian:Native Am Cinem Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": []
+  },
+  {
+    "subject": "TDHT",
+    "course_code": "TDHT 109",
+    "title": "African American Theatre Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "12:00p-2:50p",
+        "building": "RCLAS",
+        "room": "R113",
+        "instructor": "Anderson, Mysia Anyse",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261847",
+        "type": "DI",
+        "section": "A01",
+        "days": "MW",
+        "time": "3:00p-3:50p",
+        "building": "RCLAS",
+        "room": "R06",
+        "instructor": "Anderson, Mysia Anyse",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "TDMV",
+    "course_code": "TDMV 38",
+    "title": "Beginning Hip Hop Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261848",
+        "type": "ST",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "2:00p-5:50p",
+        "building": "DANCE",
+        "room": "3",
+        "instructor": "Jun, Grace Shin Hae",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "TDMV",
+    "course_code": "TDMV 142",
+    "title": "Latine Diaspora Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "261849",
+        "type": "ST",
+        "section": "A00",
+        "days": "MW",
+        "time": "2:00p-5:50p",
+        "building": "DANCE",
+        "room": "1",
+        "instructor": "Caligagan, Maria T.",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "TDPW",
+    "course_code": "TDPW 1",
+    "title": "Introduction to Playwriting Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261851",
+        "type": "LA",
+        "section": "A00",
+        "days": "MW",
+        "time": "10:00a-12:50p",
+        "building": "RCLAS",
+        "room": "R22",
+        "instructor": "Stein, Deborah Isobel",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "USP",
+    "course_code": "USP 1",
+    "title": "History/US Urban Communities Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R41",
+        "instructor": "Staff",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261854",
+        "type": "DI",
+        "section": "A01",
+        "days": "W",
+        "time": "11:00a-12:50p",
+        "building": "RCLAS",
+        "room": "R41",
+        "instructor": "",
+        "available": "29",
+        "limit": "29",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "USP",
+    "course_code": "USP 4",
+    "title": "Intro/Geographic Info Systems Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261855",
+        "type": "LA",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R40",
+        "instructor": "Staff",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "USP",
+    "course_code": "USP 5",
+    "title": "Intro to Real Estate/Develmnt Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "8:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R41",
+        "instructor": "Shenkman, Michael Thomas",
+        "available": "",
+        "limit": "",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261858",
+        "type": "DI",
+        "section": "A01",
+        "days": "W",
+        "time": "5:00p-6:50p",
+        "building": "RCLAS",
+        "room": "R40",
+        "instructor": "Shenkman, Michael Thomas",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "USP",
+    "course_code": "USP 124",
+    "title": "Land Use Planning Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "261859",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "5:00p-7:50p",
+        "building": "RCLAS",
+        "room": "R39",
+        "instructor": "Boomhower, Matthew Charles",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "USP",
+    "course_code": "USP 144",
+    "title": "Environ/Prevent Health Issues Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261860",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "6:00p-8:50p",
+        "building": "RCLAS",
+        "room": "R39",
+        "instructor": "Staff",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "USP",
+    "course_code": "USP 153",
+    "title": "Real Estate&DevMarket Analysis Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "261861",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "8:00a-10:50a",
+        "building": "RCLAS",
+        "room": "R39",
+        "instructor": "Shenkman, Michael Thomas",
+        "available": "20",
+        "limit": "20",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "USP",
+    "course_code": "USP 168",
+    "title": "History of Los Angeles Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "261862",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R11",
+        "instructor": "Kwak, Nancy",
+        "available": "1",
+        "limit": "1",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "USP",
+    "course_code": "USP 171GS",
+    "title": "International Sustainable Dev.",
+    "units": "4",
+    "restrictions": "JR SR D",
+    "sections": []
+  },
+  {
+    "subject": "USP",
+    "course_code": "USP 181",
+    "title": "Public Transportation Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "261864",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R39",
+        "instructor": "Curcio, Paul David",
+        "available": "25",
+        "limit": "25",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "VIS",
+    "course_code": "VIS 42",
+    "title": "Intro to Creative Coding Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "273034",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "9:30a-12:20p",
+        "building": "SME",
+        "room": "149",
+        "instructor": "Staff",
+        "available": "75",
+        "limit": "75",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "VIS",
+    "course_code": "VIS 103A",
+    "title": "Contemporary Arts in S. Korea Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "273039",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "PODEM",
+        "room": "1A23",
+        "instructor": "Staff",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "VIS",
+    "course_code": "VIS 125GR",
+    "title": "Hist. of Socially Engaged Art Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR",
+    "sections": [
+      {
+        "section_id": "273036",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuWThF",
+        "time": "11:00a-12:20p",
+        "building": "RCLAS",
+        "room": "R115",
+        "instructor": "Staff",
+        "available": "75",
+        "limit": "75",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "VIS",
+    "course_code": "VIS 149",
+    "title": "Contemporary Computer Topics",
+    "units": "4",
+    "restrictions": "JR SR O",
+    "sections": [
+      {
+        "section_id": "273038",
+        "type": "SE",
+        "section": "A00",
+        "days": "MW",
+        "time": "2:00p-4:50p",
+        "building": "SME",
+        "room": "149",
+        "instructor": "Staff",
+        "available": "35",
+        "limit": "35",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "VIS",
+    "course_code": "VIS 194S",
+    "title": "Fantasy In Film",
+    "units": "4",
+    "restrictions": "",
+    "sections": [
+      {
+        "section_id": "273033",
+        "type": "LE",
+        "section": "A00",
+        "days": "TuTh",
+        "time": "2:00p-4:50p",
+        "building": "SME",
+        "room": "149",
+        "instructor": "Staff",
+        "available": "40",
+        "limit": "40",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "WCWP",
+    "course_code": "WCWP 10A",
+    "title": "The Writing Course A Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "WA",
+    "sections": [
+      {
+        "section_id": "261867",
+        "type": "SE",
+        "section": "A00",
+        "days": "MW",
+        "time": "2:00p-4:50p",
+        "building": "RCLAS",
+        "room": "R100",
+        "instructor": "Merryman, Walter",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "WCWP",
+    "course_code": "WCWP 10B",
+    "title": "The Writing Course B",
+    "units": "4",
+    "restrictions": "WA",
+    "sections": [
+      {
+        "section_id": "261869",
+        "type": "SE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R110",
+        "instructor": "Dhir, Simrita",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      },
+      {
+        "section_id": "261870",
+        "type": "SE",
+        "section": "B00",
+        "days": "TuTh",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R110",
+        "instructor": "Gagnon, Jeffrey C",
+        "available": "30",
+        "limit": "30",
+        "waitlisted": ""
+      }
+    ]
+  },
+  {
+    "subject": "WCWP",
+    "course_code": "WCWP 100",
+    "title": "Academic Writing Sum Sess I 2026: June 29 2026 - August 01 2026",
+    "units": "4",
+    "restrictions": "JR SR WA",
+    "sections": [
+      {
+        "section_id": "261874",
+        "type": "LE",
+        "section": "A00",
+        "days": "MW",
+        "time": "11:00a-1:50p",
+        "building": "RCLAS",
+        "room": "R102",
+        "instructor": "Young, Mark T",
+        "available": "24",
+        "limit": "24",
+        "waitlisted": ""
+      }
+    ]
+  }
+]
