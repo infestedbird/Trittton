@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import { Header } from './components/Header'
 import type { ViewType } from './components/Header'
 import { Sidebar } from './components/Sidebar'
@@ -25,8 +25,60 @@ import { LiveStatus } from './components/LiveStatus'
 import { AutoScheduler } from './components/AutoScheduler'
 import { EventsCalendar } from './components/EventsCalendar'
 import { Councillor } from './components/Councillor'
+import { LoginPage } from './components/LoginPage'
+
+const AUTH_KEY = 'ucsd-auth-token'
+
+function useAuth() {
+  const [token, setToken] = useState<string | null>(() => localStorage.getItem(AUTH_KEY))
+  const [verified, setVerified] = useState(false)
+  const [checking, setChecking] = useState(true)
+
+  useEffect(() => {
+    if (!token) { setChecking(false); return }
+    fetch('/api/auth/verify', { headers: { Authorization: `Bearer ${token}` } })
+      .then((r) => {
+        if (r.ok) { setVerified(true) }
+        else { localStorage.removeItem(AUTH_KEY); setToken(null) }
+      })
+      .catch(() => { localStorage.removeItem(AUTH_KEY); setToken(null) })
+      .finally(() => setChecking(false))
+  }, [token])
+
+  const login = useCallback((t: string) => {
+    localStorage.setItem(AUTH_KEY, t)
+    setToken(t)
+    setVerified(true)
+  }, [])
+
+  const logout = useCallback(() => {
+    localStorage.removeItem(AUTH_KEY)
+    setToken(null)
+    setVerified(false)
+  }, [])
+
+  return { token, verified, checking, login, logout }
+}
 
 export default function App() {
+  const auth = useAuth()
+
+  if (auth.checking) {
+    return (
+      <div className="min-h-screen bg-bg flex items-center justify-center">
+        <div className="w-6 h-6 border-2 border-accent/30 border-t-accent rounded-full animate-spin" />
+      </div>
+    )
+  }
+
+  if (!auth.verified) {
+    return <LoginPage onLogin={auth.login} />
+  }
+
+  return <AuthenticatedApp onLogout={auth.logout} />
+}
+
+function AuthenticatedApp({ onLogout }: { onLogout: () => void }) {
   const { courses, isLoaded, isLoading, error, loadFromFile, loadFromServer, autoLoad, loadFromData } =
     useCourseData()
   const {
@@ -129,6 +181,7 @@ export default function App() {
         scheduleCount={mySchedule.schedule.length}
         completedCount={completedCourses.completed.length}
         termOptions={termOptions}
+        onLogout={onLogout}
       />
 
       {activeView === 'councillor' ? (

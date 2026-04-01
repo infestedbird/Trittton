@@ -26,7 +26,41 @@ app = FastAPI()
 logger = logging.getLogger(__name__)
 
 import shutil
+import hashlib
+import secrets
+import os as _os
+
 CLAUDE_BIN = shutil.which("claude") or "/opt/homebrew/bin/claude"
+
+# ── Auth ─────────────────────────────────────────────────────────────────────
+
+AUTH_EMAIL = _os.environ.get("AUTH_EMAIL", "joshhatzer@gmail.com")
+AUTH_HASH = _os.environ.get("AUTH_HASH", "16057e270cb342728edd61cd2072788626ad4f2bb58e81e0659543ea8aecebe1")
+_auth_tokens: set = set()
+
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
+
+@app.post("/api/auth/login")
+def auth_login(req: LoginRequest):
+    pw_hash = hashlib.sha256(req.password.encode()).hexdigest()
+    if req.email.lower().strip() != AUTH_EMAIL or pw_hash != AUTH_HASH:
+        return JSONResponse({"error": "Invalid email or password"}, status_code=401)
+    token = secrets.token_urlsafe(32)
+    _auth_tokens.add(token)
+    return {"token": token, "email": AUTH_EMAIL}
+
+
+@app.get("/api/auth/verify")
+def auth_verify(request: Request):
+    auth = request.headers.get("authorization", "")
+    token = auth.replace("Bearer ", "") if auth.startswith("Bearer ") else ""
+    if token not in _auth_tokens:
+        return JSONResponse({"valid": False}, status_code=401)
+    return {"valid": True, "email": AUTH_EMAIL}
 
 # Scrape state
 scrape_state = {

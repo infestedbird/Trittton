@@ -2,6 +2,7 @@ export type ViewType = 'browse' | 'ai' | 'councillor' | 'schedule' | 'planner' |
 
 interface HeaderProps {
   termOptions: { value: string; label: string }[]
+  onLogout?: () => void
   isLoaded: boolean
   stats: { totalCourses: number; totalSections: number; totalDepts: number }
   onScrapeClick: () => void
@@ -16,7 +17,7 @@ interface HeaderProps {
   completedCount: number
 }
 
-export function Header({ isLoaded, stats, onScrapeClick, scrapeRunning, activeView, onViewChange, model, onModelChange, term, onTermChange, scheduleCount, completedCount, termOptions }: HeaderProps) {
+export function Header({ isLoaded, stats, onScrapeClick, scrapeRunning, activeView, onViewChange, model, onModelChange, term, onTermChange, scheduleCount, completedCount, termOptions, onLogout }: HeaderProps) {
   return (
     <header className="border-b border-border/80 h-[56px] px-6 flex items-center justify-between sticky top-0 z-50"
       style={{ background: 'rgba(10,12,16,0.85)', backdropFilter: 'blur(16px) saturate(1.4)' }}
@@ -123,6 +124,18 @@ export function Header({ isLoaded, stats, onScrapeClick, scrapeRunning, activeVi
             </>
           )}
         </button>
+
+        {onLogout && (
+          <button
+            onClick={onLogout}
+            className="p-1.5 rounded-lg text-dim hover:text-red hover:bg-red/10 cursor-pointer"
+            title="Sign out"
+          >
+            <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+            </svg>
+          </button>
+        )}
       </div>
     </header>
   )
