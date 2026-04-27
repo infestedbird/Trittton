@@ -9,14 +9,14 @@ interface LayoutProps {
 export function Layout({ sidebar, children, showSidebar }: LayoutProps) {
   return (
     <div
-      className="h-[calc(100vh-56px)]"
+      className="h-[calc(100vh-64px)]"
       style={{
         display: 'grid',
         gridTemplateColumns: showSidebar ? '240px 1fr' : '1fr',
       }}
     >
       {showSidebar && sidebar}
-      <main className="overflow-y-auto px-6 py-5 flex flex-col gap-3">{children}</main>
+      <main className="overflow-y-auto px-8 py-6 flex flex-col gap-4">{children}</main>
     </div>
   )
 }

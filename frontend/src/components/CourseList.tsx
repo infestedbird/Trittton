@@ -10,9 +10,12 @@ interface CourseListProps {
   hasSection?: (courseCode: string, sectionCode: string, sectionType: string) => boolean
   hasCompleted?: (courseCode: string) => boolean
   getRating?: (instructor: string) => RmpRating | null | undefined
+  isWatching?: (sectionId: string) => boolean
+  onWatch?: (sectionId: string, courseCode: string, section: string, meta?: Record<string, unknown>) => void
+  onUnwatch?: (sectionId: string, courseCode: string, section: string) => void
 }
 
-export function CourseList({ courses, onAddToSchedule, hasCourse, hasSection, hasCompleted, getRating }: CourseListProps) {
+export function CourseList({ courses, onAddToSchedule, hasCourse, hasSection, hasCompleted, getRating, isWatching, onWatch, onUnwatch }: CourseListProps) {
   if (courses.length === 0) {
     return (
       <div className="text-center py-16 animate-fade-in">
@@ -25,7 +28,7 @@ export function CourseList({ courses, onAddToSchedule, hasCourse, hasSection, ha
   const visible = courses.slice(0, 300)
 
   return (
-    <div className="flex flex-col gap-3" data-testid="course-list">
+    <div className="flex flex-col gap-4" data-testid="course-list">
       {visible.map((c, i) => (
         <CourseCard
           key={`${c.course_code}-${i}`}
@@ -36,6 +39,9 @@ export function CourseList({ courses, onAddToSchedule, hasCourse, hasSection, ha
           hasSection={hasSection}
           hasCompleted={hasCompleted}
           getRating={getRating}
+          isWatching={isWatching}
+          onWatch={onWatch}
+          onUnwatch={onUnwatch}
         />
       ))}
       {courses.length > 300 && (

@@ -18,9 +18,11 @@ interface ChatPanelProps {
   onClear: () => void
   onAddToSchedule?: (proposal: ScheduleProposal) => void
   onAddCourseStub?: (courseCode: string) => void
+  model?: string
+  onModelChange?: (model: string) => void
 }
 
-export function ChatPanel({ messages, isStreaming, thinkingPhase, error, onSend, onClear, onAddToSchedule, onAddCourseStub }: ChatPanelProps) {
+export function ChatPanel({ messages, isStreaming, thinkingPhase, error, onSend, onClear, onAddToSchedule, onAddCourseStub, model, onModelChange }: ChatPanelProps) {
   const [input, setInput] = useState('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -48,7 +50,7 @@ export function ChatPanel({ messages, isStreaming, thinkingPhase, error, onSend,
   }
 
   return (
-    <div className="h-[calc(100vh-56px)] flex flex-col bg-bg">
+    <div className="h-[calc(100vh-64px)] flex flex-col bg-bg">
       {/* Messages area — full width, centered content */}
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-4xl mx-auto px-6 py-6 flex flex-col gap-4">
@@ -66,7 +68,7 @@ export function ChatPanel({ messages, isStreaming, thinkingPhase, error, onSend,
                   <span className="w-2 h-2 bg-accent rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
                   <span className="w-2 h-2 bg-accent rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                 </div>
-                <span className="text-[13px] text-muted font-mono">{thinkingPhase}</span>
+                <span className="text-[13px] text-muted">{thinkingPhase}</span>
               </div>
             </div>
           )}
@@ -100,7 +102,7 @@ export function ChatPanel({ messages, isStreaming, thinkingPhase, error, onSend,
               <button
                 onClick={handleSend}
                 disabled={!input.trim() || isStreaming}
-                className="px-6 py-3 rounded-xl text-[14px] font-bold font-mono
+                className="px-6 py-3 rounded-xl text-[14px] font-bold
                   bg-accent text-white
                   hover:bg-accent/85
                   disabled:opacity-40 disabled:cursor-not-allowed
@@ -118,7 +120,7 @@ export function ChatPanel({ messages, isStreaming, thinkingPhase, error, onSend,
               {messages.length > 0 && (
                 <button
                   onClick={onClear}
-                  className="px-3 py-1 rounded-lg text-[11px] font-mono text-muted
+                  className="px-3 py-1 rounded-lg text-[11px] text-muted
                     hover:text-text transition-colors cursor-pointer text-center"
                 >
                   Clear chat
@@ -126,8 +128,20 @@ export function ChatPanel({ messages, isStreaming, thinkingPhase, error, onSend,
               )}
             </div>
           </div>
-          <div className="text-[10px] text-dim font-mono mt-2">
-            Powered by Claude CLI &middot; Enter to send, Shift+Enter for newline
+          <div className="flex items-center gap-3 mt-2">
+            {model && onModelChange && (
+              <select
+                value={model}
+                onChange={(e) => onModelChange(e.target.value)}
+                className="bg-surface border border-border rounded-lg text-[11px] text-muted
+                  px-2 py-1 outline-none cursor-pointer focus:border-accent hover:border-border2"
+              >
+                <option value="sonnet">Sonnet 4.6</option>
+                <option value="opus">Opus 4.6</option>
+                <option value="gemini">Gemini 2.5 Flash (Free)</option>
+              </select>
+            )}
+            <span className="text-[11px] text-dim">Enter to send, Shift+Enter for newline</span>
           </div>
         </div>
       </div>
@@ -261,7 +275,7 @@ function RichTextContent({ content }: { content: string }) {
                 href={capeUrl(part)}
                 target="_blank"
                 rel="noopener"
-                className="text-[9px] text-accent2 hover:underline font-mono"
+                className="text-[11px] text-accent2 hover:underline"
                 title={`View CAPEs for ${part}`}
               >
                 CAPEs

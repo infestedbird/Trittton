@@ -108,7 +108,7 @@ export function MySchedule({ schedule, proposal, term, onRemove, onRemoveSection
 
   if (schedule.length === 0) {
     return (
-      <div className="h-[calc(100vh-56px)] flex items-center justify-center">
+      <div className="h-[calc(100vh-64px)] flex items-center justify-center">
         <div className="text-center max-w-md">
           <div className="w-16 h-16 rounded-2xl bg-green/12 flex items-center justify-center mx-auto mb-4">
             <svg width="32" height="32" fill="none" stroke="#3dd68c" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -129,17 +129,17 @@ export function MySchedule({ schedule, proposal, term, onRemove, onRemoveSection
   }
 
   return (
-    <div className="h-[calc(100vh-56px)] overflow-y-auto">
-      <div className="max-w-5xl mx-auto px-6 py-6 space-y-4">
+    <div className="h-[calc(100vh-64px)] overflow-y-auto">
+      <div className="max-w-5xl mx-auto px-8 py-8 space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-medium text-text">My Schedule</h2>
-            <div className="flex gap-4 mt-1 font-mono text-[11px] text-muted">
+            <h2 className="text-lg font-semibold text-text">My Schedule</h2>
+            <div className="flex gap-4 mt-1 text-[11px] text-muted">
               <span className="text-accent">{proposal.quarter}</span>
               <span><b className="text-text">{proposal.total_units}</b> units</span>
-              <span><b className="text-text">{schedule.length}</b> courses</span>
-              <span><b className="text-text">{schedule.reduce((s, c) => s + c.sections.length, 0)}</b> sections</span>
+              <span><b className="text-text">{schedule.length}</b> {schedule.length === 1 ? 'course' : 'courses'}</span>
+              <span><b className="text-text">{schedule.reduce((s, c) => s + c.sections.length, 0)}</b> {schedule.reduce((s, c) => s + c.sections.length, 0) === 1 ? 'section' : 'sections'}</span>
               {conflicts.length > 0 && (
                 <span className="text-red"><b>{conflicts.length}</b> conflict{conflicts.length !== 1 ? 's' : ''}</span>
               )}
@@ -151,7 +151,7 @@ export function MySchedule({ schedule, proposal, term, onRemove, onRemoveSection
               <button
                 onClick={handleGCalSync}
                 disabled={syncing}
-                className="px-3 py-1.5 rounded-lg text-[12px] font-mono font-medium
+                className="px-3 py-1.5 rounded-lg text-[12px] font-medium
                   bg-green/10 text-green border border-green/20
                   hover:bg-green/20 transition-all cursor-pointer flex items-center gap-1.5
                   disabled:opacity-50"
@@ -169,7 +169,7 @@ export function MySchedule({ schedule, proposal, term, onRemove, onRemoveSection
             ) : gcalStatus?.configured ? (
               <button
                 onClick={handleGCalConnect}
-                className="px-3 py-1.5 rounded-lg text-[12px] font-mono font-medium
+                className="px-3 py-1.5 rounded-lg text-[12px] font-medium
                   bg-green/10 text-green border border-green/20
                   hover:bg-green/20 transition-all cursor-pointer flex items-center gap-1.5"
               >
@@ -181,7 +181,7 @@ export function MySchedule({ schedule, proposal, term, onRemove, onRemoveSection
             ) : (
               <button
                 onClick={handleGoogleCalendarICS}
-                className="px-3 py-1.5 rounded-lg text-[12px] font-mono font-medium
+                className="px-3 py-1.5 rounded-lg text-[12px] font-medium
                   bg-green/10 text-green border border-green/20
                   hover:bg-green/20 transition-all cursor-pointer flex items-center gap-1.5"
                 title={`Download .ics for Google Calendar (${GCAL_EMAIL})`}
@@ -194,7 +194,7 @@ export function MySchedule({ schedule, proposal, term, onRemove, onRemoveSection
             )}
             <button
               onClick={handleExport}
-              className="px-3 py-1.5 rounded-lg text-[12px] font-mono font-medium
+              className="px-3 py-1.5 rounded-lg text-[12px] font-medium
                 bg-accent2/10 text-accent2 border border-accent2/20
                 hover:bg-accent2/20 transition-all cursor-pointer"
             >
@@ -202,7 +202,7 @@ export function MySchedule({ schedule, proposal, term, onRemove, onRemoveSection
             </button>
             <button
               onClick={onClear}
-              className="px-3 py-1.5 rounded-lg text-[12px] font-mono font-medium
+              className="px-3 py-1.5 rounded-lg text-[12px] font-medium
                 bg-red/10 text-red border border-red/20
                 hover:bg-red/20 transition-all cursor-pointer"
             >
@@ -229,13 +229,13 @@ export function MySchedule({ schedule, proposal, term, onRemove, onRemoveSection
                     {course.course_code}
                   </span>
                   <span className="text-[13px] font-medium text-text">{course.title}</span>
-                  <span className="font-mono text-[11px] text-gold">{course.units} units</span>
+                  <span className="text-[11px] text-gold">{course.units} units</span>
                   <div className="ml-auto flex items-center gap-2">
-                    <a href={socSearchUrl(subject)} target="_blank" rel="noopener" className="font-mono text-[10px] text-accent hover:underline">SoC</a>
-                    <a href={capeUrl(course.course_code)} target="_blank" rel="noopener" className="font-mono text-[10px] text-accent2 hover:underline">CAPEs</a>
+                    <a href={socSearchUrl(subject)} target="_blank" rel="noopener" className="text-[11px] text-accent hover:underline">SoC</a>
+                    <a href={capeUrl(course.course_code)} target="_blank" rel="noopener" className="text-[11px] text-accent2 hover:underline">CAPEs</a>
                     <button
                       onClick={() => onRemove(course.course_code)}
-                      className="font-mono text-[11px] px-2 py-1 rounded-md bg-red/10 text-red border border-red/20 hover:bg-red/20 transition-all cursor-pointer"
+                      className="text-[11px] px-2 py-1 rounded-md bg-red/10 text-red border border-red/20 hover:bg-red/20 transition-all cursor-pointer"
                     >
                       Remove
                     </button>
@@ -245,7 +245,7 @@ export function MySchedule({ schedule, proposal, term, onRemove, onRemoveSection
                   <thead>
                     <tr className="text-muted">
                       {['', 'Type', 'Section', 'Days', 'Time', 'Location', 'Instructor', 'Seats'].map((h) => (
-                        <th key={h || 'rm'} className="font-mono text-[9px] uppercase text-left px-2 py-1 font-medium">{h}</th>
+                        <th key={h || 'rm'} className="text-[11px] uppercase text-left px-2 py-1 font-medium">{h}</th>
                       ))}
                     </tr>
                   </thead>
@@ -255,7 +255,7 @@ export function MySchedule({ schedule, proposal, term, onRemove, onRemoveSection
                         <td className="px-2 py-1.5">
                           <button
                             onClick={() => onRemoveSection(course.course_code, s.section, s.type)}
-                            className="font-mono text-[9px] px-1 py-0.5 rounded text-red/60 hover:text-red hover:bg-red/10 transition-all cursor-pointer"
+                            className="text-[11px] px-1 py-0.5 rounded text-red/60 hover:text-red hover:bg-red/10 transition-all cursor-pointer"
                             title={`Remove ${s.type} ${s.section}`}
                           >
                             &times;
@@ -283,14 +283,14 @@ export function MySchedule({ schedule, proposal, term, onRemove, onRemoveSection
 
         {/* Sync status */}
         {syncMsg && (
-          <div className={`text-[11px] font-mono text-center py-2 px-3 rounded-lg ${
+          <div className={`text-[11px] text-center py-2 px-3 rounded-lg ${
             syncMsg.includes('Synced') || syncMsg.includes('connected') ? 'text-green bg-green/5' : 'text-red bg-red/5'
           }`}>
             {syncMsg}
           </div>
         )}
 
-        <div className="text-[11px] text-dim font-mono text-center pb-4">
+        <div className="text-[11px] text-dim text-center pb-4">
           {gcalStatus?.connected
             ? `Auto-syncing to Google Calendar (${GCAL_EMAIL}) · Each term gets its own calendar`
             : gcalStatus?.configured

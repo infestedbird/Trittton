@@ -46,25 +46,25 @@ export function ScrapePanel({ progress, show, onClose, onLoadResults }: ScrapePa
             <div className="font-mono text-lg font-medium text-text">
               {progress.current}/{progress.total}
             </div>
-            <div className="font-mono text-[10px] text-muted mt-0.5">departments</div>
+            <div className="text-[11px] text-muted mt-0.5">departments</div>
           </div>
           <div className="bg-surface rounded-lg p-3 text-center">
             <div className="font-mono text-lg font-medium text-green">
               {progress.coursesFound}
             </div>
-            <div className="font-mono text-[10px] text-muted mt-0.5">courses found</div>
+            <div className="text-[11px] text-muted mt-0.5">courses found</div>
           </div>
           <div className="bg-surface rounded-lg p-3 text-center">
             <div className="font-mono text-lg font-medium text-red">
               {progress.errors.length}
             </div>
-            <div className="font-mono text-[10px] text-muted mt-0.5">errors</div>
+            <div className="text-[11px] text-muted mt-0.5">errors</div>
           </div>
         </div>
 
         {/* Current subject */}
         {progress.status === 'running' && progress.currentSubject && (
-          <div className="text-[12px] text-muted font-mono mb-4">
+          <div className="text-[12px] text-muted mb-4">
             Currently scraping: <span className="text-accent">{progress.currentSubject}</span>
           </div>
         )}

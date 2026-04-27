@@ -29,7 +29,7 @@ export function useCouncillor() {
     }
   }, [messages, isStreaming])
 
-  const sendMessage = useCallback(async (text: string, model: string = 'gemini') => {
+  const sendMessage = useCallback(async (text: string, model: string = 'gemini', geminiKey: string | null = null) => {
     const userMsg: ChatMessage = { role: 'user', content: text }
     const newMessages = [...messages, userMsg]
     setMessages(newMessages)
@@ -44,10 +44,15 @@ export function useCouncillor() {
       const abort = new AbortController()
       abortRef.current = abort
 
+      const body: Record<string, unknown> = { messages: newMessages, model }
+      if (model === 'gemini' && geminiKey) {
+        body.gemini_api_key = geminiKey
+      }
+
       const res = await fetch('/api/councillor', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: newMessages, model }),
+        body: JSON.stringify(body),
         signal: abort.signal,
       })
 

@@ -26,8 +26,8 @@ const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 const START_HOUR = 7; const END_HOUR = 23; const HOUR_HEIGHT = 40
 
 function uid() { return Math.random().toString(36).slice(2, 9) }
-function getToday() { return new Date().toISOString().split('T')[0] }
-function getWeekEnd() { const d = new Date(); d.setDate(d.getDate() + 6); return d.toISOString().split('T')[0] }
+function getToday() { return localDateStr(new Date()) }
+function getWeekEnd() { const d = new Date(); d.setDate(d.getDate() + 6); return localDateStr(d) }
 function fmtDur(h: number) { return h < 1 ? `${Math.round(h * 60)}m` : `${Math.floor(h)}h${Math.round((h % 1) * 60) > 0 ? `${Math.round((h % 1) * 60)}m` : ''}` }
 function fmtHour(h: number) { return h === 0 || h === 12 ? '12p' : h < 12 ? `${h}a` : `${h - 12}p` }
 function load<T>(key: string, fallback: T): T { try { const r = localStorage.getItem(key); return r ? JSON.parse(r) : fallback } catch { return fallback } }
@@ -37,13 +37,22 @@ function getWeekDates() {
   const mon = new Date(today); mon.setDate(today.getDate() - ((dow + 6) % 7))
   return Array.from({ length: 7 }, (_, i) => {
     const d = new Date(mon); d.setDate(mon.getDate() + i)
-    return { day: DAYS[i], date: d.toISOString().split('T')[0], dateObj: d }
+    return { day: DAYS[i], date: localDateStr(d), dateObj: d }
   })
+}
+
+function localDateStr(d: Date): string {
+  // Format as YYYY-MM-DD in LOCAL timezone (not UTC) to avoid day-shift bugs
+  const y = d.getFullYear()
+  const m = String(d.getMonth() + 1).padStart(2, '0')
+  const day = String(d.getDate()).padStart(2, '0')
+  return `${y}-${m}-${day}`
 }
 
 function blockPos(block: TimeBlock, weekDates: { date: string }[]) {
   const s = new Date(block.start), e = new Date(block.end)
-  const dayIdx = weekDates.findIndex((d) => d.date === s.toISOString().split('T')[0])
+  // Compare using local date, not UTC — fixes events showing on wrong day
+  const dayIdx = weekDates.findIndex((d) => d.date === localDateStr(s))
   if (dayIdx < 0) return null
   const sh = s.getHours() + s.getMinutes() / 60, eh = e.getHours() + e.getMinutes() / 60
   return { dayIdx, top: (sh - START_HOUR) * HOUR_HEIGHT, height: Math.max((eh - sh) * HOUR_HEIGHT, 16) }
@@ -51,7 +60,7 @@ function blockPos(block: TimeBlock, weekDates: { date: string }[]) {
 
 type LeftTab = 'assignments' | 'leisure' | 'chat'
 
-export function AutoScheduler({ model }: { model: string }) {
+export function AutoScheduler({ model, onModelChange, geminiKey, onRequestKey }: { model: string; onModelChange?: (m: string) => void; geminiKey?: string | null; onRequestKey?: () => void }) {
   const [assignments, setAssignments] = useState<Assignment[]>(load(ASSIGN_KEY, []))
   const [leisure, setLeisure] = useState<Leisure[]>(load(LEISURE_KEY, []))
   const [result, setResult] = useState<ScheduleResult | null>(null)
@@ -108,6 +117,7 @@ export function AutoScheduler({ model }: { model: string }) {
           assignments: pending.map((a) => ({ name: a.name, due_date: a.dueDate, difficulty: a.difficulty })),
           leisure: leisure.map((l) => ({ name: l.name, preferred_day: l.preferredDay, preferred_time: l.preferredTime, duration: l.duration })),
           start_date: getToday(), end_date: getWeekEnd(), model,
+          ...(model === 'gemini' && geminiKey ? { gemini_api_key: geminiKey } : {}),
         }),
       })
       const data = await res.json()
@@ -144,6 +154,7 @@ export function AutoScheduler({ model }: { model: string }) {
           current_plan: result,
           assignments: assignments.filter((a) => !a.done),
           leisure,
+          ...(model === 'gemini' && geminiKey ? { gemini_api_key: geminiKey } : {}),
         }),
       })
       const reader = res.body?.getReader(); const decoder = new TextDecoder()
@@ -185,28 +196,37 @@ export function AutoScheduler({ model }: { model: string }) {
   const allBlocks: TimeBlock[] = [...calEvents, ...(result?.study_blocks || []), ...(result?.guilt_free || []), ...(result?.leisure_blocks || [])]
 
   return (
-    <div className="h-[calc(100vh-56px)] overflow-hidden">
+    <div className="h-[calc(100vh-64px)] overflow-hidden">
       <div className="h-full max-w-[1400px] mx-auto px-5 py-4 flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between mb-3 shrink-0">
           <div>
             <h2 className="text-lg font-semibold text-text">Smart Scheduler</h2>
-            <div className="font-mono text-[11px] text-muted mt-0.5">
+            <div className="text-[11px] text-muted mt-0.5">
               {pending > 0 && <><b className="text-text">{pending}</b> pending · <b className="text-gold">{fmtDur(totalEffort)}</b> effort · </>}
               {leisure.length > 0 && <><b className="text-green">{leisure.length}</b> leisure · </>}
-              Using <b className="text-accent2">{model === 'gemini' ? 'Gemini' : model === 'opus' ? 'Opus' : 'Sonnet'}</b>
+              {onModelChange ? (
+                <>Using <select value={model} onChange={(e) => onModelChange(e.target.value)}
+                  className="bg-surface border border-border rounded text-[11px] text-muted px-1.5 py-0.5 outline-none cursor-pointer inline">
+                  <option value="sonnet">Sonnet 4.6</option>
+                  <option value="opus">Opus 4.6</option>
+                  <option value="gemini">Gemini 2.5 Flash</option>
+                </select></>
+              ) : (
+                <>Using <b className="text-accent2">{model === 'gemini' ? 'Gemini' : model === 'opus' ? 'Opus' : 'Sonnet'}</b></>
+              )}
             </div>
           </div>
           <div className="flex gap-2">
             {result && (
               <button onClick={pushToCalendar} disabled={pushing}
-                className="px-3 py-1.5 rounded-lg text-[11px] font-mono font-semibold bg-green text-white hover:bg-green/85 disabled:opacity-50 cursor-pointer flex items-center gap-1.5">
+                className="px-3 py-1.5 rounded-lg text-[11px] font-semibold bg-green text-white hover:bg-green/85 disabled:opacity-50 cursor-pointer flex items-center gap-1.5">
                 {pushing ? <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : null}
                 Push to Calendar
               </button>
             )}
             <button onClick={generatePlan} disabled={loading || (pending === 0 && leisure.length === 0)}
-              className="px-4 py-1.5 rounded-lg text-[11px] font-mono font-semibold bg-accent2 text-white hover:bg-accent2/85 hover:shadow-[0_0_14px_rgba(124,92,252,0.3)] disabled:opacity-40 cursor-pointer flex items-center gap-1.5">
+              className="px-4 py-1.5 rounded-lg text-[11px] font-semibold bg-accent2 text-white hover:bg-accent2/85 hover:shadow-[0_0_14px_rgba(124,92,252,0.3)] disabled:opacity-40 cursor-pointer flex items-center gap-1.5">
               {loading ? <span className="w-3 h-3 border-2 border-white/30 border-t-white rounded-full animate-spin" /> : (
                 <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09z" /></svg>
               )}
@@ -215,7 +235,7 @@ export function AutoScheduler({ model }: { model: string }) {
           </div>
         </div>
 
-        {msg && <div className={`text-[11px] font-mono mb-2 px-3 py-1.5 rounded-lg shrink-0 ${msg.includes('Added') ? 'text-green bg-green/8' : 'text-red bg-red/8'}`}>{msg}</div>}
+        {msg && <div className={`text-[11px] mb-2 px-3 py-1.5 rounded-lg shrink-0 ${msg.includes('Added') ? 'text-green bg-green/8' : 'text-red bg-red/8'}`}>{msg}</div>}
 
         {/* Main grid */}
         <div className="grid grid-cols-[280px_1fr] gap-3 flex-1 min-h-0">
@@ -225,7 +245,7 @@ export function AutoScheduler({ model }: { model: string }) {
             <div className="flex gap-0.5 bg-surface rounded-lg p-0.5 mb-3 shrink-0">
               {([['assignments', 'Tasks'], ['leisure', 'Leisure'], ['chat', 'Chat']] as const).map(([k, label]) => (
                 <button key={k} onClick={() => setLeftTab(k)}
-                  className={`flex-1 py-1.5 rounded-md text-[11px] font-mono font-medium cursor-pointer
+                  className={`flex-1 py-1.5 rounded-md text-[11px] font-medium cursor-pointer
                     ${leftTab === k ? 'bg-card text-text shadow-sm' : 'text-muted hover:text-text'}`}
                 >{label}</button>
               ))}
@@ -244,12 +264,12 @@ export function AutoScheduler({ model }: { model: string }) {
                     <div className="flex gap-1">
                       {[1, 2, 3, 4, 5].map((d) => (
                         <button key={d} onClick={() => setADiff(d)}
-                          className={`flex-1 py-1 rounded-lg font-mono text-[10px] font-semibold cursor-pointer ${d === aDiff ? 'text-white' : 'bg-surface text-muted border border-border'}`}
+                          className={`flex-1 py-1 rounded-lg font-mono text-[11px] font-semibold cursor-pointer ${d === aDiff ? 'text-white' : 'bg-surface text-muted border border-border'}`}
                           style={d === aDiff ? { background: DIFF_COLORS[d] } : {}}>{d}</button>
                       ))}
                     </div>
                     <button onClick={addAssignment} disabled={!aName.trim() || !aDue}
-                      className="w-full py-1.5 rounded-lg font-mono text-[11px] font-semibold bg-accent text-white hover:bg-accent/85 disabled:opacity-30 cursor-pointer">+ Add</button>
+                      className="w-full py-1.5 rounded-lg text-[11px] font-semibold bg-accent text-white hover:bg-accent/85 disabled:opacity-30 cursor-pointer">+ Add</button>
                   </div>
                   {assignments.map((a) => (
                     <div key={a.id} className={`flex items-center gap-2 px-3 py-2 rounded-lg border border-border bg-card ${a.done ? 'opacity-35' : ''}`}>
@@ -259,7 +279,7 @@ export function AutoScheduler({ model }: { model: string }) {
                       </button>
                       <div className="flex-1 min-w-0">
                         <div className={`text-[11px] font-medium truncate ${a.done ? 'line-through text-muted' : 'text-text'}`}>{a.name}</div>
-                        <div className="font-mono text-[9px] text-muted">{new Date(a.dueDate + 'T00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} · <span style={{ color: DIFF_COLORS[a.difficulty] }}>{DIFF_LABELS[a.difficulty]}</span></div>
+                        <div className="font-mono text-[11px] text-muted">{new Date(a.dueDate + 'T00:00').toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} · <span style={{ color: DIFF_COLORS[a.difficulty] }}>{DIFF_LABELS[a.difficulty]}</span></div>
                       </div>
                       <button onClick={() => setAssignments((p) => p.filter((x) => x.id !== a.id))} className="text-dim hover:text-red text-[12px] cursor-pointer">×</button>
                     </div>
@@ -289,19 +309,19 @@ export function AutoScheduler({ model }: { model: string }) {
                       </select>
                     </div>
                     <div>
-                      <div className="font-mono text-[9px] text-muted mb-1">Duration: <b className="text-text">{lDur}h</b></div>
+                      <div className="text-[11px] text-muted mb-1">Duration: <b className="text-text">{lDur}h</b></div>
                       <input type="range" min={0.5} max={3} step={0.5} value={lDur} onChange={(e) => setLDur(parseFloat(e.target.value))}
                         className="w-full h-1 bg-border rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-green" />
                     </div>
                     <button onClick={addLeisure} disabled={!lName.trim()}
-                      className="w-full py-1.5 rounded-lg font-mono text-[11px] font-semibold bg-green text-white hover:bg-green/85 disabled:opacity-30 cursor-pointer">+ Add Leisure</button>
+                      className="w-full py-1.5 rounded-lg text-[11px] font-semibold bg-green text-white hover:bg-green/85 disabled:opacity-30 cursor-pointer">+ Add Leisure</button>
                   </div>
                   {leisure.map((l) => (
                     <div key={l.id} className="flex items-center gap-2 px-3 py-2 rounded-lg border border-green/15 bg-green/5">
                       <div className="w-2 h-6 rounded-full bg-green/40 shrink-0" />
                       <div className="flex-1 min-w-0">
                         <div className="text-[11px] font-medium text-text truncate">{l.name}</div>
-                        <div className="font-mono text-[9px] text-muted">
+                        <div className="font-mono text-[11px] text-muted">
                           {l.duration}h{l.preferredDay && ` · ${l.preferredDay}`}{l.preferredTime && ` · ${l.preferredTime}`}
                         </div>
                       </div>
@@ -309,7 +329,7 @@ export function AutoScheduler({ model }: { model: string }) {
                     </div>
                   ))}
                   {leisure.length === 0 && (
-                    <div className="text-center py-6 text-[11px] text-dim font-mono">
+                    <div className="text-center py-6 text-[11px] text-dim">
                       Add activities you enjoy — gym, gaming, walks, cooking, etc. The AI will protect time for them.
                     </div>
                   )}
@@ -321,7 +341,7 @@ export function AutoScheduler({ model }: { model: string }) {
                 <div className="flex flex-col h-full">
                   <div className="flex-1 overflow-y-auto space-y-2 mb-2">
                     {chatMsgs.length === 0 && (
-                      <div className="text-center py-6 text-[11px] text-dim font-mono leading-relaxed">
+                      <div className="text-center py-6 text-[11px] text-dim leading-relaxed">
                         Chat with AI to adjust your plan.<br />
                         Try: "Move my gym to evening" or "Add a 2h gaming session on Saturday"
                       </div>
@@ -348,7 +368,7 @@ export function AutoScheduler({ model }: { model: string }) {
                       placeholder="Adjust the plan..."
                       className="flex-1 bg-surface border border-border rounded-lg px-3 py-2 text-[12px] text-text outline-none focus:border-accent2/50 placeholder:text-dim" />
                     <button onClick={sendChat} disabled={!chatInput.trim() || chatStreaming}
-                      className="px-3 py-2 rounded-lg text-[11px] font-mono font-semibold bg-accent2 text-white hover:bg-accent2/85 disabled:opacity-30 cursor-pointer shrink-0">
+                      className="px-3 py-2 rounded-lg text-[11px] font-semibold bg-accent2 text-white hover:bg-accent2/85 disabled:opacity-30 cursor-pointer shrink-0">
                       Send
                     </button>
                   </div>
@@ -358,10 +378,10 @@ export function AutoScheduler({ model }: { model: string }) {
 
             {/* Legend */}
             <div className="shrink-0 mt-2 rounded-lg border border-border bg-card px-3 py-2 flex flex-wrap gap-x-4 gap-y-1">
-              <div className="flex items-center gap-1.5 text-[9px] font-mono text-muted"><div className="w-3 h-2 rounded-sm border-l-2 border-accent bg-accent/20" />Fixed</div>
-              <div className="flex items-center gap-1.5 text-[9px] font-mono text-muted"><div className="w-3 h-2 rounded-sm border-l-2 border-dashed border-accent2 bg-accent2/20" />Study</div>
-              <div className="flex items-center gap-1.5 text-[9px] font-mono text-muted"><div className="w-3 h-2 rounded-sm border-l-2 border-dashed border-green bg-green/20" />Leisure</div>
-              <div className="flex items-center gap-1.5 text-[9px] font-mono text-muted"><div className="w-3 h-2 rounded-sm border-l-2 border-dashed border-gold bg-gold/20" />Break</div>
+              <div className="flex items-center gap-1.5 text-[11px] text-muted"><div className="w-3 h-2 rounded-sm border-l-2 border-accent bg-accent/20" />Fixed</div>
+              <div className="flex items-center gap-1.5 text-[11px] text-muted"><div className="w-3 h-2 rounded-sm border-l-2 border-dashed border-accent2 bg-accent2/20" />Study</div>
+              <div className="flex items-center gap-1.5 text-[11px] text-muted"><div className="w-3 h-2 rounded-sm border-l-2 border-dashed border-green bg-green/20" />Leisure</div>
+              <div className="flex items-center gap-1.5 text-[11px] text-muted"><div className="w-3 h-2 rounded-sm border-l-2 border-dashed border-gold bg-gold/20" />Break</div>
             </div>
           </div>
 
@@ -373,7 +393,7 @@ export function AutoScheduler({ model }: { model: string }) {
                 const isToday = d.date === getToday()
                 return (
                   <div key={d.day} className={`px-1 py-1.5 text-center border-l border-border ${isToday ? 'bg-accent/5' : 'bg-surface'}`}>
-                    <div className={`font-mono text-[9px] font-medium ${isToday ? 'text-accent' : 'text-dim'}`}>{d.day}</div>
+                    <div className={`font-mono text-[11px] font-medium ${isToday ? 'text-accent' : 'text-dim'}`}>{d.day}</div>
                     <div className={`font-mono text-[12px] font-semibold ${isToday ? 'text-accent' : 'text-text'}`}>{d.dateObj.getDate()}</div>
                   </div>
                 )

@@ -55,13 +55,13 @@ export function FourYearPlan({ plan, allCourses, onAddCourse, onRemoveCourse, on
   const totalCourses = uniqueCodes.length
 
   return (
-    <div className="h-[calc(100vh-56px)] overflow-y-auto">
-      <div className="max-w-7xl mx-auto px-6 py-6 space-y-5">
+    <div className="h-[calc(100vh-64px)] overflow-y-auto">
+      <div className="max-w-6xl mx-auto px-8 py-8 space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-medium text-text">4-Year Plan</h2>
-            <div className="flex gap-4 mt-1 font-mono text-[11px] text-muted">
+            <h2 className="text-lg font-semibold text-text">4-Year Plan</h2>
+            <div className="flex gap-4 mt-1 text-[11px] text-muted">
               <span><b className="text-text">{totalUnits}</b> total units</span>
               <span><b className="text-text">{totalCourses}</b> unique courses</span>
               <span><b className="text-text">{plan.filter((q) => q.courses.length > 0).length}</b> active quarters</span>
@@ -69,7 +69,7 @@ export function FourYearPlan({ plan, allCourses, onAddCourse, onRemoveCourse, on
           </div>
           <button
             onClick={onClearAll}
-            className="px-3 py-1.5 rounded-lg text-[12px] font-mono font-medium
+            className="px-3 py-1.5 rounded-lg text-[12px] font-medium
               bg-red/10 text-red border border-red/20
               hover:bg-red/20 transition-all cursor-pointer"
           >
@@ -80,7 +80,7 @@ export function FourYearPlan({ plan, allCourses, onAddCourse, onRemoveCourse, on
         {/* Academic year rows */}
         {academicYears.map((ay) => (
           <div key={ay.year}>
-            <div className="font-mono text-[11px] text-muted mb-2 uppercase tracking-wider">{ay.year}</div>
+            <div className="text-[11px] text-muted mb-2 uppercase tracking-wider">{ay.year}</div>
             <div className="grid grid-cols-5 gap-2">
               {ay.quarters.map((q) => (
                 <QuarterCard
@@ -98,7 +98,7 @@ export function FourYearPlan({ plan, allCourses, onAddCourse, onRemoveCourse, on
         ))}
 
         {/* Legend / help */}
-        <div className="text-[11px] text-dim font-mono text-center pb-6">
+        <div className="text-[11px] text-dim text-center pb-6">
           Type a course code (e.g. "CSE 12") to add it to a quarter. These are rough plans — no enrollment data needed.
         </div>
       </div>
@@ -225,15 +225,15 @@ function QuarterCard({ quarter, allCourses, uniqueCodes, onAdd, onRemove, onClea
       {/* Quarter header */}
       <div className="flex items-center justify-between mb-2">
         <div>
-          <div className="font-mono text-[11px] font-medium text-text">{quarter.label}</div>
-          <div className="font-mono text-[9px] text-muted">
+          <div className="text-[11px] font-medium text-text">{quarter.label}</div>
+          <div className="text-[11px] text-muted">
             {quarterUnits > 0 ? `${quarterUnits} units` : 'no courses'}
           </div>
         </div>
         {quarter.courses.length > 0 && (
           <button
             onClick={onClear}
-            className="font-mono text-[9px] text-dim hover:text-red transition-colors cursor-pointer"
+            className="text-[11px] text-dim hover:text-red transition-colors cursor-pointer"
             title="Clear quarter"
           >
             clear
@@ -253,9 +253,9 @@ function QuarterCard({ quarter, allCourses, uniqueCodes, onAdd, onRemove, onClea
             >
               <div className="flex-1 min-w-0">
                 <div className="font-medium truncate" style={{ color: color.text }}>{c.course_code}</div>
-                <div className="text-[9px] text-muted truncate">{c.title !== 'Planned Course' ? c.title : ''}</div>
+                <div className="text-[11px] text-muted truncate">{c.title !== 'Planned Course' ? c.title : ''}</div>
               </div>
-              <span className="text-[9px] text-muted shrink-0">{c.units}u</span>
+              <span className="text-[11px] text-muted shrink-0">{c.units}u</span>
               <button
                 onClick={() => onRemove(c.course_code)}
                 className="opacity-0 group-hover:opacity-100 text-[11px] text-muted hover:text-red transition-all cursor-pointer shrink-0"
@@ -301,7 +301,7 @@ function QuarterCard({ quarter, allCourses, uniqueCodes, onAdd, onRemove, onClea
         <button
           onClick={() => setShowInput(true)}
           className="mt-2 w-full rounded-lg border border-dashed border-dim/40 py-2
-            text-[11px] font-mono text-dim hover:text-accent hover:border-accent/30 hover:bg-accent/5
+            text-[11px] text-dim hover:text-accent hover:border-accent/30 hover:bg-accent/5
             transition-all cursor-pointer flex items-center justify-center gap-1.5"
         >
           <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">

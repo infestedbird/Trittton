@@ -96,10 +96,10 @@ export function LiveStatus() {
 
   if (loading) {
     return (
-      <div className="h-[calc(100vh-56px)] flex items-center justify-center">
+      <div className="h-[calc(100vh-64px)] flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-accent/30 border-t-accent rounded-full animate-spin mx-auto mb-3" />
-          <div className="font-mono text-[12px] text-muted">Loading campus pulse...</div>
+          <div className="text-[12px] text-muted">Loading campus pulse...</div>
         </div>
       </div>
     )
@@ -115,13 +115,13 @@ export function LiveStatus() {
     : null
 
   return (
-    <div className="h-[calc(100vh-56px)] overflow-y-auto">
-      <div className="max-w-6xl mx-auto px-6 py-6 space-y-5">
+    <div className="h-[calc(100vh-64px)] overflow-y-auto">
+      <div className="max-w-5xl mx-auto px-8 py-8 space-y-6">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-lg font-semibold text-text">Live Status</h2>
-            <div className="flex gap-4 mt-1 font-mono text-[11px] text-muted">
+            <div className="flex gap-4 mt-1 text-[11px] text-muted">
               <span>Real-time campus occupancy</span>
               {lastUpdated && <span>Updated {lastUpdated.toLocaleTimeString()}</span>}
               <span className="flex items-center gap-1">
@@ -132,7 +132,7 @@ export function LiveStatus() {
           </div>
           <button
             onClick={fetchData}
-            className="px-3 py-1.5 rounded-lg text-[11px] font-mono font-medium
+            className="px-3 py-1.5 rounded-lg text-[11px] font-medium
               bg-accent text-white hover:bg-accent/85 cursor-pointer"
           >
             Refresh
@@ -143,14 +143,14 @@ export function LiveStatus() {
         {bestOverall && (
           <div className="rounded-xl border border-green/20 bg-green/5 px-5 py-3 flex items-center justify-between">
             <div>
-              <div className="font-mono text-[10px] text-green font-semibold uppercase tracking-wider mb-0.5">Best Spot Right Now</div>
+              <div className="text-[11px] text-green font-semibold uppercase tracking-wider mb-0.5">Best Spot Right Now</div>
               <div className="text-[14px] text-text font-medium">{bestOverall.name}</div>
             </div>
             <div className="text-right">
               <div className="font-mono text-[20px] font-bold" style={{ color: getStatusColor(bestOverall.busyness) }}>
                 {bestOverall.busyness}%
               </div>
-              <div className="font-mono text-[10px] text-muted">{bestOverall.people} / {bestOverall.capacity}</div>
+              <div className="font-mono text-[11px] text-muted">{bestOverall.people} / {bestOverall.capacity}</div>
             </div>
           </div>
         )}
@@ -159,7 +159,7 @@ export function LiveStatus() {
         <div className="flex gap-1.5">
           <button
             onClick={() => setFilter('')}
-            className={`font-mono text-[11px] px-3 py-1.5 rounded-lg cursor-pointer
+            className={`text-[11px] px-3 py-1.5 rounded-lg cursor-pointer
               ${!filter ? 'bg-accent/12 text-accent font-semibold' : 'bg-surface text-muted hover:text-text'}`}
           >
             All ({locations.length})
@@ -171,7 +171,7 @@ export function LiveStatus() {
               <button
                 key={cat}
                 onClick={() => setFilter(filter === cat ? '' : cat as CategoryFilter)}
-                className={`font-mono text-[11px] px-3 py-1.5 rounded-lg cursor-pointer flex items-center gap-1.5
+                className={`text-[11px] px-3 py-1.5 rounded-lg cursor-pointer flex items-center gap-1.5
                   ${filter === cat ? 'font-semibold' : 'hover:opacity-80'}`}
                 style={{
                   background: filter === cat ? `${meta.color}18` : 'var(--color-surface)',
@@ -210,7 +210,7 @@ export function LiveStatus() {
                         />
                         <span className="text-[14px] font-semibold text-text">{loc.name}</span>
                       </div>
-                      <div className="flex items-center gap-2 font-mono text-[10px]">
+                      <div className="flex items-center gap-2 text-[11px]">
                         <span style={{ color: catMeta.color }}>{catMeta.label}</span>
                         <span className="text-dim">&middot;</span>
                         <span className="text-muted">{loc.isOpen ? loc.hourSummary || 'Open' : 'Closed'}</span>
@@ -229,7 +229,7 @@ export function LiveStatus() {
                         >
                           {getStatusLabel(loc.busyness)} &middot; {loc.busyness}%
                         </span>
-                        <span className="font-mono text-[10px] text-muted">{loc.people}/{loc.capacity}</span>
+                        <span className="font-mono text-[11px] text-muted">{loc.people}/{loc.capacity}</span>
                       </div>
                       <div className="h-2 rounded-full bg-surface overflow-hidden">
                         <div
@@ -240,7 +240,7 @@ export function LiveStatus() {
                           }}
                         />
                       </div>
-                      <div className="mt-2 font-mono text-[10px] text-muted flex items-center gap-1">
+                      <div className="mt-2 text-[11px] text-muted flex items-center gap-1">
                         <svg width="10" height="10" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                           <circle cx="12" cy="12" r="10" />
                           <path d="M12 6v6l4 2" />
@@ -249,19 +249,19 @@ export function LiveStatus() {
                       </div>
                     </>
                   ) : (
-                    <div className="text-[12px] text-dim font-mono">{loc.hourSummary || 'Currently closed'}</div>
+                    <div className="text-[12px] text-dim">{loc.hourSummary || 'Currently closed'}</div>
                   )}
                 </div>
 
                 {/* Expanded floor breakdown */}
                 {isExpanded && loc.subLocs.length > 0 && (
                   <div className="border-t border-border/50 px-4 py-3 space-y-1.5 animate-fade-in">
-                    <div className="font-mono text-[9px] text-muted uppercase tracking-wider mb-1">Floor Breakdown</div>
+                    <div className="text-[11px] text-muted uppercase tracking-wider mb-1">Floor Breakdown</div>
                     {loc.subLocs.map((floor) => {
                       const floorColor = getStatusColor(floor.busyness)
                       return (
                         <div key={floor.id} className="flex items-center gap-2">
-                          <span className="w-16 font-mono text-[10px] text-muted truncate shrink-0">
+                          <span className="w-16 font-mono text-[11px] text-muted truncate shrink-0">
                             {floor.abbreviation || floor.name}
                           </span>
                           <div className="flex-1 h-3 rounded-full bg-surface overflow-hidden">
@@ -274,7 +274,7 @@ export function LiveStatus() {
                               }}
                             />
                           </div>
-                          <span className="w-20 text-right font-mono text-[10px] shrink-0" style={{ color: floor.isOpen ? floorColor : '#3d4460' }}>
+                          <span className="w-20 text-right font-mono text-[11px] shrink-0" style={{ color: floor.isOpen ? floorColor : '#3d4460' }}>
                             {floor.isOpen ? `${floor.busyness}% · ${floor.people}` : 'Closed'}
                           </span>
                         </div>
@@ -287,7 +287,7 @@ export function LiveStatus() {
           })}
         </div>
 
-        <div className="text-[11px] text-dim font-mono text-center pb-6">
+        <div className="text-[11px] text-dim text-center pb-6">
           Data from Waitz.io &middot; Auto-refreshes every 60s &middot; Click a card for floor details
         </div>
       </div>

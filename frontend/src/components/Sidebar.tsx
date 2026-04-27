@@ -25,7 +25,7 @@ export function Sidebar({ departments, activeDept, totalCourses, onDeptClick }: 
     <aside className="border-r border-border overflow-y-auto flex flex-col">
       {/* Header + search */}
       <div className="sticky top-0 bg-bg/95 backdrop-blur-sm z-10 px-4 pt-4 pb-2 border-b border-border/50">
-        <div className="font-mono text-[10px] tracking-widest uppercase text-muted mb-2.5">
+        <div className="text-[11px] tracking-widest uppercase text-muted mb-2.5">
           Departments
         </div>
         <div className="relative">
@@ -41,7 +41,7 @@ export function Sidebar({ departments, activeDept, totalCourses, onDeptClick }: 
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Filter..."
-            className="w-full bg-surface border border-border rounded-lg text-[11px] font-mono
+            className="w-full bg-surface border border-border rounded-lg text-[11px]
               pl-7 pr-2 py-1.5 outline-none text-text placeholder:text-dim
               focus:border-accent/50"
           />
@@ -68,7 +68,7 @@ export function Sidebar({ departments, activeDept, totalCourses, onDeptClick }: 
           />
         ))}
         {filtered.length === 0 && search && (
-          <div className="text-center py-4 text-[11px] text-dim font-mono">
+          <div className="text-center py-4 text-[11px] text-dim">
             No departments match "{search}"
           </div>
         )}
@@ -92,7 +92,7 @@ function DeptButton({
   return (
     <button
       onClick={onClick}
-      className={`flex justify-between items-center px-3 py-[8px] rounded-lg font-mono text-[12px]
+      className={`flex justify-between items-center px-3 py-[8px] rounded-lg text-[12px]
         cursor-pointer border-none text-left
         ${active
           ? 'bg-accent/12 text-accent shadow-[inset_0_0_0_1px_rgba(79,142,247,0.15)]'
@@ -101,7 +101,7 @@ function DeptButton({
     >
       <span className={active ? 'font-semibold' : ''}>{label}</span>
       <span
-        className={`text-[10px] rounded-full px-2 py-0.5 ${
+        className={`text-[11px] rounded-full px-2 py-0.5 ${
           active ? 'bg-accent/20 text-accent font-semibold' : 'bg-surface text-dim'
         }`}
       >

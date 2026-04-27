@@ -4,6 +4,9 @@ import type { ChatMessage } from '../hooks/useCouncillor'
 
 interface CouncillorProps {
   model: string
+  onModelChange?: (model: string) => void
+  geminiKey?: string | null
+  onRequestKey?: () => void
 }
 
 const QUICK_TOPICS = [
@@ -17,7 +20,7 @@ const QUICK_TOPICS = [
   { label: 'Mental Health', question: 'What mental health and counseling resources are available on campus?' },
 ]
 
-export function Councillor({ model }: CouncillorProps) {
+export function Councillor({ model, onModelChange, geminiKey, onRequestKey }: CouncillorProps) {
   const { messages, isStreaming, thinkingPhase, error, sendMessage, clearChat } = useCouncillor()
   const [input, setInput] = useState('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
@@ -30,8 +33,9 @@ export function Councillor({ model }: CouncillorProps) {
   const handleSend = () => {
     const text = input.trim()
     if (!text || isStreaming) return
+    if (model === 'gemini' && !geminiKey && onRequestKey) { onRequestKey(); return }
     setInput('')
-    sendMessage(text, model)
+    sendMessage(text, model, geminiKey ?? null)
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -43,20 +47,20 @@ export function Councillor({ model }: CouncillorProps) {
 
   const handleQuickTopic = (question: string) => {
     if (isStreaming) return
-    sendMessage(question, model)
+    sendMessage(question, model, geminiKey ?? null)
   }
 
   // Parse options blocks from assistant messages
   const handleOptionClick = (option: string) => {
     if (isStreaming) return
     setInput('')
-    sendMessage(option, model)
+    sendMessage(option, model, geminiKey ?? null)
   }
 
   // Empty state
   if (messages.length === 0) {
     return (
-      <div className="h-[calc(100vh-56px)] flex flex-col">
+      <div className="h-[calc(100vh-64px)] flex flex-col">
         <div className="flex-1 flex items-center justify-center">
           <div className="max-w-2xl text-center px-6">
             <div className="w-16 h-16 rounded-2xl bg-accent2/10 flex items-center justify-center mx-auto mb-5">
@@ -89,27 +93,43 @@ export function Councillor({ model }: CouncillorProps) {
 
         {/* Input */}
         <div className="border-t border-border px-6 py-4">
-          <div className="max-w-3xl mx-auto flex gap-2">
-            <textarea
-              ref={inputRef}
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Ask anything about UCSD..."
-              rows={1}
-              className="flex-1 bg-surface border border-border rounded-xl px-4 py-3 text-[14px]
-                text-text font-sans resize-none outline-none
-                focus:border-accent2/50 placeholder:text-dim"
-            />
-            <button
-              onClick={handleSend}
-              disabled={!input.trim() || isStreaming}
-              className="px-5 py-3 rounded-xl font-mono text-[12px] font-medium
-                bg-accent2 text-white hover:bg-accent2/85
-                disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer shrink-0"
-            >
-              Send
-            </button>
+          <div className="max-w-3xl mx-auto">
+            <div className="flex gap-2">
+              <textarea
+                ref={inputRef}
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Ask anything about UCSD..."
+                rows={1}
+                className="flex-1 bg-surface border border-border rounded-xl px-4 py-3 text-[14px]
+                  text-text font-sans resize-none outline-none
+                  focus:border-accent2/50 placeholder:text-dim"
+              />
+              <button
+                onClick={handleSend}
+                disabled={!input.trim() || isStreaming}
+                className="px-5 py-3 rounded-xl text-[12px] font-medium
+                  bg-accent2 text-white hover:bg-accent2/85
+                  disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer shrink-0"
+              >
+                Send
+              </button>
+            </div>
+            {onModelChange && (
+              <div className="mt-2">
+                <select
+                  value={model}
+                  onChange={(e) => onModelChange(e.target.value)}
+                  className="bg-surface border border-border rounded-lg text-[11px] text-muted
+                    px-2 py-1 outline-none cursor-pointer focus:border-accent2 hover:border-border2"
+                >
+                  <option value="sonnet">Sonnet 4.6</option>
+                  <option value="opus">Opus 4.6</option>
+                  <option value="gemini">Gemini 2.5 Flash (Free)</option>
+                </select>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -117,10 +137,10 @@ export function Councillor({ model }: CouncillorProps) {
   }
 
   return (
-    <div className="h-[calc(100vh-56px)] flex flex-col">
+    <div className="h-[calc(100vh-64px)] flex flex-col">
       {/* Messages */}
       <div className="flex-1 overflow-y-auto">
-        <div className="max-w-3xl mx-auto px-6 py-6 space-y-4">
+        <div className="max-w-4xl mx-auto px-6 py-6 space-y-4">
           {messages.map((msg, i) => (
             <MessageBubble
               key={i}

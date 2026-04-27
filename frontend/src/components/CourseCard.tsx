@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import type { Course, Section } from '../types'
 import { courseAvailStatus } from '../lib/availability'
 import { SectionTable } from './SectionTable'
+import { ProfessorCompare } from './ProfessorCompare'
 import { capeUrl, socSearchUrl, courseCodeToSubject, rmpUrl } from '../lib/links'
 import type { SavedCourse } from '../hooks/useMySchedule'
 import type { RmpRating } from '../hooks/useRmpRatings'
@@ -15,11 +16,15 @@ interface CourseCardProps {
   hasSection?: (courseCode: string, sectionCode: string, sectionType: string) => boolean
   hasCompleted?: (courseCode: string) => boolean
   getRating?: (instructor: string) => RmpRating | null | undefined
+  isWatching?: (sectionId: string) => boolean
+  onWatch?: (sectionId: string, courseCode: string, section: string, meta?: Record<string, unknown>) => void
+  onUnwatch?: (sectionId: string, courseCode: string, section: string) => void
 }
 
-export function CourseCard({ course, index, onAddToSchedule, isInSchedule, hasSection, hasCompleted, getRating }: CourseCardProps) {
+export function CourseCard({ course, index, onAddToSchedule, isInSchedule, hasSection, hasCompleted, getRating, isWatching, onWatch, onUnwatch }: CourseCardProps) {
   const [open, setOpen] = useState(false)
   const [showPicker, setShowPicker] = useState(false)
+  const [showCompare, setShowCompare] = useState(false)
   const [selectedSections, setSelectedSections] = useState<Set<number>>(new Set())
   const [prereqs, setPrereqs] = useState<{ prerequisites: string; description: string } | null>(null)
   const { status, seats } = courseAvailStatus(course)
@@ -32,9 +37,9 @@ export function CourseCard({ course, index, onAddToSchedule, isInSchedule, hasSe
       .catch(() => {})
   }, [open, prereqs, course.course_code])
 
-  const instructors =
-    [...new Set(course.sections.map((s) => s.instructor).filter(Boolean))].slice(0, 2).join(', ') ||
-    'TBA'
+  const uniqueInstructors = [...new Set(course.sections.map((s) => s.instructor).filter(n => n && n !== 'TBA' && n !== 'Staff'))]
+  const uniqueInstructorCount = uniqueInstructors.length
+  const instructors = uniqueInstructors.slice(0, 2).join(', ') || 'TBA'
 
   let seatLabel = ''
   let seatClass = ''
@@ -108,113 +113,98 @@ export function CourseCard({ course, index, onAddToSchedule, isInSchedule, hasSe
       data-testid="course-card"
       style={{ animationDelay: `${Math.min(index * 15, 150)}ms` }}
     >
-      {/* Header */}
+      {/* Header — essentials only */}
       <div
         onClick={() => setOpen(!open)}
-        className="px-4 py-3.5 cursor-pointer flex items-center gap-3 select-none"
+        className="px-5 py-4 cursor-pointer flex items-center gap-3 select-none"
         data-testid="course-header"
       >
-        {/* Course code */}
+        {/* Course code + units */}
         <a
           href={socSearchUrl(courseCodeToSubject(course.course_code))}
           target="_blank"
           rel="noopener"
           onClick={(e) => e.stopPropagation()}
-          className="font-mono text-[13px] font-bold bg-accent/12 text-accent rounded-lg px-3 py-1.5 whitespace-nowrap hover:bg-accent/20 hover:shadow-[0_0_10px_rgba(79,142,247,0.15)] shrink-0"
+          className="font-mono text-sm font-bold bg-accent/12 text-accent rounded-xl px-3.5 py-2 whitespace-nowrap hover:bg-accent/20 shrink-0"
           title={`View ${course.subject} on Schedule of Classes`}
         >
           {course.course_code}
+          {course.units && <span className="ml-1.5 text-xs font-medium text-accent/60">{course.units}u</span>}
         </a>
 
-        {/* Title + meta */}
+        {/* Title */}
         <div className="flex-1 min-w-0">
-          <div className="text-[14px] font-semibold text-text leading-snug truncate">
+          <div className="text-base font-semibold text-text leading-snug truncate">
             {course.title || 'Untitled'}
-          </div>
-          <div className="flex items-center gap-1.5 mt-1 text-[11px] font-mono text-muted">
-            {course.units && <span className="text-gold/80 font-medium">{course.units} units</span>}
-            <span className="text-dim">&middot;</span>
-            <span>{course.sections.length} sec</span>
-            {course.restrictions && (
-              <>
-                <span className="text-dim">&middot;</span>
-                <span className="text-accent2">{course.restrictions}</span>
-              </>
-            )}
-            {rating && (
-              <>
-                <span className="text-dim">&middot;</span>
-                <a
-                  href={rating.rmpUrl}
-                  target="_blank"
-                  rel="noopener"
-                  onClick={(e) => e.stopPropagation()}
-                  className={`hover:underline ${
-                    rating.rating >= 4 ? 'text-green' : rating.rating >= 3 ? 'text-gold' : 'text-red'
-                  }`}
-                  title={`${rating.name}: ${rating.rating}/5, ${rating.numRatings} reviews`}
-                >
-                  &#9733;{rating.rating.toFixed(1)}
-                </a>
-              </>
-            )}
           </div>
         </div>
 
-        {/* Right side: actions + status */}
-        <div className="flex items-center gap-2.5 shrink-0">
-          {/* Quick links */}
-          <div className="flex gap-1">
-            <a
-              href={capeUrl(course.course_code)}
-              target="_blank"
-              rel="noopener"
-              onClick={(e) => e.stopPropagation()}
-              className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-accent2/8 text-accent2/70 hover:text-accent2 hover:bg-accent2/12"
-            >
-              CAPEs
-            </a>
-            {mainInstructor !== 'TBA' && !rating && (
-              <a
-                href={rmpUrl(mainInstructor)}
-                target="_blank"
-                rel="noopener"
-                onClick={(e) => e.stopPropagation()}
-                className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-green/8 text-green/70 hover:text-green hover:bg-green/12"
-              >
-                RMP
-              </a>
-            )}
-          </div>
-
-          {/* Add button — filled pill */}
+        {/* Right: add button + seat status pill + chevron */}
+        <div className="flex items-center gap-3 shrink-0">
           {onAddToSchedule && (
             <button
               onClick={handleAddClick}
-              className={`font-mono text-[11px] font-semibold px-3.5 py-1.5 rounded-full cursor-pointer
+              className={`text-sm font-bold px-5 py-2 rounded-xl cursor-pointer transition-all
                 ${isInSchedule
-                  ? 'bg-green text-white shadow-[0_0_10px_rgba(61,214,140,0.25)]'
+                  ? 'bg-green text-white shadow-[0_0_12px_rgba(61,214,140,0.3)]'
                   : showPicker
-                    ? 'bg-accent/20 text-accent border border-accent/25'
-                    : 'bg-accent text-white hover:bg-accent/85 hover:shadow-[0_0_12px_rgba(79,142,247,0.3)]'
+                    ? 'bg-accent/20 text-accent border-2 border-accent/25'
+                    : 'bg-accent text-white hover:bg-accent/85 hover:shadow-[0_0_16px_rgba(79,142,247,0.3)]'
                 }`}
               title={isInSchedule ? 'Already in My Schedule' : 'Pick sections to add'}
             >
-              {isInSchedule ? '✓ Added' : showPicker ? 'Picking' : '+ Add'}
+              {isInSchedule ? '✓ Added' : showPicker ? 'Picking...' : '+ Add'}
             </button>
           )}
 
-          {/* Seat status + chevron */}
-          <div className="flex items-center gap-2">
-            <span className={`font-mono text-[11px] font-medium ${seatClass}`} data-testid="seat-status">
-              {seatLabel}
-            </span>
-            <span className={`text-dim text-[10px] transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>
-              &#x25BC;
-            </span>
-          </div>
+          <span className={`text-xs font-bold px-3 py-1.5 rounded-full ${
+            status === 'open' ? 'bg-green/15 text-green' : status === 'waitlist' ? 'bg-gold/15 text-gold' : 'bg-red/15 text-red'
+          }`} data-testid="seat-status">
+            {seatLabel}
+          </span>
+
+          <span className={`text-dim text-xs transition-transform duration-200 ${open ? 'rotate-180' : ''}`}>
+            &#x25BC;
+          </span>
         </div>
       </div>
+
+      {/* Expanded summary bar — details that used to be in collapsed header */}
+      {open && (
+        <div className="px-5 py-2.5 bg-surface/30 border-t border-border/50 flex items-center gap-3 flex-wrap text-[12px] text-muted">
+          <span>{course.sections.length} section{course.sections.length !== 1 ? 's' : ''}</span>
+          {course.restrictions && <span className="text-accent2">{course.restrictions}</span>}
+          <span className="truncate max-w-[200px]">{instructors}</span>
+          {rating && (
+            <a href={rating.rmpUrl} target="_blank" rel="noopener"
+              className={`hover:underline ${rating.rating >= 4 ? 'text-green' : rating.rating >= 3 ? 'text-gold' : 'text-red'}`}>
+              &#9733;{rating.rating.toFixed(1)}
+            </a>
+          )}
+          <a href={capeUrl(course.course_code)} target="_blank" rel="noopener" onClick={(e) => e.stopPropagation()}
+            className="text-[11px] px-1.5 py-0.5 rounded bg-accent2/8 text-accent2/70 hover:text-accent2">CAPEs</a>
+          {mainInstructor !== 'TBA' && (
+            <a href={rmpUrl(mainInstructor)} target="_blank" rel="noopener" onClick={(e) => e.stopPropagation()}
+              className="text-[11px] px-1.5 py-0.5 rounded bg-green/8 text-green/70 hover:text-green">RMP</a>
+          )}
+          {uniqueInstructorCount >= 2 && (
+            <button
+              onClick={(e) => { e.stopPropagation(); setShowCompare(true) }}
+              className="text-[11px] px-2 py-0.5 rounded bg-gold/10 text-gold/80 hover:text-gold hover:bg-gold/15 cursor-pointer"
+            >
+              Compare Professors
+            </button>
+          )}
+        </div>
+      )}
+
+      {showCompare && (
+        <ProfessorCompare
+          courseCode={course.course_code}
+          sections={course.sections}
+          onClose={() => setShowCompare(false)}
+        />
+      )}
 
       {/* Expanded content */}
       <div
@@ -288,6 +278,9 @@ export function CourseCard({ course, index, onAddToSchedule, isInSchedule, hasSe
             } : undefined}
             isSectionAdded={hasSection ? (sec, type) => hasSection(course.course_code, sec, type) : undefined}
             getRating={getRating}
+            isWatching={isWatching}
+            onWatch={onWatch ? (sid, _cc, sec, meta) => onWatch(sid, course.course_code, sec, { ...meta, title: course.title, units: course.units }) : undefined}
+            onUnwatch={onUnwatch ? (sid, _cc, sec) => onUnwatch(sid, course.course_code, sec) : undefined}
           />
         )}
       </div>

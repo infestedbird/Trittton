@@ -109,7 +109,7 @@ export function LibraryStatus() {
 
   if (loading) {
     return (
-      <div className="h-[calc(100vh-56px)] flex items-center justify-center">
+      <div className="h-[calc(100vh-64px)] flex items-center justify-center">
         <div className="text-center">
           <div className="w-8 h-8 border-2 border-accent/30 border-t-accent rounded-full animate-spin mx-auto mb-3" />
           <div className="font-mono text-[12px] text-muted">Loading library data...</div>
@@ -120,7 +120,7 @@ export function LibraryStatus() {
 
   if (error && libraries.length === 0) {
     return (
-      <div className="h-[calc(100vh-56px)] flex items-center justify-center">
+      <div className="h-[calc(100vh-64px)] flex items-center justify-center">
         <div className="text-center max-w-md">
           <div className="text-red font-mono text-[13px] mb-2">{error}</div>
           <button onClick={fetchData} className="font-mono text-[12px] text-accent hover:underline cursor-pointer">
@@ -141,12 +141,12 @@ export function LibraryStatus() {
   }
 
   return (
-    <div className="h-[calc(100vh-56px)] overflow-y-auto">
+    <div className="h-[calc(100vh-64px)] overflow-y-auto">
       <div className="max-w-4xl mx-auto px-6 py-6 space-y-5">
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-lg font-medium text-text">Library Status</h2>
+            <h2 className="text-lg font-semibold text-text">Library Status</h2>
             <div className="flex gap-4 mt-1 font-mono text-[11px] text-muted">
               <span>Live occupancy data</span>
               {lastUpdated && (

@@ -216,32 +216,53 @@ def parse_html(html, subject):
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main():
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+
     logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
+    total = len(ALL_SUBJECTS)
     print("UCSD Schedule of Classes Scraper")
-    print(f"Term: {TERM}  |  Departments: {len(ALL_SUBJECTS)}  |  Output: {OUTPUT}\n")
+    print(f"Term: {TERM}  |  Departments: {total}  |  Output: {OUTPUT}")
+    print(f"Workers: 12 concurrent\n")
 
-    session     = requests.Session()
-    all_courses = []
-    total       = len(ALL_SUBJECTS)
+    results: dict[int, list] = {}
+    completed = 0
+    start_time = time.time()
 
-    for i, subject in enumerate(ALL_SUBJECTS, 1):
-        print(f"[{i:3}/{total}] {subject:<8}", end=" ... ", flush=True)
+    WORKERS = 12
 
+    def _fetch_one(idx: int, subject: str) -> tuple[int, str, list | None]:
+        session = requests.Session()
         html = fetch_subject(session, TERM, subject)
         if html is None:
-            print("FAILED")
-            continue
+            return (idx, subject, None)
+        return (idx, subject, parse_html(html, subject))
 
-        courses = parse_html(html, subject)
-        sections = sum(len(c["sections"]) for c in courses)
-        all_courses.extend(courses)
-        print(f"{len(courses):3} courses, {sections:4} sections")
+    with ThreadPoolExecutor(max_workers=WORKERS) as pool:
+        futures = {
+            pool.submit(_fetch_one, i, subj): (i, subj)
+            for i, subj in enumerate(ALL_SUBJECTS)
+        }
 
-        if i < total:
-            time.sleep(DELAY)
+        for future in as_completed(futures):
+            idx, subject, courses = future.result()
+            completed += 1
 
-    print(f"\n── Done: {len(all_courses)} total courses ──")
+            if courses is None:
+                print(f"[{completed:3}/{total}] {subject:<8} ... FAILED")
+            else:
+                results[idx] = courses
+                sections = sum(len(c["sections"]) for c in courses)
+                total_so_far = sum(len(r) for r in results.values())
+                print(f"[{completed:3}/{total}] {subject:<8} ... {len(courses):3} courses, {sections:4} sections  (total: {total_so_far})")
+
+    # Reassemble in original department order
+    all_courses = []
+    for i in range(total):
+        all_courses.extend(results.get(i, []))
+
+    elapsed = time.time() - start_time
+    print(f"\n── Done: {len(all_courses)} total courses in {elapsed:.1f}s ──")
     with open(OUTPUT, "w", encoding="utf-8") as f:
         json.dump(all_courses, f, indent=2, ensure_ascii=False)
     print(f"✓ Saved to {OUTPUT}")

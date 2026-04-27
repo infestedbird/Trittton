@@ -85,7 +85,7 @@ export function FilterBar({
       {hasFilters && (
         <button
           onClick={clearAll}
-          className="font-mono text-[11px] text-muted hover:text-text px-2 py-1 rounded-md
+          className="text-[11px] text-muted hover:text-text px-2 py-1 rounded-md
             hover:bg-surface cursor-pointer"
         >
           Reset
@@ -93,7 +93,7 @@ export function FilterBar({
       )}
 
       {/* Result count */}
-      <div className="ml-auto font-mono text-[11px] text-muted" data-testid="result-count">
+      <div className="ml-auto text-[11px] text-muted" data-testid="result-count">
         <b className="text-text font-medium">{resultCount.toLocaleString()}</b> course{resultCount !== 1 ? 's' : ''}
       </div>
     </div>

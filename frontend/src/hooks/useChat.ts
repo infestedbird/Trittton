@@ -29,7 +29,7 @@ export function useChat() {
     }
   }, [messages, isStreaming])
 
-  const sendMessage = useCallback(async (text: string, model: string = 'sonnet', term: string = 'SP26', completedCourses: string = '') => {
+  const sendMessage = useCallback(async (text: string, model: string = 'sonnet', term: string = 'SP26', completedCourses: string = '', geminiKey: string | null = null) => {
     const userMsg: ChatMessage = { role: 'user', content: text }
     const newMessages = [...messages, userMsg]
     setMessages(newMessages)
@@ -44,10 +44,15 @@ export function useChat() {
       const abort = new AbortController()
       abortRef.current = abort
 
+      const body: Record<string, unknown> = { messages: newMessages, include_courses: true, model, term, completed_courses: completedCourses }
+      if (model === 'gemini' && geminiKey) {
+        body.gemini_api_key = geminiKey
+      }
+
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: newMessages, include_courses: true, model, term, completed_courses: completedCourses }),
+        body: JSON.stringify(body),
         signal: abort.signal,
       })
 
