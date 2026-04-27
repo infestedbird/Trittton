@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged, type User } from 'firebase/auth'
+import { signInWithPopup, signOut, onAuthStateChanged, type User } from 'firebase/auth'
 import { auth, googleProvider } from '../lib/firebase'
 
 export interface GoogleUser {
@@ -12,15 +12,9 @@ export interface GoogleUser {
 export function useGoogleAuth() {
   const [user, setUser] = useState<GoogleUser | null>(null)
   const [loading, setLoading] = useState(true)
+  const [authError, setAuthError] = useState<string | null>(null)
 
   useEffect(() => {
-    // Handle redirect result when returning from Google sign-in
-    getRedirectResult(auth).catch((err) => {
-      console.error('Redirect sign-in error:', err)
-    }).finally(() => {
-      // onAuthStateChanged will handle setting the user
-    })
-
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser: User | null) => {
       if (firebaseUser) {
         setUser({
@@ -38,10 +32,15 @@ export function useGoogleAuth() {
   }, [])
 
   const signIn = useCallback(async () => {
+    setAuthError(null)
     try {
-      await signInWithRedirect(auth, googleProvider)
-    } catch (err) {
-      console.error('Google sign-in failed:', err)
+      await signInWithPopup(auth, googleProvider)
+    } catch (err: unknown) {
+      const firebaseErr = err as { code?: string; message?: string }
+      const code = firebaseErr.code || 'unknown'
+      const msg = firebaseErr.message || 'Unknown error'
+      console.error('Google sign-in failed:', code, msg)
+      setAuthError(`${code}: ${msg}`)
       throw err
     }
   }, [])
@@ -50,7 +49,7 @@ export function useGoogleAuth() {
     await signOut(auth)
   }, [])
 
-  return { user, loading, signIn, logOut }
+  return { user, loading, signIn, logOut, authError }
 }
 
 // ── Gemini API Key helpers (keyed per UID) ──

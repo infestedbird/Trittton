@@ -2,9 +2,10 @@ import { useState } from 'react'
 
 interface LoginPageProps {
   onGoogleSignIn: () => Promise<void>
+  authError?: string | null
 }
 
-export function LoginPage({ onGoogleSignIn }: LoginPageProps) {
+export function LoginPage({ onGoogleSignIn, authError }: LoginPageProps) {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -13,8 +14,9 @@ export function LoginPage({ onGoogleSignIn }: LoginPageProps) {
     setError('')
     try {
       await onGoogleSignIn()
-    } catch {
-      setError('Google sign-in failed. Please try again.')
+    } catch (err: unknown) {
+      const firebaseErr = err as { code?: string; message?: string }
+      setError(firebaseErr.code || 'Google sign-in failed. Please try again.')
     } finally {
       setLoading(false)
     }
@@ -40,9 +42,9 @@ export function LoginPage({ onGoogleSignIn }: LoginPageProps) {
             Sign in with your Google account to access AI-powered course planning.
           </p>
 
-          {error && (
+          {(error || authError) && (
             <div className="text-[13px] text-red bg-red/8 border border-red/15 rounded-lg px-4 py-2.5 mb-4">
-              {error}
+              {error || authError}
             </div>
           )}
 

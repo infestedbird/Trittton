@@ -39,7 +39,7 @@ import { Parking } from './components/Parking'
 import { useTheme } from './components/ThemeToggle'
 
 export default function App() {
-  const { user, loading, signIn, logOut } = useGoogleAuth()
+  const { user, loading, signIn, logOut, authError } = useGoogleAuth()
   const { theme, toggle: toggleTheme } = useTheme()
   const [geminiKey, setGeminiKeyState] = useState<string | null>(null)
   const [showKeyOverlay, setShowKeyOverlay] = useState(false)
@@ -75,7 +75,7 @@ export default function App() {
   }
 
   if (!user) {
-    return <LoginPage onGoogleSignIn={signIn} />
+    return <LoginPage onGoogleSignIn={signIn} authError={authError} />
   }
 
   return (
