@@ -42,16 +42,12 @@ export function CourseCard({ course, index, onAddToSchedule, isInSchedule, hasSe
   const instructors = uniqueInstructors.slice(0, 2).join(', ') || 'TBA'
 
   let seatLabel = ''
-  let seatClass = ''
   if (status === 'open') {
     seatLabel = `${seats} open`
-    seatClass = 'text-green'
   } else if (status === 'waitlist') {
     seatLabel = 'waitlist'
-    seatClass = 'text-gold'
   } else {
     seatLabel = 'full'
-    seatClass = 'text-red'
   }
 
   const handleAddClick = (e: React.MouseEvent) => {

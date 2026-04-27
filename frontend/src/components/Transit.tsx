@@ -107,10 +107,6 @@ function haversine(lat1: number, lon1: number, lat2: number, lon2: number): numb
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
 }
 
-function walkMinutes(km: number): number {
-  return Math.ceil(km / 0.08) // ~5 km/h = 0.083 km/min
-}
-
 function googleMapsTransitUrl(destLat: number, destLon: number): string {
   return `https://www.google.com/maps/dir/?api=1&destination=${destLat},${destLon}&travelmode=transit`
 }
@@ -298,7 +294,6 @@ export function Transit() {
   const clearDestination = () => {
     setDestination(null)
     setDestSearch('')
-    setNearestStops([])
     setGeoResults([])
   }
 

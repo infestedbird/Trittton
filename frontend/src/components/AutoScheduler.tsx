@@ -60,7 +60,7 @@ function blockPos(block: TimeBlock, weekDates: { date: string }[]) {
 
 type LeftTab = 'assignments' | 'leisure' | 'chat'
 
-export function AutoScheduler({ model, onModelChange, geminiKey, onRequestKey }: { model: string; onModelChange?: (m: string) => void; geminiKey?: string | null; onRequestKey?: () => void }) {
+export function AutoScheduler({ model, onModelChange, geminiKey }: { model: string; onModelChange?: (m: string) => void; geminiKey?: string | null; onRequestKey?: () => void }) {
   const [assignments, setAssignments] = useState<Assignment[]>(load(ASSIGN_KEY, []))
   const [leisure, setLeisure] = useState<Leisure[]>(load(LEISURE_KEY, []))
   const [result, setResult] = useState<ScheduleResult | null>(null)

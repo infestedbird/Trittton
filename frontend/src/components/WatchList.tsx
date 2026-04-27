@@ -53,9 +53,6 @@ export function WatchList({ watches, alerts, onUnwatch, onDismissAlert, notifPer
     .map(code => courses.find(c => c.course_code === code))
     .filter((c): c is Course => c !== undefined)
 
-  // Build a map of sectionId -> WatchInfo for the chance badges
-  const watchMap = watches
-
   return (
     <div className="h-[calc(100vh-64px)] overflow-y-auto">
       <div className="max-w-5xl mx-auto px-8 py-8 space-y-6">

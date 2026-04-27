@@ -43,13 +43,6 @@ function parseDateParts(iso: string): { year: number; month: number; day: number
   return { year: parseInt(match[1]), month: parseInt(match[2]), day: parseInt(match[3]) }
 }
 
-function parseLocalDate(iso: string): Date {
-  const p = parseDateParts(iso)
-  if (!p) return new Date(iso)
-  // Create date using local constructor (month is 0-indexed)
-  return new Date(p.year, p.month - 1, p.day, 12, 0, 0)
-}
-
 function formatDate(iso: string | null): string {
   if (!iso) return ''
   const p = parseDateParts(iso)

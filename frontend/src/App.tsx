@@ -11,7 +11,6 @@ import { ChatPanel } from './components/ChatPanel'
 import { MySchedule } from './components/MySchedule'
 import { CompletedCourses } from './components/CompletedCourses'
 import { GradProgress } from './components/GradProgress'
-import { Layout } from './components/Layout'
 import { useCourseData } from './hooks/useCourseData'
 import { useFilters } from './hooks/useFilters'
 import { useScraper } from './hooks/useScraper'
@@ -112,13 +111,12 @@ function AuthenticatedApp({
   theme: 'dark' | 'light'
   onToggleTheme: () => void
 }) {
-  const { courses, isLoaded, error, loadFromServer, autoLoad, loadFromData } =
+  const { courses, isLoaded, error, autoLoad, loadFromData } =
     useCourseData()
   const {
     filters,
     filtered,
     departments,
-    stats,
     setSearch,
     setDepartment,
     setSectionType,
