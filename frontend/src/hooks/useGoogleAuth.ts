@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react'
-import { signInWithPopup, signOut, onAuthStateChanged, type User } from 'firebase/auth'
+import { signInWithRedirect, getRedirectResult, signOut, onAuthStateChanged, type User } from 'firebase/auth'
 import { auth, googleProvider } from '../lib/firebase'
 
 export interface GoogleUser {
@@ -14,6 +14,13 @@ export function useGoogleAuth() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // Handle redirect result when returning from Google sign-in
+    getRedirectResult(auth).catch((err) => {
+      console.error('Redirect sign-in error:', err)
+    }).finally(() => {
+      // onAuthStateChanged will handle setting the user
+    })
+
     const unsubscribe = onAuthStateChanged(auth, (firebaseUser: User | null) => {
       if (firebaseUser) {
         setUser({
@@ -32,7 +39,7 @@ export function useGoogleAuth() {
 
   const signIn = useCallback(async () => {
     try {
-      await signInWithPopup(auth, googleProvider)
+      await signInWithRedirect(auth, googleProvider)
     } catch (err) {
       console.error('Google sign-in failed:', err)
       throw err
