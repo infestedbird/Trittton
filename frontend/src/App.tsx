@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback, lazy, Suspense } from 'react'
+import { useEffect, useState, useCallback, lazy, Suspense } from 'react'
 import { Header } from './components/Header'
 import type { ViewType } from './components/Header'
 import { SideNav } from './components/SideNav'
@@ -25,6 +25,8 @@ const FourYearPlan = lazy(() => import('./components/FourYearPlan').then((m) => 
 const LiveStatus = lazy(() => import('./components/LiveStatus').then((m) => ({ default: m.LiveStatus })))
 const AutoScheduler = lazy(() => import('./components/AutoScheduler').then((m) => ({ default: m.AutoScheduler })))
 const EventsCalendar = lazy(() => import('./components/EventsCalendar').then((m) => ({ default: m.EventsCalendar })))
+const EnrollmentCenter = lazy(() => import('./components/EnrollmentCenter').then((m) => ({ default: m.EnrollmentCenter })))
+const CampusHub = lazy(() => import('./components/CampusHub').then((m) => ({ default: m.CampusHub })))
 import { LoginPage } from './components/LoginPage'
 import { ApiKeyOverlay, type ApiKeyKind } from './components/ApiKeyOverlay'
 import { useGoogleAuth, getGeminiKey, setGeminiKey, getAnthropicKey, setAnthropicKey } from './hooks/useGoogleAuth'
@@ -49,6 +51,11 @@ function ViewLoader() {
 
 export default function App() {
   const { user, loading, signIn, logOut, authError } = useGoogleAuth()
+  const [localPreview, setLocalPreview] = useState(false)
+  const previewUser = import.meta.env.DEV && localPreview
+    ? { uid: '', displayName: 'Local Tester', photoURL: null }
+    : null
+  const activeUser = user || previewUser
   const { theme, toggle: toggleTheme } = useTheme()
   const [geminiKey, setGeminiKeyState] = useState<string | null>(null)
   const [anthropicKey, setAnthropicKeyState] = useState<string | null>(null)
@@ -83,7 +90,7 @@ export default function App() {
     setKeyOverlayKind(kind)
   }, [])
 
-  if (loading) {
+  if (loading && !previewUser) {
     return (
       <div className="min-h-screen bg-bg flex items-center justify-center">
         <div className="w-6 h-6 border-2 border-accent/30 border-t-accent rounded-full animate-spin" />
@@ -91,8 +98,14 @@ export default function App() {
     )
   }
 
-  if (!user) {
-    return <LoginPage onGoogleSignIn={signIn} authError={authError} />
+  if (!activeUser) {
+    return (
+      <LoginPage
+        onGoogleSignIn={signIn}
+        onLocalPreview={import.meta.env.DEV ? () => setLocalPreview(true) : undefined}
+        authError={authError}
+      />
+    )
   }
 
   return (
@@ -106,13 +119,13 @@ export default function App() {
         />
       )}
       <AuthenticatedApp
-        onLogout={logOut}
+        onLogout={previewUser ? () => setLocalPreview(false) : logOut}
         geminiKey={geminiKey}
         anthropicKey={anthropicKey}
         onRequestKey={handleRequestKey}
-        uid={user.uid}
-        userDisplayName={user.displayName}
-        userPhotoURL={user.photoURL}
+        uid={activeUser.uid}
+        userDisplayName={activeUser.displayName}
+        userPhotoURL={activeUser.photoURL}
         theme={theme}
         onToggleTheme={toggleTheme}
       />
@@ -141,8 +154,9 @@ function AuthenticatedApp({
   theme: 'dark' | 'light'
   onToggleTheme: () => void
 }) {
+  const [term, setTerm] = useState(() => localStorage.getItem('ucsd-term') || 'FA26')
   const { courses, isLoaded, error, autoLoad, loadFromData } =
-    useCourseData()
+    useCourseData(term)
   const {
     filters,
     filtered,
@@ -154,20 +168,22 @@ function AuthenticatedApp({
   } = useFilters(courses)
 
   const [activeView, setActiveView] = useState<ViewType>('browse')
+  const [aiWorkspace, setAiWorkspace] = useState<'courses' | 'week'>('courses')
   const [model, setModel] = useState(() => localStorage.getItem('ucsd-ai-model') || 'sonnet')
-  const [term, setTerm] = useState(() => localStorage.getItem('ucsd-term') || 'SP26')
 
   const handleScrapeComplete = useCallback((courses: import('./types').Course[]) => {
     loadFromData(courses)
-    setShowPanel(false)
   }, [loadFromData])
 
   const { progress, showPanel, setShowPanel, startScrape } = useClientScraper(handleScrapeComplete)
   const { messages, isStreaming, thinkingPhase, error: chatError, sendMessage, clearChat, restoreChat } = useChat()
   const { showToast } = useToast()
   const mySchedule = useMySchedule(term, uid)
+  const refreshScheduleAvailability = mySchedule.refreshAvailability
   const completedCourses = useCompletedCourses(uid)
-  const { getRating } = useRmpRatings(courses)
+  // Ratings are secondary data. Limit the hook to the current result set so a
+  // full FA26 load does not queue lookups for every instructor in the catalog.
+  const { getRating } = useRmpRatings(filtered)
   const fourYearPlan = useFourYearPlan(uid)
 
   // Coalesce the three sync statuses into one header indicator.
@@ -182,6 +198,10 @@ function AuthenticatedApp({
     return 'idle'
   })()
   const seatWatch = useSeatWatch(term, uid)
+
+  useEffect(() => {
+    if (isLoaded) refreshScheduleAvailability(courses)
+  }, [courses, isLoaded, refreshScheduleAvailability])
 
   const [termOptions, setTermOpts] = useState(TERM_OPTIONS)
 
@@ -230,20 +250,16 @@ function AuthenticatedApp({
 
   const handleTermChange = (newTerm: string) => {
     setTerm(newTerm)
-    // Always scrape when term changes — server data is term-specific
-    startScrape(newTerm)
   }
 
-  const didAutoLoad = useRef(false)
   useEffect(() => {
-    if (didAutoLoad.current) return
-    didAutoLoad.current = true
+    let cancelled = false
     autoLoad().then((loaded) => {
-      if (!loaded) {
-        // No existing data — auto-scrape for new users
+      if (!loaded && !cancelled) {
         startScrape(term)
       }
     })
+    return () => { cancelled = true }
   }, [autoLoad, startScrape, term])
 
   const handleScrapeClick = () => {
@@ -363,9 +379,31 @@ function AuthenticatedApp({
 
   const renderContent = () => {
     if (activeView === 'ai' && isLoaded)
-      return <ChatPanel messages={messages} isStreaming={isStreaming} thinkingPhase={thinkingPhase} error={chatError}
-        onSend={handleChatSend} onClear={handleClearChat} onAddToSchedule={mySchedule.addFromProposal}
-        onAddCourseStub={(code) => { setActiveView('browse'); setSearch(code) }} model={model} onModelChange={setModel} />
+      return (
+        <div className="flex h-full min-h-0 flex-col">
+          <div className="shrink-0 border-b border-border bg-surface/55 px-4 py-3 sm:px-7">
+            <div className="mx-auto flex max-w-5xl items-center justify-between gap-3">
+              <div>
+                <div className="text-[13px] font-bold text-text">AI Planner</div>
+                <div className="text-[10px] text-muted">Course planning and weekly workload in one workspace</div>
+              </div>
+              <div className="flex rounded-xl border border-border bg-card/70 p-1">
+                <button onClick={() => setAiWorkspace('courses')} className={`rounded-lg px-3 py-1.5 text-[11px] font-semibold ${aiWorkspace === 'courses' ? 'bg-accent text-white shadow-sm' : 'text-muted hover:text-text'}`}>Course plan</button>
+                <button onClick={() => setAiWorkspace('week')} className={`rounded-lg px-3 py-1.5 text-[11px] font-semibold ${aiWorkspace === 'week' ? 'bg-accent text-white shadow-sm' : 'text-muted hover:text-text'}`}>Weekly scheduler</button>
+              </div>
+            </div>
+          </div>
+          <div className="min-h-0 flex-1">
+            {aiWorkspace === 'courses' ? (
+              <ChatPanel messages={messages} isStreaming={isStreaming} thinkingPhase={thinkingPhase} error={chatError}
+                onSend={handleChatSend} onClear={handleClearChat} onAddToSchedule={mySchedule.addFromProposal}
+                onAddCourseStub={(code) => { setActiveView('browse'); setSearch(code) }} model={model} onModelChange={setModel} />
+            ) : (
+              <AutoScheduler model={model} onModelChange={setModel} geminiKey={geminiKey} anthropicKey={anthropicKey} onRequestKey={onRequestKey} uid={uid} />
+            )}
+          </div>
+        </div>
+      )
     if (activeView === 'schedule' && isLoaded)
       return <MySchedule schedule={mySchedule.schedule} proposal={mySchedule.asProposal} term={term}
         onRemove={mySchedule.removeCourse} onRemoveSection={mySchedule.removeSection} onClear={handleClearSchedule}
@@ -379,6 +417,11 @@ function AuthenticatedApp({
         onClearQuarter={handleClearQuarter}
         onClearAll={handleClearAllPlan}
         totalUnits={fourYearPlan.totalUnits} />
+    if (activeView === 'enrollment')
+      return <EnrollmentCenter term={term} schedule={mySchedule.schedule} proposal={mySchedule.asProposal} allCourses={courses}
+        completedCodes={completedCourses.completed.map((course) => course.course_code)}
+        onBrowse={() => setActiveView('browse')} />
+    if (activeView === 'campus') return <CampusHub onOpen={setActiveView} />
     if (activeView === 'live') return <LiveStatus />
     if (activeView === 'scheduler')
       return <AutoScheduler model={model} onModelChange={setModel} geminiKey={geminiKey} anthropicKey={anthropicKey} onRequestKey={onRequestKey} uid={uid} />
@@ -403,7 +446,7 @@ function AuthenticatedApp({
     // Browse view (default)
     if (!isLoaded) return <ScrapeLoadingScreen progress={progress} error={error} onRetry={() => startScrape(term)} />
     return (
-      <div className="h-[calc(100vh-64px)] flex">
+      <div className="h-full flex min-h-0">
         <Sidebar
           departments={departments}
           activeDept={filters.department}
@@ -412,23 +455,40 @@ function AuthenticatedApp({
           mobileOpen={mobileDeptOpen}
           onMobileClose={closeMobileDept}
         />
-        <div className="flex-1 overflow-y-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 min-w-0">
-          {/* Mobile-only: open the dept drawer */}
-          <button
-            onClick={() => setMobileDeptOpen(true)}
-            className="md:hidden mb-3 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-surface border border-border text-[12px] text-text hover:border-border2 cursor-pointer"
-          >
-            <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-            </svg>
-            Departments
-            {filters.department && filters.department !== 'ALL' && (
-              <span className="text-[11px] text-accent font-semibold">· {filters.department}</span>
-            )}
-          </button>
-          <FilterBar search={filters.search} sectionType={filters.sectionType} availability={filters.availability}
-            resultCount={filtered.length} onSearchChange={setSearch} onTypeChange={setSectionType} onAvailChange={setAvailability} />
-          <div className="mt-4">
+        <div className="flex min-w-0 flex-1 flex-col overflow-hidden">
+          <div className="shrink-0 px-4 pt-5 sm:px-7 sm:pt-7 lg:px-9">
+            <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+              <div>
+                <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-accent/20 bg-accent/8 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-accent">
+                  <span className="h-1.5 w-1.5 rounded-full bg-green shadow-[0_0_8px_rgba(74,222,128,0.8)]" />
+                  Live TSS catalog
+                </div>
+                <h1 className="text-2xl font-bold tracking-[-0.025em] text-text sm:text-[28px]">Find your next course</h1>
+                <p className="mt-1.5 text-[13px] text-muted">Compare sections, watch seats, build your plan, and jump directly into TSS.</p>
+              </div>
+              <div className="flex items-center gap-2 text-[11px] text-muted">
+                <span className="rounded-lg border border-border bg-card/70 px-2.5 py-1.5"><b className="text-text">{courses.length.toLocaleString()}</b> courses</span>
+                <span className="rounded-lg border border-border bg-card/70 px-2.5 py-1.5"><b className="text-text">{departments.length}</b> departments</span>
+              </div>
+            </div>
+
+            {/* Mobile-only: open the dept drawer */}
+            <button
+              onClick={() => setMobileDeptOpen(true)}
+              className="md:hidden mb-3 inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-surface border border-border text-[12px] text-text hover:border-border2 cursor-pointer"
+            >
+              <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+              Departments
+              {filters.department && filters.department !== 'ALL' && (
+                <span className="text-[11px] text-accent font-semibold">· {filters.department}</span>
+              )}
+            </button>
+            <FilterBar search={filters.search} sectionType={filters.sectionType} availability={filters.availability}
+              resultCount={filtered.length} onSearchChange={setSearch} onTypeChange={setSectionType} onAvailChange={setAvailability} />
+          </div>
+          <div className="min-h-0 flex-1 overflow-y-auto px-4 pb-6 pt-4 sm:px-7 lg:px-9">
             <CourseList courses={filtered} onAddToSchedule={mySchedule.addCourse} hasCourse={mySchedule.hasCourse}
               hasSection={mySchedule.hasSection} hasCompleted={completedCourses.hasCompleted} getRating={getRating}
               isWatching={seatWatch.isWatching} onWatch={seatWatch.addWatch} onUnwatch={seatWatch.removeWatch} />
@@ -439,7 +499,7 @@ function AuthenticatedApp({
   }
 
   return (
-    <div className="h-screen flex flex-col bg-bg">
+    <div className="h-screen flex flex-col bg-bg/80">
       <Header
         onScrapeClick={handleScrapeClick}
         scrapeRunning={progress.status === 'running'}
@@ -482,7 +542,7 @@ function AuthenticatedApp({
         onClose={() => setShowPanel(false)}
         onLoadResults={async () => {
           try {
-            const res = await fetch('/api/courses')
+            const res = await fetch(`/api/courses?term=${encodeURIComponent(term)}`)
             const data = await res.json()
             if (Array.isArray(data)) loadFromData(data)
             setShowPanel(false)
@@ -505,8 +565,8 @@ function ScrapeLoadingScreen({ progress, error, onRetry }: { progress: ScrapePro
             <span className="w-6 h-6 border-[2.5px] border-accent/30 border-t-accent rounded-full animate-spin" />
           </div>
 
-          <h2 className="text-lg font-medium">Scraping UCSD Courses...</h2>
-          <p className="text-[13px] text-muted">Fetching live data from TritonLink. This takes a few minutes.</p>
+          <h2 className="text-lg font-medium">Refreshing UCSD Courses...</h2>
+          <p className="text-[13px] text-muted">Fetching TSS-era course, seat, and waitlist data from UCSD.</p>
 
           <div className="w-full max-w-xs">
             <div className="w-full h-2 bg-surface rounded-full overflow-hidden">
@@ -558,7 +618,7 @@ function ScrapeLoadingScreen({ progress, error, onRetry }: { progress: ScrapePro
             bg-accent text-white hover:bg-accent/90
             transition-all duration-150 cursor-pointer"
         >
-          Retry Scrape
+          Retry Refresh
         </button>
       </div>
     </div>

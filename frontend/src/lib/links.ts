@@ -1,4 +1,11 @@
-let _term = 'SP26'
+let _term = 'FA26'
+
+export function isTssTerm(term: string): boolean {
+  const match = term.toUpperCase().match(/^(FA|WI|SP|SA|S1|S2|S3)(\d{2})$/)
+  if (!match) return false
+  const year = 2000 + Number(match[2])
+  return year > 2026 || (year === 2026 && match[1] === 'FA')
+}
 
 export function setCurrentTerm(term: string) {
   _term = term
@@ -10,6 +17,9 @@ export function getCurrentTerm(): string {
 
 export function socSearchUrl(subject: string, term?: string): string {
   const t = term || _term
+  if (isTssTerm(t)) {
+    return `https://classplanner.apps.ucsd.edu/workspace?term=${encodeURIComponent(t)}&q=${encodeURIComponent(subject)}`
+  }
   return `https://act.ucsd.edu/scheduleOfClasses/scheduleOfClassesStudent.htm#selectedTerm=${t}&selectedSubjects=${encodeURIComponent(subject)}`
 }
 
@@ -30,9 +40,13 @@ export function catalogUrl(subject: string, number: string): string {
   return `https://catalog.ucsd.edu/courses/${subject}.html#${subject.toLowerCase()}${number}`
 }
 
-export function webRegUrl(_sectionId?: string, _term?: string): string {
-  // WebReg does not support deep-linking to specific sections
+export function webRegUrl(_sectionId?: string, term?: string): string {
+  if (isTssTerm(term || _term)) return tssHomeUrl()
   return 'https://act.ucsd.edu/webreg2/start'
+}
+
+export function tssHomeUrl(): string {
+  return 'https://sis.ucsd.edu/'
 }
 
 export function courseCodeToSubject(courseCode: string): string {
@@ -41,6 +55,7 @@ export function courseCodeToSubject(courseCode: string): string {
 
 // Fallback terms if the API hasn't loaded yet
 export const DEFAULT_TERM_OPTIONS = [
+  { value: 'FA26', label: 'Fall 2026' },
   { value: 'SP26', label: 'Spring 2026' },
   { value: 'SA26', label: 'Summer (All) 2026' },
   { value: 'S126', label: 'Summer I 2026' },

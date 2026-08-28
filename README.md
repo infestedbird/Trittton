@@ -12,7 +12,7 @@ Built by [Joshua DeNeveu](https://github.com/Joshua-de-neveu), co-founder of [GA
 
 **Course planning**
 
-- **Course Browser** — search/filter every section of every course in a term, with live seat counts, prereqs, and inline RateMyProfessor ratings (★/difficulty/would-take-again).
+- **Course Browser** — search/filter TSS-era modules and events with live seats, waitlist availability, prerequisites, and inline RateMyProfessor ratings (★/difficulty/would-take-again).
 - **AI Schedule Planner** — chat panel that proposes a full quarter schedule rendered as a weekly calendar. Backed by either Gemini 2.5 Flash or the Claude CLI (Sonnet/Opus), selectable in the header.
 - **Auto Scheduler** — non-chat alternative that generates schedules from constraints (no-conflict, time-of-day, instructor preference).
 - **My Schedule** — pick individual sections, see Mon–Fri conflicts on a calendar, export to `.ics` for Google Calendar.
@@ -25,8 +25,8 @@ Built by [Joshua DeNeveu](https://github.com/Joshua-de-neveu), co-founder of [GA
 
 **Active monitoring**
 
-- **Seat Watch** — background thread on the server polls watched sections; alerts when a seat opens.
-- **Enroll Countdown** — countdown to your enrollment appointment with a one-click WebReg deep link.
+- **Seat + Waitlist Watch** — background polling against TSS-era data alerts when a seat or waitlist spot opens.
+- **TSS Booking Assistant** — validates exact event IDs, opens each official course page in one reusable side-by-side TSS window, and tracks Book/Join Waitlist confirmations without handling UCSD credentials.
 
 **Campus utilities**
 
@@ -49,8 +49,8 @@ Built by [Joshua DeNeveu](https://github.com/Joshua-de-neveu), co-founder of [GA
 | Frontend    | React 19 · TypeScript · Vite 8 · Tailwind 4 · Leaflet (campus map) · react-window (virtualized lists) |
 | Backend     | FastAPI · Uvicorn · Python 3.12                                        |
 | AI          | Google Gemini 2.5 Flash *and* Claude CLI (Sonnet 4.6 / Opus 4.6) — chosen per-request |
-| Scraping    | `requests` + `BeautifulSoup`/`lxml` against the UCSD Schedule of Classes |
-| Data        | RateMyProfessor GraphQL · UCSD Catalog (prereqs) · UCSD WebReg deep links |
+| Course data | UCSD Class Planner's public TSS-era catalog API, with legacy SoC fallback |
+| Data        | TSS events/seats/waitlists · RateMyProfessor GraphQL · UCSD Catalog (prereqs) |
 | Auth / sync | Server-side hash login · Firebase + Google OAuth for cloud sync       |
 | Calendar    | `icalendar` for `.ics` export                                          |
 | Deploy      | Dockerfile · `render.yaml` for Render                                  |
@@ -79,7 +79,7 @@ Built by [Joshua DeNeveu](https://github.com/Joshua-de-neveu), co-founder of [GA
         (scrape)   Gemini API     (GraphQL)     (prereqs)
 ```
 
-Scraped course data lives in `all_courses.json` (~1.4 MB), regenerated on demand. Optionally persisted back to GitHub from the server when `GITHUB_TOKEN` is set so a fresh deploy starts with data.
+Fall 2026 and later are loaded from UCSD's public TSS-backed Class Planner catalog and cached briefly in memory. `all_courses.json` remains the fallback for Summer 2026 and earlier transition terms. Server-side GitHub persistence is disabled unless both `ENABLE_GITHUB_PERSIST=true` and `GITHUB_TOKEN` are set.
 
 ---
 
@@ -121,7 +121,8 @@ Set what you need before launch (a `.env` works if you `source` it):
 | `GEMINI_API_KEY` | Gemini chat backend                                       | Using the Gemini model in the UI    |
 | `AUTH_EMAIL`     | Login email                                               | Always (login-gated app)            |
 | `AUTH_HASH`      | bcrypt-style hash of the login password                   | Always                              |
-| `GITHUB_TOKEN`   | Persist scraped course JSON back to the repo on update    | Optional (for deploys w/o disk)     |
+| `GITHUB_TOKEN`   | Persist legacy scraped JSON when explicitly enabled       | Optional                            |
+| `ENABLE_GITHUB_PERSIST` | Opt in to server-authored catalog commits (`true`) | Optional; defaults to disabled      |
 
 ### Production / Docker
 
@@ -174,10 +175,11 @@ Trittton/
 
 | Source                                                       | Used for                          | Auth   |
 |--------------------------------------------------------------|-----------------------------------|--------|
-| [UCSD Schedule of Classes](https://act.ucsd.edu/scheduleOfClasses/) | Courses, sections, availability   | none   |
+| [UCSD Class Planner](https://classplanner.apps.ucsd.edu/)          | TSS modules, events, seats, waitlists, booking links | none |
+| [UCSD Schedule of Classes](https://act.ucsd.edu/scheduleOfClasses/) | Legacy terms through Summer 2026 | none   |
 | [RateMyProfessors](https://www.ratemyprofessors.com/)        | Instructor ratings                | none   |
 | [UCSD Catalog](https://catalog.ucsd.edu/)                    | Prerequisites, descriptions       | none   |
-| [WebReg](https://act.ucsd.edu/webreg2/)                      | Enroll deep links                 | UCSD   |
+| [TSS](https://sis.ucsd.edu/)                                 | Final booking and waitlist action | UCSD   |
 | [CAPEs](https://cape.ucsd.edu/)                              | Course evaluations                | UCSD   |
 
 Scraping respects a configurable `DELAY` (default 1.0s) between requests.

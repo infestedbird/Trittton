@@ -47,13 +47,13 @@ export function Sidebar({ departments, activeDept, totalCourses, onDeptClick, mo
       onClick={onMobileClose}
       aria-hidden
     />
-    <aside className={`border-r border-border overflow-y-auto flex flex-col bg-bg
-        md:static md:translate-x-0 md:w-[200px] md:shrink-0 md:z-auto
-        fixed top-14 bottom-0 left-0 w-[260px] max-w-[80vw] z-50 transition-transform duration-200
+    <aside className={`border-r border-border/80 overflow-y-auto flex flex-col bg-surface/55 backdrop-blur-xl
+        md:static md:translate-x-0 md:w-[220px] md:shrink-0 md:z-auto
+        fixed top-16 bottom-0 left-0 w-[280px] max-w-[84vw] z-50 transition-transform duration-200
         ${mobileOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
       {/* Header + search */}
-      <div className="sticky top-0 bg-bg/95 backdrop-blur-sm z-10 px-4 pt-4 pb-2 border-b border-border/50">
-        <div className="text-[11px] tracking-widest uppercase text-muted mb-2.5">
+      <div className="sticky top-0 bg-surface/90 backdrop-blur-xl z-10 px-4 pt-5 pb-3 border-b border-border/60">
+        <div className="text-[10px] font-bold tracking-[0.18em] uppercase text-muted mb-3">
           Departments
         </div>
         <div className="relative">
@@ -69,15 +69,15 @@ export function Sidebar({ departments, activeDept, totalCourses, onDeptClick, mo
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Filter..."
-            className="w-full bg-surface border border-border rounded-lg text-[11px]
-              pl-7 pr-2 py-1.5 outline-none text-text placeholder:text-dim
-              focus:border-accent/50"
+            className="h-9 w-full bg-card/75 border border-border rounded-xl text-[11px]
+              pl-8 pr-2 outline-none text-text placeholder:text-dim
+              focus:border-accent/50 focus:shadow-[0_0_0_3px_rgba(100,136,255,0.08)]"
           />
         </div>
       </div>
 
       {/* Department list */}
-      <div className="flex flex-col gap-px px-2 py-2">
+      <div className="flex flex-col gap-1 px-2.5 py-3">
         <DeptButton
           code="ALL"
           label="All Departments"
@@ -121,17 +121,17 @@ function DeptButton({
   return (
     <button
       onClick={onClick}
-      className={`flex justify-between items-center px-3 py-[8px] rounded-lg text-[12px]
+      className={`flex justify-between items-center px-3 py-2.5 rounded-xl text-[12px]
         cursor-pointer border-none text-left
         ${active
-          ? 'bg-accent/12 text-accent shadow-[inset_0_0_0_1px_rgba(79,142,247,0.15)]'
-          : 'text-muted hover:bg-white/[0.03] hover:text-text'
+          ? 'bg-accent/12 text-accent shadow-[inset_0_0_0_1px_rgba(100,136,255,0.18),0_8px_20px_rgba(0,0,0,0.12)]'
+          : 'text-muted hover:bg-card/70 hover:text-text'
         }`}
     >
       <span className={active ? 'font-semibold' : ''}>{label}</span>
       <span
         className={`text-[11px] rounded-full px-2 py-0.5 ${
-          active ? 'bg-accent/20 text-accent font-semibold' : 'bg-surface text-dim'
+          active ? 'bg-accent/20 text-accent font-semibold' : 'bg-card/80 text-dim'
         }`}
       >
         {count}

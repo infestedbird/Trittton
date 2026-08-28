@@ -18,11 +18,21 @@ from fastapi import FastAPI, Query, Request
 from fastapi.responses import StreamingResponse, FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
+from starlette.middleware.gzip import GZipMiddleware
 
 # Import scraper functions
 from app import fetch_subject, parse_html, parse_html_multi, fetch_batch, ALL_SUBJECTS, VALID_TYPES, DELAY, _fetch_subjects, BATCH_SIZE
+from tss import (
+    TssApiError,
+    create_booking_handoff,
+    fetch_catalog as fetch_tss_catalog,
+    fetch_terms as fetch_tss_terms,
+    is_tss_term,
+    search_course as search_tss_course,
+)
 
 app = FastAPI()
+app.add_middleware(GZipMiddleware, minimum_size=1024, compresslevel=5)
 logger = logging.getLogger(__name__)
 
 import shutil
@@ -214,6 +224,26 @@ TERM_PREFIX_LABELS = {
 }
 
 
+def _merge_and_sort_terms(terms: list[dict]) -> list[dict]:
+    """Deduplicate term codes, prefer TSS metadata, and show newest first."""
+    by_code: dict[str, dict] = {}
+    for term in terms:
+        code = term.get("value", "")
+        if code not in by_code or term.get("source") == "tss":
+            by_code[code] = term
+
+    quarter_rank = {"WI": 1, "SP": 2, "S1": 3, "S2": 4, "S3": 5, "SA": 6, "FA": 7}
+
+    def sort_key(term: dict) -> tuple[int, int]:
+        code = term.get("value", "")
+        try:
+            return (2000 + int(code[2:]), quarter_rank.get(code[:2], 0))
+        except (TypeError, ValueError):
+            return (0, 0)
+
+    return sorted(by_code.values(), key=sort_key, reverse=True)
+
+
 def _scrape_terms() -> list:
     """Scrape available terms from UCSD Schedule of Classes."""
     import requests as req_lib
@@ -256,7 +286,14 @@ def _get_terms() -> list:
     now = time.time()
     if _terms_cache["terms"] and (now - _terms_cache["ts"]) < TERMS_TTL:
         return _terms_cache["terms"]
-    terms = _scrape_terms()
+    terms = []
+    try:
+        terms.extend(fetch_tss_terms())
+    except TssApiError as e:
+        logger.warning("TSS term lookup failed: %s", e)
+    terms.extend(_scrape_terms())
+    # Prefer the TSS record when a transition-era term appears in both systems.
+    terms = _merge_and_sort_terms(terms)
     if terms:
         _terms_cache["terms"] = terms
         _terms_cache["ts"] = now
@@ -267,7 +304,13 @@ def _get_terms() -> list:
 def _term_poll_loop():
     while True:
         try:
-            terms = _scrape_terms()
+            terms = []
+            try:
+                terms.extend(fetch_tss_terms())
+            except TssApiError:
+                pass
+            terms.extend(_scrape_terms())
+            terms = _merge_and_sort_terms(terms)
             if terms:
                 _terms_cache["terms"] = terms
                 _terms_cache["ts"] = time.time()
@@ -283,11 +326,12 @@ _term_thread.start()
 
 @app.get("/api/terms")
 def get_terms():
-    """Return available terms from UCSD Schedule of Classes. Cached 10 min."""
+    """Return TSS terms plus transition-era Schedule of Classes terms."""
     terms = _get_terms()
     if not terms:
         # Fallback to hardcoded if scrape fails
         terms = [
+            {"value": "FA26", "label": "Fall 2026", "source": "tss"},
             {"value": "SP26", "label": "Spring 2026"},
             {"value": "SA26", "label": "Summer (All) 2026"},
             {"value": "S126", "label": "Summer I 2026"},
@@ -299,13 +343,38 @@ def get_terms():
 # ── Course Data ──────────────────────────────────────────────────────────────
 
 @app.get("/api/courses")
-def get_courses(request: Request):
-    """Return the latest scraped course catalog.
+def get_courses(
+    request: Request,
+    term: str = Query(default="FA26"),
+    refresh: bool = Query(default=False),
+):
+    """Return a term catalog from TSS or the legacy Schedule of Classes.
 
-    The catalog is ~1.5 MB and rarely changes during a session. We tag every response
-    with an ETag based on the file's mtime + size so the browser can short-circuit
-    subsequent fetches with a 304 once the data is cached in IndexedDB.
+    Fall 2026 and later use UCSD's public TSS-backed Class Planner API. Earlier
+    terms continue to use the saved Schedule of Classes scrape during transition.
     """
+    term = term.upper().strip()
+    if is_tss_term(term):
+        try:
+            data = fetch_tss_catalog(term, refresh=refresh)
+        except TssApiError as e:
+            return JSONResponse({"error": str(e), "source": "tss"}, status_code=502)
+
+        encoded = json.dumps(data, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
+        etag = f'"tss-{term}-{hashlib.sha256(encoded).hexdigest()[:16]}"'
+        if_none_match = request.headers.get("if-none-match", "").strip()
+        if not refresh and if_none_match == etag:
+            return Response(status_code=304, headers={"ETag": etag, "Cache-Control": "public, max-age=120, must-revalidate"})
+        return Response(
+            content=encoded,
+            media_type="application/json",
+            headers={
+                "ETag": etag,
+                "Cache-Control": "public, max-age=120, must-revalidate",
+                "X-Course-Source": "tss",
+            },
+        )
+
     if not OUTPUT.exists():
         return JSONResponse({"error": "No course data found. Run the scraper first."}, status_code=404)
 
@@ -326,6 +395,28 @@ def get_courses(request: Request):
             "Cache-Control": "public, max-age=300, must-revalidate",
         },
     )
+
+
+class TssHandoffRequest(BaseModel):
+    term: str
+    section_ids: list[str]
+
+
+@app.post("/api/tss/handoff")
+def tss_handoff(req: TssHandoffRequest):
+    """Resolve a planned set of sections into official TSS course links.
+
+    This does not authenticate as the student or submit booking/waitlist actions.
+    It hands the student to TSS, where eligibility and confirmation are enforced.
+    """
+    if not is_tss_term(req.term):
+        return JSONResponse({"error": f"{req.term} is not a TSS booking term"}, status_code=400)
+    if not any(section_id.strip() for section_id in req.section_ids):
+        return JSONResponse({"error": "At least one TSS section ID is required"}, status_code=400)
+    try:
+        return create_booking_handoff(req.term, req.section_ids)
+    except TssApiError as e:
+        return JSONResponse({"error": str(e)}, status_code=502)
 
 
 # ── Scraping ─────────────────────────────────────────────────────────────────
@@ -364,11 +455,15 @@ def start_scrape(request: Request, term: str = Query(default="SP26")):
 
 
 GITHUB_TOKEN = _os.environ.get("GITHUB_TOKEN", "")
-GITHUB_REPO = _os.environ.get("GITHUB_REPO", "infestedbird/Trittton")
+GITHUB_REPO = _os.environ.get("GITHUB_REPO", "Joshua-de-neveu/Trittton")
+GITHUB_PERSIST_ENABLED = _os.environ.get("ENABLE_GITHUB_PERSIST", "").lower() == "true"
 
 
 def _persist_to_github(file_path: str, content: str, message: str):
     """Commit a file to GitHub to persist data across deploys."""
+    if not GITHUB_PERSIST_ENABLED:
+        logger.info("GitHub persistence is disabled — set ENABLE_GITHUB_PERSIST=true to opt in")
+        return
     if not GITHUB_TOKEN:
         logger.info("No GITHUB_TOKEN set — skipping GitHub persist")
         return
@@ -671,7 +766,7 @@ class ChatRequest(BaseModel):
     messages: List[ChatMessage]
     include_courses: bool = True
     model: str = "sonnet"
-    term: str = "SP26"
+    term: str = "FA26"
     completed_courses: str = ""
     gemini_api_key: Optional[str] = None
     # Per-user Anthropic API key. When provided, /api/chat uses the Anthropic
@@ -724,8 +819,8 @@ SYSTEM_PROMPT_TEMPLATE = """You are an expert UCSD academic advisor and schedule
       "title": "Basic Data Struct & OO Design",
       "units": 4,
       "sections": [
-        {"type": "LE", "section": "A00", "days": "MWF", "time": "9:00a-9:50a", "building": "CENTR", "room": "109", "instructor": "Politz, Joe", "available": 15, "limit": 200},
-        {"type": "DI", "section": "A01", "days": "W", "time": "3:00p-3:50p", "building": "CSB", "room": "002", "instructor": "Politz, Joe", "available": 8, "limit": 40}
+        {"section_id": "E 00001234", "type": "LE", "section": "001-000-LE", "days": "MWF", "time": "9:00a-9:50a", "building": "CENTR", "room": "109", "instructor": "Politz, Joe", "available": 15, "limit": 200},
+        {"section_id": "E 00005678", "type": "DI", "section": "001-001-DI", "days": "W", "time": "3:00p-3:50p", "building": "CSB", "room": "002", "instructor": "Politz, Joe", "available": 8, "limit": 40}
       ]
     }
   ]
@@ -738,6 +833,8 @@ IMPORTANT RULES:
 - ALWAYS use REAL data from the course catalog below — never fabricate courses, sections, times, or instructors
 - Include the total_units sum and verify it's correct
 - Every section must have accurate days, times, building, room, instructor, available, and limit from the catalog
+- Preserve every section_id exactly. Trittton needs TSS section IDs to create the official booking/waitlist handoff.
+- For Fall 2026 and later, call enrollment "booking" and send students to TSS for the final Book or Join Waitlist action
 - If a course has no open sections, mention it and suggest alternatives
 
 ## Conversational Style
@@ -802,9 +899,10 @@ def _build_course_summary(courses: list) -> str:
             avail = s.get("available", "?")
             limit = s.get("limit", "?")
             wait = s.get("waitlisted", "")
-            status = f"{avail}/{limit}" + (f" WL:{wait}" if wait else "")
+            wait_open = s.get("waitlist_available")
+            status = f"{avail}/{limit}" + (f" WL joined:{wait}" if wait else "") + (f" WL open:{wait_open}" if wait_open else "")
             secs.append(
-                f"  {s['type']} {s['section']} | {s.get('days','')} {s.get('time','')} | "
+                f"  {s['type']} {s['section']} | TSS ID:{s.get('section_id','')} | {s.get('days','')} {s.get('time','')} | "
                 f"{s.get('building','')} {s.get('room','')} | {s.get('instructor','TBA')} | {status}"
             )
         restrict = f" [{c['restrictions']}]" if c.get("restrictions") else ""
@@ -824,10 +922,18 @@ def _format_conversation(messages: List[ChatMessage]) -> str:
 def _build_prompt(req: ChatRequest) -> tuple[str, str]:
     """Build system prompt and conversation prompt from a ChatRequest."""
     course_context = ""
-    if req.include_courses and OUTPUT.exists():
-        with open(OUTPUT, "r") as f:
-            courses = json.load(f)
-        course_context = f"\n\nCOURSE CATALOG ({len(courses)} courses):\n{_build_course_summary(courses)}"
+    if req.include_courses:
+        courses = []
+        if is_tss_term(req.term):
+            try:
+                courses = fetch_tss_catalog(req.term)
+            except TssApiError as e:
+                logger.warning("Could not load TSS catalog for AI context: %s", e)
+        elif OUTPUT.exists():
+            with open(OUTPUT, "r") as f:
+                courses = json.load(f)
+        if courses:
+            course_context = f"\n\nCOURSE CATALOG ({len(courses)} courses):\n{_build_course_summary(courses)}"
 
     term_label = TERM_LABELS.get(req.term, req.term)
     system_prompt = SYSTEM_PROMPT_TEMPLATE.replace("{term_label}", term_label).replace("{term_code}", req.term)
@@ -1361,6 +1467,7 @@ def add_seat_watch(req: SeatWatchRequest):
                 "section": req.section,
                 "term": req.term,
                 "last_available": 0,
+                "last_waitlist_available": 0,
                 "watchers": 1,
             }
         total = len(user_watches)
@@ -1448,16 +1555,34 @@ def _seat_watch_loop():
         session = req_lib.Session()
         for (subj, term), _section_ids in subj_term.items():
             try:
-                html = fetch_subject(session, term, subj)
-                if not html:
-                    continue
-                courses = parse_html(html, subj)
-
-                avail_map: dict = {}
-                for course in courses:
-                    for sec in course["sections"]:
-                        if sec["section_id"]:
-                            avail_map[sec["section_id"]] = int(sec["available"]) if sec["available"].isdigit() else 0
+                status_map: dict[str, tuple[int, int]] = {}
+                if is_tss_term(term):
+                    course_codes = {
+                        owner_info.get("course_code", "")
+                        for (sid, owner_term), owners in section_owners.items()
+                        if owner_term == term and sid in _section_ids
+                        for _uid, owner_info in owners
+                    }
+                    for course_code in course_codes:
+                        course = search_tss_course(term, course_code)
+                        if not course:
+                            continue
+                        for sec in course["sections"]:
+                            if sec["section_id"]:
+                                status_map[sec["section_id"]] = (
+                                    int(sec.get("available") or 0),
+                                    int(sec.get("waitlist_available") or 0),
+                                )
+                else:
+                    html = fetch_subject(session, term, subj)
+                    if not html:
+                        continue
+                    courses = parse_html(html, subj)
+                    for course in courses:
+                        for sec in course["sections"]:
+                            if sec["section_id"]:
+                                available = int(sec["available"]) if sec["available"].isdigit() else 0
+                                status_map[sec["section_id"]] = (available, 0)
 
                 # For every (section, term) we care about, update each owning user's
                 # last_available and emit an alert into that user's queue when seats
@@ -1465,26 +1590,32 @@ def _seat_watch_loop():
                 for (sid, t_), owners in section_owners.items():
                     if t_ != term:
                         continue
-                    new_avail = avail_map.get(sid, 0)
+                    new_avail, new_waitlist = status_map.get(sid, (0, 0))
                     for uid, info in owners:
                         old_avail = info.get("last_available", 0)
+                        old_waitlist = info.get("last_waitlist_available", 0)
                         with _seat_watch_lock:
                             user_watches = _seat_watches_by_user.get(uid, {})
                             if sid in user_watches:
                                 user_watches[sid]["last_available"] = new_avail
-                        if new_avail > 0 and old_avail == 0:
+                                user_watches[sid]["last_waitlist_available"] = new_waitlist
+                        seat_opened = new_avail > 0 and old_avail == 0
+                        waitlist_opened = new_avail == 0 and new_waitlist > 0 and old_waitlist == 0
+                        if seat_opened or waitlist_opened:
                             alert = {
                                 "section_id": sid,
                                 "course_code": info["course_code"],
                                 "section": info["section"],
                                 "available": new_avail,
+                                "waitlist_available": new_waitlist,
+                                "kind": "seat" if seat_opened else "waitlist",
                                 "timestamp": time.time(),
                             }
                             with _seat_watch_lock:
                                 _seat_alerts_by_user.setdefault(uid, []).append(alert)
                             logger.info(
-                                "SEAT ALERT for uid=%s: %s %s now has %d seats!",
-                                uid, info["course_code"], info["section"], new_avail,
+                                "TSS AVAILABILITY ALERT for uid=%s: %s %s seats=%d waitlist=%d",
+                                uid, info["course_code"], info["section"], new_avail, new_waitlist,
                             )
 
             except Exception as e:
@@ -2607,7 +2738,7 @@ Use for: common follow-up questions, topic selection, yes/no questions.
 
 ## Topics You Can Help With
 - College GE requirements and which college is best for different majors
-- Course registration, WebReg, enrollment dates, waitlists
+- TSS course booking, booking windows, enrollment, and waitlists (Fall 2026 and later)
 - Housing (on-campus vs off-campus, neighborhoods, costs)
 - Dining (meal plans, best food spots, Dining Dollars vs Triton Cash)
 - Transportation (trolley, buses, U-Pass, parking, shuttles)

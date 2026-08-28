@@ -7,20 +7,20 @@
 
 @theme {
   /* ── Dark palette (default) ── */
-  --color-bg: #111113;
-  --color-surface: #1c1c1e;
-  --color-card: #252528;
-  --color-card-hover: #2c2c30;
-  --color-border: #38383a;
-  --color-border2: #48484a;
-  --color-accent: #3b82f6;
-  --color-accent2: #8b5cf6;
-  --color-gold: #f59e0b;
-  --color-green: #22c55e;
-  --color-red: #ef4444;
-  --color-text: #f5f5f7;
-  --color-muted: #8e8e93;
-  --color-dim: #48484a;
+  --color-bg: #080c14;
+  --color-surface: #0e1624;
+  --color-card: #131d2d;
+  --color-card-hover: #19263a;
+  --color-border: #223149;
+  --color-border2: #344867;
+  --color-accent: #6488ff;
+  --color-accent2: #a78bfa;
+  --color-gold: #fbbf24;
+  --color-green: #4ade80;
+  --color-red: #fb7185;
+  --color-text: #f7f9fc;
+  --color-muted: #98a6ba;
+  --color-dim: #58677e;
 
   --font-sans: 'Instrument Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'DM Mono', ui-monospace, 'SF Mono', monospace;
@@ -28,18 +28,25 @@
 
 *, *::before, *::after {
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
 }
 
 body {
-  background: var(--color-bg);
+  margin: 0;
+  background:
+    radial-gradient(circle at 18% -12%, rgba(100, 136, 255, 0.14), transparent 30rem),
+    radial-gradient(circle at 92% 4%, rgba(167, 139, 250, 0.08), transparent 24rem),
+    var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
   font-size: 14px;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  isolation: isolate;
 }
 
 /* ── Scrollbars ── */
@@ -111,7 +118,8 @@ body {
 
 /* ── Base transitions ── */
 button, a, select, input {
-  transition: all 0.15s ease;
+  transition: color 0.16s ease, background-color 0.16s ease, border-color 0.16s ease,
+    box-shadow 0.16s ease, transform 0.16s ease, opacity 0.16s ease;
 }
 
 /* ── Select styling ── */
@@ -128,8 +136,8 @@ select {
   transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 .card-hover:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.22), 0 0 0 1px rgba(100, 136, 255, 0.06);
 }
 
 /* ── Course list striping ── */
@@ -153,16 +161,16 @@ select {
    Light theme — clean whites, proper contrast, subtle shadows
    ═══════════════════════════════════════════════════════════════ */
 .light {
-  --color-bg: #f2f2f7;
+  --color-bg: #eef3f9;
   --color-surface: #ffffff;
   --color-card: #ffffff;
-  --color-card-hover: #f5f5f7;
-  --color-border: #d1d1d6;
-  --color-border2: #c7c7cc;
-  --color-text: #1c1c1e;
-  --color-muted: #636366;
-  --color-dim: #aeaeb2;
-  --color-accent: #2563eb;
+  --color-card-hover: #f7f9fc;
+  --color-border: #d7e0ec;
+  --color-border2: #bcc9da;
+  --color-text: #142033;
+  --color-muted: #607087;
+  --color-dim: #9aa8ba;
+  --color-accent: #3f6df6;
   --color-accent2: #7c3aed;
   --color-green: #16a34a;
   --color-red: #dc2626;
@@ -170,7 +178,10 @@ select {
 }
 
 .light body {
-  background: var(--color-bg);
+  background:
+    radial-gradient(circle at 18% -12%, rgba(63, 109, 246, 0.12), transparent 30rem),
+    radial-gradient(circle at 92% 4%, rgba(124, 58, 237, 0.06), transparent 24rem),
+    var(--color-bg);
   color: var(--color-text);
 }
 

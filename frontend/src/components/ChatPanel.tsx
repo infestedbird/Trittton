@@ -50,7 +50,7 @@ export function ChatPanel({ messages, isStreaming, thinkingPhase, error, onSend,
   }
 
   return (
-    <div className="h-[calc(100vh-64px)] flex flex-col bg-bg">
+    <div className="h-full flex flex-col bg-bg">
       {/* Messages area — full width, centered content */}
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-4xl mx-auto px-6 py-6 flex flex-col gap-4">

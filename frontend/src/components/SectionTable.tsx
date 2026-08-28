@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import type { Section } from '../types'
 import { TYPE_COLORS, TYPE_LABELS } from '../lib/constants'
-import { capeInstructorUrl, rmpUrl, webRegUrl } from '../lib/links'
+import { capeInstructorUrl, getCurrentTerm, isTssTerm, rmpUrl, webRegUrl } from '../lib/links'
 import type { RmpRating } from '../hooks/useRmpRatings'
+import { isWaitlistOnlySection, sectionAvailStatus } from '../lib/availability'
 
 interface SectionTableProps {
   sections: Section[]
   courseCode?: string
   courseTitle?: string
   courseUnits?: number
-  onAddSection?: (section: { type: string; section: string; days: string; time: string; building: string; room: string; instructor: string; available: number; limit: number }) => void
+  onAddSection?: (section: { section_id?: string; type: string; section: string; days: string; time: string; building: string; room: string; instructor: string; available: number; limit: number; waitlisted?: number; waitlist_available?: number | null; status?: string | null; event_package_ids?: string[] }) => void
   isSectionAdded?: (sectionCode: string, sectionType: string) => boolean
   getRating?: (instructor: string) => RmpRating | null | undefined
   isWatching?: (sectionId: string) => boolean
@@ -27,8 +28,9 @@ function isOnlineSection(s: Section): boolean {
     || (!b && !r && !s.days)
 }
 
-export function SectionTable({ sections, onAddSection, isSectionAdded, getRating, isWatching, onWatch, onUnwatch }: SectionTableProps) {
+export function SectionTable({ sections, courseCode, onAddSection, isSectionAdded, getRating, isWatching, onWatch, onUnwatch }: SectionTableProps) {
   const [watchToast, setWatchToast] = useState<string | null>(null)
+  const [launchingSectionId, setLaunchingSectionId] = useState<string | null>(null)
 
   if (sections.length === 0) {
     return (
@@ -42,6 +44,53 @@ export function SectionTable({ sections, onAddSection, isSectionAdded, getRating
   const showToast = (msg: string) => {
     setWatchToast(msg)
     setTimeout(() => setWatchToast(null), 3000)
+  }
+
+  const openExactTssCourse = async (section: Section) => {
+    if (!section.section_id || launchingSectionId) return
+
+    // Create the tab synchronously from the click so Chrome does not treat it
+    // as an unsolicited popup while the exact UCSD booking URL is resolved.
+    const tssTab = window.open('', 'trittton-tss-booking')
+    if (!tssTab) {
+      showToast('Chrome blocked the TSS tab. Allow popups for Trittton and try again.')
+      return
+    }
+    tssTab.focus()
+    setLaunchingSectionId(section.section_id)
+
+    try {
+      const response = await fetch('/api/tss/handoff', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          term: getCurrentTerm(),
+          section_ids: [section.section_id],
+        }),
+      })
+      const data = await response.json() as {
+        courses?: Array<{ course_code?: string; tss_booking_url?: string | null }>
+        error?: string
+      }
+      if (!response.ok) throw new Error(data.error || `TSS handoff failed: ${response.status}`)
+
+      const normalizedCode = courseCode?.replace(/\s+/g, '').toUpperCase()
+      const match = data.courses?.find(
+        (course) => course.course_code?.replace(/\s+/g, '').toUpperCase() === normalizedCode,
+      ) || data.courses?.[0]
+      if (!match?.tss_booking_url) throw new Error('UCSD did not return a booking link for this section')
+
+      // Assigning href can navigate a reused cross-origin TSS window; calling
+      // Location.replace() on that window is blocked by same-origin rules.
+      tssTab.location.href = match.tss_booking_url
+      tssTab.focus()
+      showToast(`Opened ${courseCode || 'course'} ${section.section} directly in TSS`)
+    } catch (error) {
+      tssTab.close()
+      showToast(error instanceof Error ? error.message : 'Could not open this course in TSS')
+    } finally {
+      setLaunchingSectionId(null)
+    }
   }
 
   return (
@@ -76,8 +125,8 @@ export function SectionTable({ sections, onAddSection, isSectionAdded, getRating
       <table className="w-full border-collapse text-[12px]">
         <thead>
           <tr className="bg-surface">
-            {onAddSection && <th className="px-2 py-2 w-12" />}
-            {['ID', 'Type', 'Section', 'Days', 'Time', 'Location', 'Instructor', 'Available', 'Limit', 'Waitlist', ''].map(
+            {onAddSection && <th className="px-2 py-2 text-[10px] uppercase tracking-wide text-muted font-medium">Plan</th>}
+            {['Type', 'Section', 'Days', 'Time', 'Location', 'Instructor', 'Available', 'Limit', 'Waitlist', ''].map(
               (h) => (
                 <th key={h} className="text-[11px] tracking-wide uppercase text-muted px-3 py-2 text-left font-medium whitespace-nowrap">
                   {h}
@@ -88,9 +137,12 @@ export function SectionTable({ sections, onAddSection, isSectionAdded, getRating
         </thead>
         <tbody>
           {sections.map((s, i) => {
-            const aInt = parseInt(s.available) || 0
+            const availability = sectionAvailStatus(s)
+            const aInt = availability.seats
             const wInt = parseInt(s.waitlisted) || 0
-            const availClass = aInt > 0 ? 'text-green' : wInt > 0 ? 'text-gold' : 'text-red'
+            const waitlistOnly = isWaitlistOnlySection(s)
+            const waitlistOpen = availability.status === 'waitlist'
+            const availClass = availability.status === 'open' ? 'text-green' : waitlistOpen ? 'text-gold' : 'text-red'
             const typeColor = TYPE_COLORS[s.type]
             const added = isSectionAdded?.(s.section, s.type) ?? false
 
@@ -100,6 +152,7 @@ export function SectionTable({ sections, onAddSection, isSectionAdded, getRating
                   <td className="px-2 py-2 border-t border-border">
                     <button
                       onClick={() => onAddSection({
+                        section_id: s.section_id,
                         type: s.type,
                         section: s.section,
                         days: s.days,
@@ -109,21 +162,22 @@ export function SectionTable({ sections, onAddSection, isSectionAdded, getRating
                         instructor: s.instructor,
                         available: aInt,
                         limit: parseInt(s.limit) || 0,
+                        waitlisted: wInt,
+                        waitlist_available: s.waitlist_available,
+                        status: s.status,
+                        event_package_ids: s.event_package_ids,
                       })}
-                      className={`text-sm font-bold w-8 h-8 rounded-lg flex items-center justify-center transition-all cursor-pointer
+                      className={`min-w-[48px] h-8 px-2 rounded-lg flex items-center justify-center text-[10px] font-bold transition-all cursor-pointer
                         ${added
                           ? 'bg-green/20 text-green'
                           : 'bg-accent/15 text-accent hover:bg-accent/25 hover:scale-110'
                         }`}
-                      title={added ? 'Already added' : `Add ${s.type} ${s.section} to My Schedule`}
+                      title={added ? 'Already saved to your Trittton plan' : `Save ${s.type} ${s.section} to your Trittton plan`}
                     >
-                      {added ? '✓' : '+'}
+                      {added ? '✓ Saved' : '+ Plan'}
                     </button>
                   </td>
                 )}
-                <td className="px-3 py-2 border-t border-border font-mono text-muted">
-                  {s.section_id || '\u2014'}
-                </td>
                 <td className="px-3 py-2 border-t border-border">
                   <span
                     className="font-mono text-[11px] px-1.5 py-0.5 rounded font-medium"
@@ -192,29 +246,36 @@ export function SectionTable({ sections, onAddSection, isSectionAdded, getRating
                   })() : 'TBA'}
                 </td>
                 <td className={`px-3 py-2 border-t border-border font-mono ${availClass}`}>
-                  {s.available || '\u2014'}
+                  {aInt}
                 </td>
                 <td className="px-3 py-2 border-t border-border font-mono text-muted">
                   {s.limit || '\u2014'}
                 </td>
                 <td className="px-3 py-2 border-t border-border font-mono text-muted">
-                  {wInt > 0 ? wInt : '\u2014'}
+                  {waitlistOnly ? 'Waitlist only' : (s.waitlist_available || 0) > 0 ? `${s.waitlist_available} open` : wInt > 0 ? `${wInt} joined` : '\u2014'}
                 </td>
                 <td className="px-2 py-2 border-t border-border">
                   <div className="flex items-center gap-1.5">
-                    {s.section_id && (
+                    {s.section_id && s.source === 'tss' && isTssTerm(getCurrentTerm()) ? (
+                      <button
+                        onClick={() => openExactTssCourse(s)}
+                        disabled={Boolean(launchingSectionId)}
+                        className="min-w-[104px] whitespace-nowrap rounded-lg border border-accent bg-accent px-3 py-1.5 text-[11px] font-bold text-white shadow-[0_6px_18px_rgba(79,142,247,0.22)] transition-all hover:-translate-y-0.5 hover:bg-accent/90 disabled:cursor-wait disabled:opacity-55"
+                        title={`Open ${courseCode || 'this course'} ${s.section} directly in TSS`}
+                      >
+                        {launchingSectionId === s.section_id ? 'Opening TSS…' : waitlistOnly ? 'Join waitlist in TSS ↗' : 'Add in TSS ↗'}
+                      </button>
+                    ) : s.section_id ? (
                       <a
                         href={webRegUrl(s.section_id)}
                         target="_blank"
                         rel="noopener"
-                        className="text-[11px] px-2 py-0.5 rounded
-                          bg-accent/10 text-accent border border-accent/20
-                          hover:bg-accent/20 transition-colors whitespace-nowrap"
+                        className="whitespace-nowrap rounded border border-accent/20 bg-accent/10 px-2 py-0.5 text-[11px] text-accent transition-colors hover:bg-accent/20"
                       >
-                        Enroll &rarr;
+                        WebReg &rarr;
                       </a>
-                    )}
-                    {s.section_id && aInt === 0 && onWatch && onUnwatch && (() => {
+                    ) : null}
+                    {s.section_id && availability.status !== 'open' && onWatch && onUnwatch && (() => {
                       const watching = isWatching?.(s.section_id)
                       return (
                         <button

@@ -10,6 +10,12 @@ export interface RmpRating {
   rmpUrl: string
 }
 
+// Keep ratings useful without letting a full TSS catalog trigger hundreds of
+// background requests. Searching or filtering changes `courses`, so relevant
+// instructors outside this initial window are fetched when the user narrows in.
+const MAX_INSTRUCTORS_PER_VIEW = 60
+const PREFETCH_DELAY_MS = 700
+
 export function useRmpRatings(courses: Course[]) {
   const [ratings, setRatings] = useState<Record<string, RmpRating | null>>({})
   const [loading, setLoading] = useState(false)
@@ -17,6 +23,8 @@ export function useRmpRatings(courses: Course[]) {
 
   useEffect(() => {
     if (courses.length === 0) return
+
+    let cancelled = false
 
     // Collect unique instructors
     const allInstructors = new Set<string>()
@@ -30,11 +38,10 @@ export function useRmpRatings(courses: Course[]) {
     }
 
     // Filter out already fetched
-    const toFetch = Array.from(allInstructors).filter((i) => !fetchedRef.current.has(i))
+    const toFetch = Array.from(allInstructors)
+      .filter((i) => !fetchedRef.current.has(i))
+      .slice(0, MAX_INSTRUCTORS_PER_VIEW)
     if (toFetch.length === 0) return
-
-    // Mark as fetched to avoid re-requesting
-    for (const i of toFetch) fetchedRef.current.add(i)
 
     // Fetch in batches of 25
     const fetchBatch = async (batch: string[]) => {
@@ -46,23 +53,26 @@ export function useRmpRatings(courses: Course[]) {
         })
         if (!res.ok) return
         const data: Record<string, RmpRating | null> = await res.json()
-        setRatings((prev) => ({ ...prev, ...data }))
+        if (!cancelled) setRatings((prev) => ({ ...prev, ...data }))
       } catch { /* silent */ }
     }
 
-    setLoading(true)
-    // Process batches sequentially
-    const batches: string[][] = []
-    for (let i = 0; i < toFetch.length; i += 25) {
-      batches.push(toFetch.slice(i, i + 25))
-    }
+    // Let the catalog paint and become interactive before secondary lookups.
+    const timer = window.setTimeout(() => {
+      if (cancelled) return
+      for (const instructor of toFetch) fetchedRef.current.add(instructor)
+      const batches: string[][] = []
+      for (let i = 0; i < toFetch.length; i += 25) batches.push(toFetch.slice(i, i + 25))
+      setLoading(true)
+      Promise.all(batches.map(fetchBatch)).finally(() => {
+        if (!cancelled) setLoading(false)
+      })
+    }, PREFETCH_DELAY_MS)
 
-    ;(async () => {
-      for (const batch of batches) {
-        await fetchBatch(batch)
-      }
-      setLoading(false)
-    })()
+    return () => {
+      cancelled = true
+      window.clearTimeout(timer)
+    }
   }, [courses])
 
   const getRating = useCallback((instructor: string): RmpRating | null | undefined => {

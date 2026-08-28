@@ -265,8 +265,9 @@ UCSD has 8 residential colleges, each with its own GE requirements and writing s
 ### Accounts & Systems
 - **UCSD Email**: @ucsd.edu, Active Directory (AD) credentials for all systems
 - **Canvas** (canvas.ucsd.edu): Learning management — syllabi, assignments, grades, discussions
-- **TritonLink** (students.ucsd.edu): Central portal — WebReg, Schedule of Classes, holds, finances, academic history
-- **WebReg**: Course registration — add/drop/swap, grading options
+- **Triton Student System (TSS)** (sis.ucsd.edu): Fall 2026 and later course booking, waitlists, holds, finances, and academic records. TSS calls enrollment “booking” and class sections “events.”
+- **Class Planner** (classplanner.apps.ucsd.edu): Public TSS-era planning with seats and waitlist availability; final booking and waitlist actions still happen in authenticated TSS.
+- **WebReg**: Legacy registration for Summer 2026 and earlier transition terms.
 - **Handshake**: Jobs/internships platform via Career Center
 
 ### WiFi

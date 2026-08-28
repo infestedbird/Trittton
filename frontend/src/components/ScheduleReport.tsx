@@ -3,6 +3,7 @@ import type { ScheduleProposal } from '../lib/schedule'
 import { buildCalendarBlocks, assignColors, detectConflicts, getUntimedSections } from '../lib/schedule'
 import { WeeklyCalendar } from './WeeklyCalendar'
 import { capeUrl, socSearchUrl, courseCodeToSubject } from '../lib/links'
+import { isWaitlistOnlySection, sectionAvailStatus } from '../lib/availability'
 
 interface ScheduleReportProps {
   proposal: ScheduleProposal
@@ -192,19 +193,20 @@ export function ScheduleReport({ proposal, onAddToSchedule }: ScheduleReportProp
                   </tr>
                 </thead>
                 <tbody>
-                  {course.sections.map((s, i) => (
-                    <tr key={i} className="border-t border-border/50">
+                  {course.sections.map((s, i) => {
+                    const availability = sectionAvailStatus(s)
+                    return <tr key={i} className="border-t border-border/50">
                       <td className="px-2 py-1 font-mono">{s.type}</td>
                       <td className="px-2 py-1 font-mono text-muted">{s.section}</td>
                       <td className="px-2 py-1">{s.days}</td>
                       <td className="px-2 py-1 font-mono">{s.time}</td>
                       <td className="px-2 py-1">{s.building} {s.room}</td>
                       <td className="px-2 py-1">{s.instructor}</td>
-                      <td className={`px-2 py-1 font-mono ${s.available > 0 ? 'text-green' : 'text-red'}`}>
-                        {s.available}/{s.limit}
+                      <td className={`px-2 py-1 font-mono ${availability.status === 'open' ? 'text-green' : availability.status === 'waitlist' ? 'text-gold' : 'text-red'}`}>
+                        {isWaitlistOnlySection(s) ? 'Waitlist only' : `${availability.seats}/${s.limit}`}
                       </td>
                     </tr>
-                  ))}
+                  })}
                 </tbody>
               </table>
             </div>
@@ -221,9 +223,12 @@ function generateReportHtml(proposal: ScheduleProposal): string {
 
   const courseRows = proposal.courses.map((c) => {
     const color = colors.get(c.course_code)
-    const sectionRows = c.sections.map((s) =>
-      `<tr><td>${s.type}</td><td>${s.section}</td><td>${s.days}</td><td>${s.time}</td><td>${s.building} ${s.room}</td><td>${s.instructor}</td><td style="color:${s.available > 0 ? '#3dd68c' : '#f25f5c'}">${s.available}/${s.limit}</td></tr>`
-    ).join('')
+    const sectionRows = c.sections.map((s) => {
+      const availability = sectionAvailStatus(s)
+      const seatColor = availability.status === 'open' ? '#3dd68c' : availability.status === 'waitlist' ? '#f5c842' : '#f25f5c'
+      const seatLabel = isWaitlistOnlySection(s) ? 'Waitlist only' : `${availability.seats}/${s.limit}`
+      return `<tr><td>${s.type}</td><td>${s.section}</td><td>${s.days}</td><td>${s.time}</td><td>${s.building} ${s.room}</td><td>${s.instructor}</td><td style="color:${seatColor}">${seatLabel}</td></tr>`
+    }).join('')
 
     return `
       <div class="course">

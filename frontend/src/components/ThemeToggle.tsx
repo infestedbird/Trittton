@@ -32,7 +32,7 @@ export function ThemeToggle({ theme, onToggle }: { theme: 'dark' | 'light'; onTo
   return (
     <button
       onClick={onToggle}
-      className="p-2 rounded-xl text-muted hover:text-gold hover:bg-card cursor-pointer transition-all"
+      className="p-2.5 rounded-xl border border-transparent text-muted hover:text-gold hover:bg-card hover:border-border cursor-pointer transition-all"
       title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       {theme === 'dark' ? (

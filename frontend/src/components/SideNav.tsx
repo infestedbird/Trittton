@@ -30,40 +30,42 @@ interface NavItem {
 
 const GROUPS: (scheduleCount: number, completedCount: number, watchCount: number) => NavGroup[] = (scheduleCount, completedCount, watchCount) => [
   {
-    label: 'Courses',
+    label: 'Explore',
     defaultOpen: true,
     items: [
       { view: 'browse', label: 'Browse', icon: <MagnifyIcon /> },
+    ],
+  },
+  {
+    label: 'Plan',
+    defaultOpen: true,
+    items: [
       { view: 'schedule', label: 'My Schedule', icon: <CalendarIcon />, badge: scheduleCount },
-      { view: 'watching', label: 'Seat Alerts', icon: <BellIcon />, badge: watchCount },
       { view: 'planner', label: '4-Year Plan', icon: <AcademicIcon /> },
+      { view: 'ai', label: 'AI Planner', icon: <SparkleIcon /> },
+    ],
+  },
+  {
+    label: 'Enroll',
+    defaultOpen: true,
+    items: [
+      { view: 'enrollment', label: 'Enrollment Center', icon: <EnrollIcon /> },
+      { view: 'watching', label: 'Seat Alerts', icon: <BellIcon />, badge: watchCount },
+    ],
+  },
+  {
+    label: 'Track',
+    defaultOpen: true,
+    items: [
+      { view: 'completed', label: 'Course History', icon: <HistoryIcon />, badge: completedCount },
       { view: 'prereqs', label: 'Prereq Chains', icon: <NodesIcon /> },
     ],
   },
   {
-    label: 'AI Tools',
+    label: 'Resources',
     defaultOpen: true,
     items: [
-      { view: 'ai', label: 'AI Assistant', icon: <SparkleIcon /> },
-      { view: 'scheduler', label: 'Scheduler', icon: <ClockIcon /> },
-    ],
-  },
-  {
-    label: 'Campus',
-    defaultOpen: true,
-    items: [
-      { view: 'live', label: 'Live Status', icon: <PulseIcon /> },
-      { view: 'rooms', label: 'Empty Rooms', icon: <BuildingIcon /> },
-      { view: 'dining', label: 'Dining', icon: <DiningIcon /> },
-      { view: 'events', label: 'Dates', icon: <EventIcon /> },
-      { view: 'internships', label: 'Internships', icon: <BriefcaseIcon /> },
-    ],
-  },
-  {
-    label: 'Profile',
-    defaultOpen: true,
-    items: [
-      { view: 'completed', label: 'My Courses', icon: <HistoryIcon />, badge: completedCount },
+      { view: 'campus', label: 'Campus & More', icon: <GridIcon /> },
     ],
   },
 ]
@@ -176,7 +178,7 @@ export function SideNav({ activeView, onViewChange, scheduleCount, completedCoun
   // ── Desktop: existing inline behavior ──
   if (collapsed) {
     return (
-      <nav className="w-[56px] border-r border-border bg-surface flex flex-col items-center py-3 gap-1 shrink-0">
+      <nav className="w-[64px] border-r border-border/80 bg-surface/75 backdrop-blur-xl flex flex-col items-center py-3 gap-1.5 shrink-0">
         <button onClick={onToggleCollapse} className="p-1.5 rounded-lg text-muted hover:text-text hover:bg-card cursor-pointer mb-2">
           <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -206,9 +208,9 @@ export function SideNav({ activeView, onViewChange, scheduleCount, completedCoun
   }
 
   return (
-    <nav className="w-[220px] border-r border-border bg-surface flex flex-col overflow-y-auto shrink-0">
-      <div className="px-3 pt-3 pb-1 flex items-center justify-between">
-        <span className="text-[11px] font-medium text-muted uppercase tracking-wider">Navigation</span>
+    <nav className="w-[240px] border-r border-border/80 bg-surface/75 backdrop-blur-xl flex flex-col overflow-y-auto shrink-0">
+      <div className="px-4 pt-5 pb-2 flex items-center justify-between">
+        <span className="text-[10px] font-bold text-muted uppercase tracking-[0.18em]">Navigation</span>
         <button onClick={onToggleCollapse} className="p-1 rounded-md text-muted hover:text-text hover:bg-card cursor-pointer">
           <svg width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
@@ -219,10 +221,10 @@ export function SideNav({ activeView, onViewChange, scheduleCount, completedCoun
       {groups.map((group) => {
         const isCollapsed = collapsedGroups[group.label]
         return (
-          <div key={group.label} className="mb-0.5">
+          <div key={group.label} className="mb-1.5">
             <button
               onClick={() => toggleGroup(group.label)}
-              className="w-full flex items-center justify-between px-4 py-1.5 cursor-pointer group"
+              className="w-full flex items-center justify-between px-4 py-2 cursor-pointer group"
             >
               <span className="text-[11px] font-medium text-dim uppercase tracking-wider group-hover:text-muted">
                 {group.label}
@@ -236,23 +238,23 @@ export function SideNav({ activeView, onViewChange, scheduleCount, completedCoun
             </button>
 
             <div className={`overflow-hidden transition-all duration-200 ${isCollapsed ? 'max-h-0' : 'max-h-96'}`}>
-              <div className="px-2 pb-1.5 space-y-0.5">
+              <div className="px-2.5 pb-2 space-y-1">
                 {group.items.map((item) => {
                   const isActive = activeView === item.view
                   return (
                     <button
                       key={item.view}
                       onClick={() => onViewChange(item.view)}
-                      className={`w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left cursor-pointer transition-all relative ${
+                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left cursor-pointer transition-all relative ${
                         isActive
-                          ? 'bg-accent/10 text-accent'
-                          : 'text-muted hover:bg-card hover:text-text'
+                          ? 'bg-accent/12 text-accent shadow-[inset_0_0_0_1px_rgba(100,136,255,0.15),0_8px_18px_rgba(0,0,0,0.1)]'
+                          : 'text-muted hover:bg-card/80 hover:text-text'
                       }`}
                     >
                       <span className="w-5 h-5 flex items-center justify-center shrink-0">
                         {item.icon}
                       </span>
-                      <span className={`text-[13px] flex-1 ${isActive ? 'font-semibold' : 'font-medium'}`}>
+                      <span className={`text-[13px] flex-1 ${isActive ? 'font-bold' : 'font-medium'}`}>
                         {item.label}
                       </span>
                       {item.badge !== undefined && item.badge > 0 && (
@@ -293,30 +295,18 @@ function AcademicIcon() {
 function SparkleIcon() {
   return <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.455 2.456L21.75 6l-1.036.259a3.375 3.375 0 00-2.455 2.456z" /></svg>
 }
-function ClockIcon() {
-  return <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-}
-function PulseIcon() {
-  return <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 12h3l3-9 4 18 3-9h5" /></svg>
-}
-function EventIcon() {
-  return <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-}
 function HistoryIcon() {
   return <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h3.75M9 15h3.75M9 18h3.75m3 .75H18a2.25 2.25 0 002.25-2.25V6.108c0-1.135-.845-2.098-1.976-2.192a48.424 48.424 0 00-1.123-.08m-5.801 0c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15a2.25 2.25 0 012.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m0 0H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V9.375c0-.621-.504-1.125-1.125-1.125H8.25z" /></svg>
-}
-function DiningIcon() {
-  return <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8.25v-1.5m0 1.5c-1.355 0-2.697.056-4.024.166C6.845 8.51 6 9.473 6 10.608v2.513m6-4.871c1.355 0 2.697.056 4.024.166C17.155 8.51 18 9.473 18 10.608v2.513M15 8.25v-1.5m-6 1.5v-1.5m12 9.75l-1.5.75a3.354 3.354 0 01-3 0 3.354 3.354 0 00-3 0 3.354 3.354 0 01-3 0 3.354 3.354 0 00-3 0 3.354 3.354 0 01-3 0L3 16.5m15-3.379a48.474 48.474 0 00-6-.371c-2.032 0-4.034.126-6 .371m12 0c.39.049.777.102 1.163.16 1.07.16 1.837 1.094 1.837 2.175v5.169c0 .621-.504 1.125-1.125 1.125H4.125A1.125 1.125 0 013 20.625v-5.17c0-1.08.768-2.014 1.837-2.174A47.78 47.78 0 016 13.12" /></svg>
 }
 function BellIcon() {
   return <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" /></svg>
 }
-function BuildingIcon() {
-  return <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3 0h.008v.008H18V7.5z" /></svg>
-}
-function BriefcaseIcon() {
-  return <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M20.25 14.15v4.25c0 1.094-.787 2.036-1.872 2.18-2.087.277-4.216.42-6.378.42s-4.291-.143-6.378-.42c-1.085-.144-1.872-1.086-1.872-2.18v-4.25m16.5 0a2.18 2.18 0 00.75-1.661V8.706c0-1.081-.768-2.015-1.837-2.175a48.114 48.114 0 00-3.413-.387m4.5 8.006c-.194.165-.42.295-.673.38A23.978 23.978 0 0112 15.75c-2.648 0-5.195-.429-7.577-1.22a2.016 2.016 0 01-.673-.38m0 0A2.18 2.18 0 013 12.489V8.706c0-1.081.768-2.015 1.837-2.175a48.111 48.111 0 013.413-.387m7.5 0V5.25A2.25 2.25 0 0013.5 3h-3a2.25 2.25 0 00-2.25 2.25v.894m7.5 0a48.667 48.667 0 00-7.5 0" /></svg>
-}
 function NodesIcon() {
   return <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><circle cx="5" cy="6" r="2" /><circle cx="12" cy="12" r="2" /><circle cx="19" cy="6" r="2" /><circle cx="5" cy="18" r="2" /><circle cx="19" cy="18" r="2" /><path strokeLinecap="round" d="M7 6 L10 11 M14 11 L17 6 M7 18 L10 13 M14 13 L17 18" /></svg>
+}
+function EnrollIcon() {
+  return <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M12 2.25c-2.172 1.25-4.594 2-7.125 2.25v6.75c0 5.043 3.438 9.284 8.1 10.5 4.662-1.216 8.1-5.457 8.1-10.5V4.5A18.64 18.64 0 0112 2.25z" /></svg>
+}
+function GridIcon() {
+  return <svg width="18" height="18" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="6.5" height="6.5" rx="1.5" /><rect x="14" y="3.5" width="6.5" height="6.5" rx="1.5" /><rect x="3.5" y="14" width="6.5" height="6.5" rx="1.5" /><rect x="14" y="14" width="6.5" height="6.5" rx="1.5" /></svg>
 }

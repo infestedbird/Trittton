@@ -17,10 +17,10 @@ export function ScrapePanel({ progress, show, onClose, onLoadResults }: ScrapePa
       <div className="bg-card border border-border rounded-2xl w-full max-w-md p-6 shadow-2xl animate-fade-in">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-base font-medium">
-            {progress.status === 'running' && 'Scraping UCSD Courses...'}
-            {progress.status === 'done' && 'Scrape Complete'}
-            {progress.status === 'error' && 'Scrape Failed'}
-            {progress.status === 'idle' && 'Ready to Scrape'}
+            {progress.status === 'running' && 'Refreshing UCSD Courses...'}
+            {progress.status === 'done' && 'Refresh Complete'}
+            {progress.status === 'error' && 'Refresh Failed'}
+            {progress.status === 'idle' && 'Ready to Refresh'}
           </h2>
           <button
             onClick={onClose}

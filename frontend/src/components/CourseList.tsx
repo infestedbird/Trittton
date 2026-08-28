@@ -31,7 +31,7 @@ type CardProps = Omit<CourseListProps, 'courses'> & { courses: Course[] }
 function Row({ index, style, courses, ...cardProps }: RowComponentProps<CardProps>) {
   const c = courses[index]
   return (
-    <div style={style} className="pb-3">
+      <div style={style} className="pb-3.5">
       <CourseCard
         course={c}
         index={index}
@@ -72,7 +72,7 @@ export function CourseList(props: CourseListProps) {
   // Small lists: plain render. No measurement overhead, smoother scroll near the top.
   if (courses.length < VIRTUALIZE_THRESHOLD) {
     return (
-      <div className="flex flex-col gap-4" data-testid="course-list">
+      <div className="flex flex-col gap-3.5" data-testid="course-list">
         {courses.map((c, i) => (
           <CourseCard
             key={`${c.course_code}-${i}`}
@@ -95,7 +95,7 @@ export function CourseList(props: CourseListProps) {
   // Large lists: virtualize. The List sizes itself to fit its scrolling parent — the Browse
   // view already gives us a scroll container, so we expand to fill that.
   return (
-    <div className="h-[calc(100vh-220px)]" data-testid="course-list">
+    <div className="h-full min-h-[320px]" data-testid="course-list">
       <List<CardProps>
         rowCount={courses.length}
         rowHeight={rowHeight}

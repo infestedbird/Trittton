@@ -201,7 +201,7 @@ export function AutoScheduler({ model, onModelChange, geminiKey, anthropicKey, u
   const allBlocks: TimeBlock[] = [...calEvents, ...(result?.study_blocks || []), ...(result?.guilt_free || []), ...(result?.leisure_blocks || [])]
 
   return (
-    <div className="h-[calc(100vh-64px)] overflow-hidden">
+    <div className="h-full overflow-hidden">
       <div className="h-full max-w-[1400px] mx-auto px-5 py-4 flex flex-col">
         {/* Header */}
         <div className="flex items-center justify-between mb-3 shrink-0">

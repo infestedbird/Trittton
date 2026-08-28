@@ -3,6 +3,7 @@ import type { CompletedCourse } from '../hooks/useCompletedCourses'
 import type { Course } from '../types'
 import { GradProgress } from './GradProgress'
 import { PREREQ_GRAPH, getCleanPrereqs, getCourseStatus, getUnlocks, getDepth, getAllDownstream } from '../lib/prereqChains'
+import { tssHomeUrl } from '../lib/links'
 
 interface Props {
   completed: CompletedCourse[]
@@ -36,7 +37,7 @@ export function CompletedCourses({ completed, allCourses, onAdd, onRemove, onCle
 
   const departments = useMemo(() => Array.from(deptMap.keys()).sort(), [deptMap])
   const activeDept = selectedDept || departments[0] || ''
-  const deptCourses = deptMap.get(activeDept) || []
+  const deptCourses = useMemo(() => deptMap.get(activeDept) || [], [deptMap, activeDept])
 
   // Count completed per dept
   const deptDoneCounts = useMemo(() => {
@@ -314,18 +315,17 @@ function DetailPanel({ courseCode, allCourses, completedSet, onClose, onSelect, 
           }`}
         >{isDone ? 'Remove from History' : 'Add to History'}</button>
 
-        {/* WebReg — register for sections */}
+        {/* TSS — finish booking or waitlisting in UCSD's authenticated system */}
         {course && course.sections && course.sections.length > 0 && !isDone && (
           <div className="mt-2 space-y-1.5">
             <div className="text-[10px] font-bold text-dim uppercase tracking-wide">Register</div>
             {course.sections.slice(0, 4).map(s => (
               <div key={s.section_id || s.section} className="flex items-center gap-1.5">
                 <button onClick={() => {
-                  navigator.clipboard.writeText(s.section_id)
-                  window.open('https://act.ucsd.edu/webreg2/start', '_blank')
+                  window.open(tssHomeUrl(), '_blank', 'noopener,noreferrer')
                 }}
                   className="flex-1 flex items-center gap-2 px-2.5 py-1.5 rounded-lg bg-card border border-border hover:border-accent/30 hover:bg-accent/5 cursor-pointer transition-all text-left text-[10px]"
-                  title={`Copy section ID ${s.section_id} and open WebReg`}
+                  title={`Open TSS for ${s.section_id}`}
                 >
                   <span className="font-mono font-bold text-accent">{s.type} {s.section}</span>
                   <span className="text-dim truncate">{s.days} {s.time}</span>
@@ -336,7 +336,7 @@ function DetailPanel({ courseCode, allCourses, completedSet, onClose, onSelect, 
               </div>
             ))}
             <p className="text-[9px] text-dim leading-relaxed">
-              Click a section to copy its ID and open WebReg. Paste the ID in WebReg to enroll.
+              Open TSS to book an available event or join its active waitlist. Confirm the exact TSS section ID before submitting.
             </p>
           </div>
         )}

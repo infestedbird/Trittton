@@ -16,7 +16,7 @@ const QUICK_TOPICS = [
   { label: 'Dining', question: 'What are the best dining options on campus? Explain meal plans and Dining Dollars vs Triton Cash.' },
   { label: 'Housing', question: "What are my housing options? Compare on-campus vs off-campus, and which neighborhoods are best for students?" },
   { label: 'Transportation', question: 'How do I get around campus and San Diego? Explain the trolley, buses, U-Pass, and shuttles.' },
-  { label: 'Registration', question: 'How does course registration work? Walk me through WebReg, enrollment times, and waitlists.' },
+  { label: 'Registration', question: 'How does TSS course booking work? Walk me through booking windows, enrollment, and waitlists.' },
   { label: 'Change Major', question: 'How do I change my major? What about selective/capped majors like CSE or Data Science?' },
   { label: 'Financial Aid', question: "What financial aid is available? What's the total cost of attendance for a CA resident?" },
   { label: 'Mental Health', question: 'What mental health and counseling resources are available on campus?' },

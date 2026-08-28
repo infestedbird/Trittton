@@ -1,10 +1,12 @@
-import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import type { SavedCourse } from '../hooks/useMySchedule'
 import type { ScheduleProposal } from '../lib/schedule'
 import { buildCalendarBlocks, detectConflicts, assignColors, getUntimedSections } from '../lib/schedule'
 import { WeeklyCalendar } from './WeeklyCalendar'
 import { socSearchUrl, capeUrl, rmpUrl, courseCodeToSubject } from '../lib/links'
 import { downloadICS } from '../lib/icsExport'
+import { TssHandoff } from './TssHandoff'
+import { isWaitlistOnlySection, sectionAvailStatus } from '../lib/availability'
 
 interface MyScheduleProps {
   schedule: SavedCourse[]
@@ -34,10 +36,11 @@ export function MySchedule({ schedule, proposal, term, onRemove, onRemoveSection
   const colors = assignColors(proposal.courses)
   const conflicts = detectConflicts(blocks)
   const untimedSections = getUntimedSections(proposal)
-  const transitions = useMemo(() => findTightTransitions(blocks), [blocks])
+  const transitions = findTightTransitions(blocks)
   const [gcalStatus, setGcalStatus] = useState<GCalStatus | null>(null)
   const [syncing, setSyncing] = useState(false)
   const [syncMsg, setSyncMsg] = useState<string | null>(null)
+  const [showExportMenu, setShowExportMenu] = useState(false)
 
   // The uid is required to scope all GCal API calls to this user.
   const uidQuery = uid ? `?uid=${encodeURIComponent(uid)}` : ''
@@ -174,7 +177,7 @@ export function MySchedule({ schedule, proposal, term, onRemove, onRemoveSection
             </div>
             <h2 className="text-xl font-medium text-text mb-2">No courses in {proposal.quarter}</h2>
             <p className="text-[14px] text-muted leading-relaxed">
-              Add courses from the <b className="text-text">Browse</b> tab using the "+ Add" button,
+              Plan courses from the <b className="text-text">Browse</b> tab using the "+ Plan" button,
               or ask the <b className="text-accent2">AI Planner</b> to build you a schedule.
             </p>
             {allSchedules && Object.entries(allSchedules).some(([t, list]) => t !== term && list.length > 0) && (
@@ -242,71 +245,27 @@ export function MySchedule({ schedule, proposal, term, onRemove, onRemoveSection
             )}
           </div>
           <div className="flex gap-2 flex-wrap">
-            {/* Google Calendar sync */}
-            {gcalStatus?.connected ? (
-              <>
-                <button
-                  onClick={handleGCalSync}
-                  disabled={syncing}
-                  className="px-3 py-1.5 rounded-lg text-[12px] font-medium
-                    bg-green/10 text-green border border-green/20
-                    hover:bg-green/20 transition-all cursor-pointer flex items-center gap-1.5
-                    disabled:opacity-50"
-                  title="Sync this schedule to your Google Calendar"
-                >
-                  {syncing ? (
-                    <span className="w-3 h-3 border-2 border-green/30 border-t-green rounded-full animate-spin" />
-                  ) : (
-                    <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-                    </svg>
-                  )}
-                  {syncing ? 'Syncing...' : 'Sync Calendar'}
-                </button>
-                <button
-                  onClick={handleGCalDisconnect}
-                  className="px-2 py-1.5 rounded-lg text-[12px] font-medium
-                    bg-card border border-border text-muted
-                    hover:text-red hover:border-red/30 transition-all cursor-pointer"
-                  title="Disconnect Google Calendar from this account"
-                >
-                  Disconnect
-                </button>
-              </>
-            ) : gcalStatus?.configured ? (
-              <button
-                onClick={handleGCalConnect}
-                className="px-3 py-1.5 rounded-lg text-[12px] font-medium
-                  bg-green/10 text-green border border-green/20
-                  hover:bg-green/20 transition-all cursor-pointer flex items-center gap-1.5"
-              >
-                <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-2.688a4.5 4.5 0 00-1.242-7.244l4.5-4.5a4.5 4.5 0 016.364 6.364l-1.757 1.757" />
-                </svg>
-                Connect Google Calendar
+            <TssHandoff term={term} schedule={schedule} />
+            <div className="relative">
+              <button onClick={() => setShowExportMenu((current) => !current)} className="rounded-xl border border-border bg-card px-3.5 py-2 text-[11px] font-semibold text-muted hover:border-border2 hover:text-text">
+                Export & sync <span className="ml-1 text-dim">▾</span>
               </button>
-            ) : (
-              <button
-                onClick={handleGoogleCalendarICS}
-                className="px-3 py-1.5 rounded-lg text-[12px] font-medium
-                  bg-green/10 text-green border border-green/20
-                  hover:bg-green/20 transition-all cursor-pointer flex items-center gap-1.5"
-                title={`Download .ics for Google Calendar (${gcalStatus?.email || 'your Google Calendar'})`}
-              >
-                <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
-                </svg>
-                Export .ics
-              </button>
-            )}
-            <button
-              onClick={handleExport}
-              className="px-3 py-1.5 rounded-lg text-[12px] font-medium
-                bg-accent2/10 text-accent2 border border-accent2/20
-                hover:bg-accent2/20 transition-all cursor-pointer"
-            >
-              Export Report
-            </button>
+              {showExportMenu && (
+                <div className="absolute right-0 top-full z-30 mt-2 w-56 rounded-xl border border-border bg-card p-2 shadow-[0_18px_55px_rgba(0,0,0,0.4)]">
+                  {gcalStatus?.connected ? (
+                    <>
+                      <button onClick={() => { handleGCalSync(); setShowExportMenu(false) }} disabled={syncing} className="w-full rounded-lg px-3 py-2 text-left text-[11px] font-semibold text-green hover:bg-green/10 disabled:opacity-50">{syncing ? 'Syncing…' : 'Sync Google Calendar'}</button>
+                      <button onClick={() => { handleGCalDisconnect(); setShowExportMenu(false) }} className="w-full rounded-lg px-3 py-2 text-left text-[11px] text-muted hover:bg-red/10 hover:text-red">Disconnect Google Calendar</button>
+                    </>
+                  ) : gcalStatus?.configured ? (
+                    <button onClick={() => { handleGCalConnect(); setShowExportMenu(false) }} className="w-full rounded-lg px-3 py-2 text-left text-[11px] font-semibold text-green hover:bg-green/10">Connect Google Calendar</button>
+                  ) : null}
+                  <div className="my-1 h-px bg-border" />
+                  <button onClick={() => { handleGoogleCalendarICS(); setShowExportMenu(false) }} className="w-full rounded-lg px-3 py-2 text-left text-[11px] text-muted hover:bg-surface hover:text-text">Download calendar (.ics)</button>
+                  <button onClick={() => { handleExport(); setShowExportMenu(false) }} className="w-full rounded-lg px-3 py-2 text-left text-[11px] text-muted hover:bg-surface hover:text-text">Export schedule report</button>
+                </div>
+              )}
+            </div>
             <button
               onClick={() => { if (confirm(`Clear all ${schedule.length} courses from your schedule?`)) onClear() }}
               className="px-3 py-1.5 rounded-lg text-[12px] font-medium
@@ -381,8 +340,9 @@ export function MySchedule({ schedule, proposal, term, onRemove, onRemoveSection
                     </tr>
                   </thead>
                   <tbody>
-                    {course.sections.map((s, i) => (
-                      <tr key={i} className="border-t border-border/50">
+                      {course.sections.map((s, i) => {
+                        const availability = sectionAvailStatus(s)
+                        return <tr key={i} className="border-t border-border/50">
                         <td className="px-2 py-1.5">
                           <button
                             onClick={() => onRemoveSection(course.course_code, s.section, s.type)}
@@ -402,9 +362,11 @@ export function MySchedule({ schedule, proposal, term, onRemove, onRemoveSection
                             <a href={rmpUrl(s.instructor)} target="_blank" rel="noopener" className="hover:text-accent hover:underline">{s.instructor}</a>
                           ) : 'TBA'}
                         </td>
-                        <td className={`px-2 py-1.5 font-mono ${s.available > 0 ? 'text-green' : 'text-red'}`}>{s.available}/{s.limit}</td>
+                        <td className={`px-2 py-1.5 font-mono ${availability.status === 'open' ? 'text-green' : availability.status === 'waitlist' ? 'text-gold' : 'text-red'}`}>
+                          {isWaitlistOnlySection(s) ? 'Waitlist only' : `${availability.seats}/${s.limit}`}
+                        </td>
                       </tr>
-                    ))}
+                      })}
                   </tbody>
                 </table>
               </div>
@@ -448,34 +410,17 @@ function TermSwitcher({
   allSchedules?: Record<string, SavedCourse[]>
   onTermChange: (term: string) => void
 }) {
+  const savedCount = allSchedules?.[term]?.length ?? 0
   return (
-    <div className="-mt-1 flex items-center gap-2 overflow-x-auto pb-1 -mx-3 px-3 sm:mx-0 sm:px-0">
-      <span className="text-[10px] uppercase tracking-wider text-dim shrink-0">Term</span>
-      <div className="flex items-center gap-1.5 shrink-0">
-        {termOptions.map((t) => {
-          const count = allSchedules?.[t.value]?.length ?? 0
-          const isActive = t.value === term
-          return (
-            <button
-              key={t.value}
-              onClick={() => onTermChange(t.value)}
-              className={`relative inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-medium border whitespace-nowrap cursor-pointer transition-all ${
-                isActive
-                  ? 'bg-accent/15 border-accent/40 text-accent shadow-sm'
-                  : 'bg-card border-border text-muted hover:text-text hover:border-border2'
-              }`}
-              title={t.label}
-            >
-              {t.value}
-              {count > 0 && (
-                <span className={`text-[10px] font-mono px-1.5 rounded ${isActive ? 'bg-accent/20 text-accent' : 'bg-bg text-text'}`}>
-                  {count}
-                </span>
-              )}
-            </button>
-          )
+    <div className="-mt-1 flex items-center gap-2">
+      <label htmlFor="schedule-term" className="text-[10px] font-bold uppercase tracking-wider text-dim">Term</label>
+      <select id="schedule-term" value={term} onChange={(event) => onTermChange(event.target.value)} className="h-9 rounded-xl border border-border bg-card px-3 text-[11px] font-semibold text-text outline-none hover:border-border2 focus:border-accent">
+        {termOptions.map((option) => {
+          const count = allSchedules?.[option.value]?.length ?? 0
+          return <option key={option.value} value={option.value}>{option.label}{count > 0 ? ` · ${count} saved` : ''}</option>
         })}
-      </div>
+      </select>
+      {savedCount > 0 && <span className="rounded-full bg-accent/12 px-2 py-1 text-[9px] font-bold text-accent">{savedCount} planned</span>}
     </div>
   )
 }
@@ -533,9 +478,12 @@ function generateMyScheduleHtml(proposal: ScheduleProposal, schedule: SavedCours
   const colors = assignColors(proposal.courses)
   const rows = schedule.map((c) => {
     const color = colors.get(c.course_code)
-    const secs = c.sections.map((s) =>
-      `<tr><td>${s.type}</td><td>${s.section}</td><td>${s.days}</td><td>${s.time}</td><td>${s.building} ${s.room}</td><td>${s.instructor}</td><td style="color:${s.available > 0 ? '#3dd68c' : '#f25f5c'}">${s.available}/${s.limit}</td></tr>`
-    ).join('')
+    const secs = c.sections.map((s) => {
+      const availability = sectionAvailStatus(s)
+      const color = availability.status === 'open' ? '#3dd68c' : availability.status === 'waitlist' ? '#f5c842' : '#f25f5c'
+      const label = isWaitlistOnlySection(s) ? 'Waitlist only' : `${availability.seats}/${s.limit}`
+      return `<tr><td>${s.type}</td><td>${s.section}</td><td>${s.days}</td><td>${s.time}</td><td>${s.building} ${s.room}</td><td>${s.instructor}</td><td style="color:${color}">${label}</td></tr>`
+    }).join('')
     return `<div class="course"><div class="course-header"><span class="badge" style="background:${color?.bg};color:${color?.text};border-left:3px solid ${color?.border}">${c.course_code}</span><span class="title">${c.title}</span><span class="units">${c.units} units</span></div><table><thead><tr><th>Type</th><th>Section</th><th>Days</th><th>Time</th><th>Location</th><th>Instructor</th><th>Seats</th></tr></thead><tbody>${secs}</tbody></table></div>`
   }).join('\n')
 

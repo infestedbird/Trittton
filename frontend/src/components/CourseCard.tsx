@@ -1,12 +1,13 @@
 import { useState, useEffect, memo } from 'react'
 import type { Course, Section } from '../types'
-import { courseAvailStatus } from '../lib/availability'
+import { courseAvailStatus, isWaitlistOnlySection, sectionAvailStatus } from '../lib/availability'
 import { SectionTable } from './SectionTable'
 import { ProfessorCompare } from './ProfessorCompare'
 import { capeUrl, socSearchUrl, courseCodeToSubject, rmpUrl } from '../lib/links'
 import type { SavedCourse } from '../hooks/useMySchedule'
 import type { RmpRating } from '../hooks/useRmpRatings'
 import { TYPE_COLORS } from '../lib/constants'
+import { SectionBundles } from './SectionBundles'
 
 interface CourseCardProps {
   course: Course
@@ -45,7 +46,7 @@ export const CourseCard = memo(function CourseCard({ course, index, onAddToSched
   if (status === 'open') {
     seatLabel = `${seats} open`
   } else if (status === 'waitlist') {
-    seatLabel = 'waitlist'
+    seatLabel = 'waitlist only'
   } else {
     seatLabel = 'full'
   }
@@ -56,7 +57,7 @@ export const CourseCard = memo(function CourseCard({ course, index, onAddToSched
     if (isInSchedule) return
     setShowPicker(true)
     setOpen(true)
-    setSelectedSections(new Set(course.sections.map((_, i) => i)))
+    setSelectedSections(new Set())
   }
 
   const toggleSection = (idx: number) => {
@@ -77,6 +78,7 @@ export const CourseCard = memo(function CourseCard({ course, index, onAddToSched
       units: parseInt(course.units) || 0,
       subject: course.subject,
       sections: picked.map((s) => ({
+        section_id: s.section_id,
         type: s.type,
         section: s.section,
         days: s.days,
@@ -84,8 +86,12 @@ export const CourseCard = memo(function CourseCard({ course, index, onAddToSched
         building: s.building,
         room: s.room,
         instructor: s.instructor,
-        available: parseInt(s.available) || 0,
+        available: sectionAvailStatus(s).seats,
         limit: parseInt(s.limit) || 0,
+        waitlisted: parseInt(s.waitlisted) || 0,
+        waitlist_available: s.waitlist_available,
+        status: s.status,
+        event_package_ids: s.event_package_ids,
       })),
     })
     setShowPicker(false)
@@ -103,8 +109,8 @@ export const CourseCard = memo(function CourseCard({ course, index, onAddToSched
 
   return (
     <div
-      className={`bg-card border rounded-xl overflow-hidden card-hover animate-fade-in ${
-        hasUnmetPrereqs ? 'border-red/30' : 'border-border hover:border-border2'
+      className={`bg-card/90 border rounded-2xl overflow-hidden card-hover animate-fade-in shadow-[0_10px_30px_rgba(0,0,0,0.1)] backdrop-blur-sm ${
+        hasUnmetPrereqs ? 'border-red/30' : 'border-border/90 hover:border-accent/30'
       }`}
       data-testid="course-card"
       style={{ animationDelay: `${Math.min(index * 15, 150)}ms` }}
@@ -112,7 +118,7 @@ export const CourseCard = memo(function CourseCard({ course, index, onAddToSched
       {/* Header — essentials only */}
       <div
         onClick={() => setOpen(!open)}
-        className="px-5 py-4 cursor-pointer flex items-center gap-3 select-none"
+        className="px-4 py-4 sm:px-5 cursor-pointer flex items-center gap-3.5 select-none"
         data-testid="course-header"
       >
         {/* Course code + units */}
@@ -121,7 +127,7 @@ export const CourseCard = memo(function CourseCard({ course, index, onAddToSched
           target="_blank"
           rel="noopener"
           onClick={(e) => e.stopPropagation()}
-          className="font-mono text-sm font-bold bg-accent/12 text-accent rounded-xl px-3.5 py-2 whitespace-nowrap hover:bg-accent/20 shrink-0"
+          className="font-mono text-[13px] font-bold bg-gradient-to-br from-accent/18 to-accent2/10 text-accent rounded-xl border border-accent/15 px-3.5 py-2.5 whitespace-nowrap hover:border-accent/30 hover:bg-accent/20 shrink-0"
           title={`View ${course.subject} on Schedule of Classes`}
         >
           {course.course_code}
@@ -130,7 +136,7 @@ export const CourseCard = memo(function CourseCard({ course, index, onAddToSched
 
         {/* Title */}
         <div className="flex-1 min-w-0">
-          <div className="text-base font-semibold text-text leading-snug truncate">
+          <div className="text-[15px] sm:text-base font-semibold text-text leading-snug truncate tracking-[-0.01em]">
             {course.title || 'Untitled'}
           </div>
         </div>
@@ -140,21 +146,21 @@ export const CourseCard = memo(function CourseCard({ course, index, onAddToSched
           {onAddToSchedule && (
             <button
               onClick={handleAddClick}
-              className={`text-sm font-bold px-5 py-2 rounded-xl cursor-pointer transition-all
+              className={`text-[12px] font-bold px-4 py-2.5 rounded-xl cursor-pointer transition-all
                 ${isInSchedule
                   ? 'bg-green text-white shadow-[0_0_12px_rgba(61,214,140,0.3)]'
                   : showPicker
                     ? 'bg-accent/20 text-accent border-2 border-accent/25'
-                    : 'bg-accent text-white hover:bg-accent/85 hover:shadow-[0_0_16px_rgba(79,142,247,0.3)]'
+                    : 'bg-accent text-white hover:bg-accent/90 hover:-translate-y-0.5 hover:shadow-[0_8px_22px_rgba(100,136,255,0.28)]'
                 }`}
-              title={isInSchedule ? 'Already in My Schedule' : 'Pick sections to add'}
+              title={isInSchedule ? 'Already in My Schedule' : 'Pick sections for your Trittton plan'}
             >
-              {isInSchedule ? '✓ Added' : showPicker ? 'Picking...' : '+ Add'}
+              {isInSchedule ? '✓ Planned' : showPicker ? 'Picking...' : '+ Plan'}
             </button>
           )}
 
-          <span className={`text-xs font-bold px-3 py-1.5 rounded-full ${
-            status === 'open' ? 'bg-green/15 text-green' : status === 'waitlist' ? 'bg-gold/15 text-gold' : 'bg-red/15 text-red'
+          <span className={`text-[11px] font-bold px-3 py-1.5 rounded-full border ${
+            status === 'open' ? 'bg-green/10 text-green border-green/15' : status === 'waitlist' ? 'bg-gold/10 text-gold border-gold/15' : 'bg-red/10 text-red border-red/15'
           }`} data-testid="seat-status">
             {seatLabel}
           </span>
@@ -167,7 +173,7 @@ export const CourseCard = memo(function CourseCard({ course, index, onAddToSched
 
       {/* Expanded summary bar — details that used to be in collapsed header */}
       {open && (
-        <div className="px-5 py-2.5 bg-surface/30 border-t border-border/50 flex items-center gap-3 flex-wrap text-[12px] text-muted">
+        <div className="px-5 py-3 bg-surface/45 border-t border-border/60 flex items-center gap-3 flex-wrap text-[12px] text-muted">
           <span>{course.sections.length} section{course.sections.length !== 1 ? 's' : ''}</span>
           {course.restrictions && <span className="text-accent2">{course.restrictions}</span>}
           <span className="truncate max-w-[200px]">{instructors}</span>
@@ -249,6 +255,18 @@ export const CourseCard = memo(function CourseCard({ course, index, onAddToSched
           )
         })()}
 
+        {!showPicker && course.source === 'tss' && (
+          <SectionBundles
+            courseCode={course.course_code}
+            title={course.title}
+            units={parseInt(course.units) || 0}
+            subject={course.subject}
+            sections={course.sections}
+            onPlan={onAddToSchedule}
+            hasSection={hasSection}
+          />
+        )}
+
         {showPicker ? (
           <SectionPicker
             sections={course.sections}
@@ -301,7 +319,7 @@ function SectionPicker({
     <div className="p-3">
       <div className="flex items-center justify-between mb-2">
         <div className="font-mono text-[11px] text-accent font-medium">
-          Select sections ({selected.size} selected)
+          Select sections for your plan ({selected.size} selected)
         </div>
         <div className="flex gap-2">
           <button
@@ -318,14 +336,15 @@ function SectionPicker({
               bg-green/12 text-green border border-green/15 hover:bg-green/20
               disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
           >
-            Add {selected.size}
+            Save {selected.size} to plan
           </button>
         </div>
       </div>
       <div className="space-y-1">
         {sections.map((s, i) => {
           const isSelected = selected.has(i)
-          const aInt = parseInt(s.available) || 0
+          const availability = sectionAvailStatus(s)
+          const aInt = availability.seats
           const wInt = parseInt(s.waitlisted) || 0
           const typeColor = TYPE_COLORS[s.type]
           return (
@@ -354,8 +373,8 @@ function SectionPicker({
               <span className="text-[12px] text-text w-28 shrink-0">{s.days} {s.time}</span>
               <span className="text-[12px] text-muted w-24 shrink-0">{s.building} {s.room}</span>
               <span className="text-[12px] text-muted flex-1 truncate">{s.instructor || 'TBA'}</span>
-              <span className={`font-mono text-[11px] shrink-0 ${aInt > 0 ? 'text-green' : wInt > 0 ? 'text-gold' : 'text-red'}`}>
-                {s.available}/{s.limit}
+              <span className={`font-mono text-[11px] shrink-0 ${availability.status === 'open' ? 'text-green' : availability.status === 'waitlist' || wInt > 0 ? 'text-gold' : 'text-red'}`}>
+                {isWaitlistOnlySection(s) ? 'Waitlist only' : `${aInt}/${s.limit}`}
               </span>
             </button>
           )

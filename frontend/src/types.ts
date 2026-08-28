@@ -1,5 +1,6 @@
 export interface Section {
   section_id: string
+  section_ref?: string
   type: string
   section: string
   days: string
@@ -10,6 +11,10 @@ export interface Section {
   available: string
   limit: string
   waitlisted: string
+  waitlist_available?: number | null
+  status?: string | null
+  event_package_ids?: string[]
+  source?: 'tss' | 'soc'
 }
 
 export interface Course {
@@ -19,6 +24,13 @@ export interface Course {
   units: string
   restrictions: string
   sections: Section[]
+  source?: 'tss' | 'soc'
+  module_code?: string | null
+  academic_level?: string | null
+  prerequisites?: string[]
+  availability_refresh_pending?: boolean
+  open_seat_count?: number
+  waitlist_available_count?: number
 }
 
 export type AvailabilityStatus = 'open' | 'waitlist' | 'full'

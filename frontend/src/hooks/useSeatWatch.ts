@@ -5,6 +5,8 @@ export interface SeatAlert {
   course_code: string
   section: string
   available: number
+  waitlist_available?: number
+  kind?: 'seat' | 'waitlist'
   timestamp: number
 }
 
@@ -13,6 +15,7 @@ export interface WatchInfo {
   section: string
   term: string
   last_available: number
+  last_waitlist_available?: number
   limit: number
   watchers: number
   // Extra metadata stored locally
@@ -90,11 +93,14 @@ export function useSeatWatch(term: string, uid: string | null = null) {
   // state in refs and only re-run the effect when the watches set crosses from
   // "empty" to "non-empty" (and vice versa).
   const watchesRef = useRef(watches)
-  watchesRef.current = watches
   const notifPermissionRef = useRef(notifPermission)
-  notifPermissionRef.current = notifPermission
   const uidQueryRef = useRef(uidQuery)
-  uidQueryRef.current = uidQuery
+
+  useEffect(() => {
+    watchesRef.current = watches
+    notifPermissionRef.current = notifPermission
+    uidQueryRef.current = uidQuery
+  }, [watches, notifPermission, uidQuery])
 
   const hasAnyWatches = Object.keys(watches).length > 0 || Object.keys(loadLocal()).length > 0
 
@@ -115,8 +121,11 @@ export function useSeatWatch(term: string, uid: string | null = null) {
             setAlerts(prev => [...prev, ...data.alerts])
             for (const alert of data.alerts) {
               if (notifPermissionRef.current === 'granted') {
-                new Notification('Seat Available!', {
-                  body: `${alert.course_code} ${alert.section} now has ${alert.available} seat${alert.available !== 1 ? 's' : ''}`,
+                const isWaitlist = alert.kind === 'waitlist'
+                new Notification(isWaitlist ? 'TSS Waitlist Available!' : 'TSS Seat Available!', {
+                  body: isWaitlist
+                    ? `${alert.course_code} ${alert.section} has ${alert.waitlist_available} waitlist spot${alert.waitlist_available !== 1 ? 's' : ''}`
+                    : `${alert.course_code} ${alert.section} now has ${alert.available} seat${alert.available !== 1 ? 's' : ''}`,
                   icon: '/favicon.svg',
                   tag: `seat-${alert.section_id}`,
                 })

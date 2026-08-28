@@ -3,7 +3,7 @@ import type { Course } from '../types'
 import type { RmpRating } from '../hooks/useRmpRatings'
 import type { SavedCourse } from '../hooks/useMySchedule'
 import { CourseCard } from './CourseCard'
-import { webRegUrl } from '../lib/links'
+import { tssHomeUrl } from '../lib/links'
 
 interface WatchListProps {
   watches: Record<string, WatchInfo>
@@ -87,7 +87,7 @@ export function WatchList({ watches, alerts, onUnwatch, onDismissAlert, notifPer
           <div className="space-y-2">
             <h2 className="text-sm font-semibold text-green flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-green animate-pulse" />
-              Seats Just Opened
+              TSS Availability Changed
             </h2>
             {alerts.map((alert, i) => (
               <div key={`${alert.section_id}-${alert.timestamp}`}
@@ -101,14 +101,16 @@ export function WatchList({ watches, alerts, onUnwatch, onDismissAlert, notifPer
                   <div>
                     <div className="text-base font-bold text-text">{alert.course_code} — {alert.section}</div>
                     <div className="text-sm text-green font-semibold">
-                      {alert.available} seat{alert.available !== 1 ? 's' : ''} just opened — enroll now!
+                      {alert.kind === 'waitlist'
+                        ? `${alert.waitlist_available} waitlist spot${alert.waitlist_available !== 1 ? 's' : ''} available`
+                        : `${alert.available} seat${alert.available !== 1 ? 's' : ''} just opened`}
                     </div>
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <a href={webRegUrl(alert.section_id)} target="_blank" rel="noopener"
+                  <a href={tssHomeUrl()} target="_blank" rel="noopener"
                     className="px-4 py-2 rounded-xl text-sm font-bold bg-green text-white hover:bg-green/85 cursor-pointer transition-all">
-                    Enroll Now
+                    {alert.kind === 'waitlist' ? 'Join in TSS' : 'Book in TSS'}
                   </a>
                   <span className="text-xs text-muted">{new Date(alert.timestamp * 1000).toLocaleTimeString()}</span>
                   <button onClick={() => onDismissAlert(i)} className="p-1.5 rounded-lg text-dim hover:text-text hover:bg-surface cursor-pointer">

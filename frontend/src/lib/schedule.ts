@@ -22,6 +22,7 @@ export interface ScheduleProposal {
     title: string
     units: number
     sections: {
+      section_id?: string
       type: string
       section: string
       days: string
@@ -31,6 +32,10 @@ export interface ScheduleProposal {
       instructor: string
       available: number
       limit: number
+      waitlisted?: number
+      waitlist_available?: number | null
+      status?: string | null
+      event_package_ids?: string[]
     }[]
   }[]
 }

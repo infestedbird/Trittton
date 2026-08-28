@@ -1,7 +1,9 @@
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useMemo } from 'react'
 import type { ScheduleProposal } from '../lib/schedule'
+import type { Course } from '../types'
 import { TERM_OPTIONS, courseCodeToSubject } from '../lib/links'
 import { useCloudSync, type CloudSyncStatus } from './useCloudSync'
+import { sectionAvailStatus } from '../lib/availability'
 
 export interface SavedCourse {
   course_code: string
@@ -9,6 +11,7 @@ export interface SavedCourse {
   units: number
   subject: string
   sections: {
+    section_id?: string
     type: string
     section: string
     days: string
@@ -18,6 +21,10 @@ export interface SavedCourse {
     instructor: string
     available: number
     limit: number
+    waitlisted?: number
+    waitlist_available?: number | null
+    status?: string | null
+    event_package_ids?: string[]
   }[]
 }
 
@@ -35,7 +42,7 @@ function loadAllFromStorage(): AllSchedules {
     if (legacy) {
       const courses = JSON.parse(legacy)
       if (Array.isArray(courses) && courses.length > 0) {
-        const defaultTerm = localStorage.getItem('ucsd-term') || 'SP26'
+        const defaultTerm = localStorage.getItem('ucsd-term') || 'FA26'
         localStorage.removeItem('ucsd-my-schedule')
         return { [defaultTerm]: courses }
       }
@@ -68,7 +75,7 @@ export function useMySchedule(currentTerm: string, uid: string | null = null) {
   })
 
   // Current term's schedule
-  const schedule = allSchedules[currentTerm] || []
+  const schedule = useMemo(() => allSchedules[currentTerm] || [], [allSchedules, currentTerm])
 
   const setSchedule = useCallback((updater: (prev: SavedCourse[]) => SavedCourse[]) => {
     setAllSchedules((all) => ({
@@ -174,5 +181,54 @@ export function useMySchedule(currentTerm: string, uid: string | null = null) {
     setSchedule(() => prev)
   }, [setSchedule])
 
-  return { schedule, allSchedules, asProposal, addCourse, removeCourse, clearSchedule, restoreSchedule, addFromProposal, hasCourse, hasSection, addSection, removeSection, totalCount, cloudStatus }
+  // Saved plans keep section choices, but seat counts must come from the latest
+  // catalog snapshot. This updates availability without replacing the user's
+  // selected sections or creating cloud-sync churn when nothing changed.
+  const refreshAvailability = useCallback((catalog: Course[]) => {
+    const liveCourses = new Map(catalog.map((course) => [normalizeCourseCode(course.course_code), course]))
+    setSchedule((prev) => {
+      let changed = false
+      const next = prev.map((savedCourse) => {
+        const liveCourse = liveCourses.get(normalizeCourseCode(savedCourse.course_code))
+        if (!liveCourse) return savedCourse
+
+        const sections = savedCourse.sections.map((savedSection) => {
+          const liveSection = liveCourse.sections.find((section) =>
+            (savedSection.section_id && section.section_id === savedSection.section_id)
+            || (section.section === savedSection.section && section.type === savedSection.type),
+          )
+          if (!liveSection) return savedSection
+
+          const liveAvailability = sectionAvailStatus(liveSection)
+          const refreshed = {
+            ...savedSection,
+            available: liveAvailability.seats,
+            limit: Number(liveSection.limit) || 0,
+            waitlisted: Number(liveSection.waitlisted) || 0,
+            waitlist_available: liveSection.waitlist_available,
+            status: liveSection.status,
+            event_package_ids: liveSection.event_package_ids,
+          }
+          if (
+            refreshed.available !== savedSection.available
+            || refreshed.limit !== savedSection.limit
+            || refreshed.waitlisted !== (savedSection.waitlisted || 0)
+            || refreshed.waitlist_available !== savedSection.waitlist_available
+            || refreshed.status !== savedSection.status
+          ) changed = true
+          return refreshed
+        })
+        return sections.some((section, index) => section !== savedCourse.sections[index])
+          ? { ...savedCourse, sections }
+          : savedCourse
+      })
+      return changed ? next : prev
+    })
+  }, [setSchedule])
+
+  return { schedule, allSchedules, asProposal, addCourse, removeCourse, clearSchedule, restoreSchedule, refreshAvailability, addFromProposal, hasCourse, hasSection, addSection, removeSection, totalCount, cloudStatus }
+}
+
+function normalizeCourseCode(code: string) {
+  return code.replace(/[\s-]+/g, '').toUpperCase().replace(/^([A-Z]+)0+/, '$1')
 }

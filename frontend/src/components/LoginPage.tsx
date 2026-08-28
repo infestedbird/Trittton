@@ -2,10 +2,11 @@ import { useState } from 'react'
 
 interface LoginPageProps {
   onGoogleSignIn: () => Promise<void>
+  onLocalPreview?: () => void
   authError?: string | null
 }
 
-export function LoginPage({ onGoogleSignIn, authError }: LoginPageProps) {
+export function LoginPage({ onGoogleSignIn, onLocalPreview, authError }: LoginPageProps) {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -23,23 +24,25 @@ export function LoginPage({ onGoogleSignIn, authError }: LoginPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-bg flex items-center justify-center px-4">
-      <div className="w-full max-w-sm">
+    <div className="relative min-h-screen bg-bg flex items-center justify-center overflow-hidden px-4 py-10">
+      <div className="pointer-events-none absolute left-1/2 top-[-18rem] h-[42rem] w-[42rem] -translate-x-1/2 rounded-full bg-accent/15 blur-[110px]" />
+      <div className="pointer-events-none absolute bottom-[-20rem] right-[-10rem] h-[34rem] w-[34rem] rounded-full bg-accent2/10 blur-[110px]" />
+      <div className="relative w-full max-w-md">
         {/* Logo */}
-        <div className="text-center mb-10">
-          <div className="w-14 h-14 rounded-2xl bg-accent flex items-center justify-center mx-auto mb-5 shadow-lg">
+        <div className="text-center mb-8">
+          <div className="w-16 h-16 rounded-[20px] bg-gradient-to-br from-accent to-accent2 flex items-center justify-center mx-auto mb-5 shadow-[0_18px_50px_rgba(100,136,255,0.35)] ring-1 ring-white/15">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5">
               <path strokeLinecap="round" strokeLinejoin="round" d="M4.26 10.147a60.438 60.438 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342" />
             </svg>
           </div>
-          <h1 className="text-2xl font-bold text-text tracking-tight">Trittton</h1>
-          <p className="text-[14px] text-muted mt-1.5">UCSD Course Browser</p>
+          <h1 className="text-3xl font-bold text-text tracking-[-0.035em]">Trittton</h1>
+          <p className="text-[14px] text-muted mt-2">Plan smarter. Book confidently.</p>
         </div>
 
         {/* Sign-in card */}
-        <div className="rounded-2xl border border-border bg-surface p-8 shadow-sm">
+        <div className="rounded-3xl border border-border bg-surface/80 p-7 sm:p-8 shadow-[0_28px_80px_rgba(0,0,0,0.3)] backdrop-blur-2xl">
           <p className="text-[14px] text-muted text-center leading-relaxed mb-6">
-            Sign in with your Google account to access AI-powered course planning.
+            Browse live UCSD courses, build schedules, watch seats, and continue directly into TSS.
           </p>
 
           {(error || authError) && (
@@ -74,10 +77,29 @@ export function LoginPage({ onGoogleSignIn, authError }: LoginPageProps) {
               </>
             )}
           </button>
+
+          {onLocalPreview && (
+            <>
+              <div className="my-4 flex items-center gap-3">
+                <span className="h-px flex-1 bg-border" />
+                <span className="text-[10px] font-semibold uppercase tracking-wider text-dim">Local testing</span>
+                <span className="h-px flex-1 bg-border" />
+              </div>
+              <button
+                onClick={onLocalPreview}
+                className="w-full rounded-xl border border-accent/25 bg-accent/10 py-3 text-[13px] font-semibold text-accent transition-colors hover:bg-accent/15"
+              >
+                Continue locally — no sign-in
+              </button>
+              <p className="mt-2 text-center text-[10px] leading-relaxed text-dim">
+                Development only. Cloud sync is disabled in this session.
+              </p>
+            </>
+          )}
         </div>
 
         <p className="text-center text-[12px] text-muted mt-6">
-          Powered by Gemini AI
+          Built for UC San Diego students
         </p>
       </div>
     </div>

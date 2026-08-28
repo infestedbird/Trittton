@@ -1,5 +1,6 @@
 import { useState, useCallback, useRef } from 'react'
 import type { Course, Section, ScrapeProgress } from '../types'
+import { isTssTerm } from '../lib/links'
 
 const BATCH_SIZE = 30
 
@@ -172,7 +173,7 @@ export function useClientScraper(onComplete?: (courses: Course[]) => void) {
   const [showPanel, setShowPanel] = useState(false)
   const abortRef = useRef<AbortController | null>(null)
 
-  const startScrape = useCallback(async (term: string = 'SP26') => {
+  const startScrape = useCallback(async (term: string = 'FA26') => {
     // Abort any previous scrape
     abortRef.current?.abort()
     const abort = new AbortController()
@@ -181,6 +182,31 @@ export function useClientScraper(onComplete?: (courses: Course[]) => void) {
     setProgress({ ...defaultProgress, status: 'running' })
 
     try {
+      if (isTssTerm(term)) {
+        setProgress({
+          ...defaultProgress,
+          status: 'running',
+          currentSubject: 'TSS catalog',
+        })
+        const response = await fetch(`/api/courses?term=${encodeURIComponent(term)}&refresh=true`, {
+          signal: abort.signal,
+        })
+        const data = await response.json()
+        if (!response.ok) throw new Error(data.error || `TSS catalog failed: ${response.status}`)
+        if (!Array.isArray(data)) throw new Error('TSS catalog returned an unexpected response')
+        setProgress({
+          status: 'done',
+          current: data.length,
+          total: data.length,
+          currentSubject: '',
+          coursesFound: data.length,
+          errors: [],
+        })
+        onComplete?.(data)
+        setShowPanel(false)
+        return
+      }
+
       // Use fallback subjects immediately — don't wait for server
       const subjects = [...FALLBACK_SUBJECTS]
       const batches: string[][] = []
@@ -270,6 +296,7 @@ export function useClientScraper(onComplete?: (courses: Course[]) => void) {
       })
 
       onComplete?.(allCourses)
+      setShowPanel(false)
     } catch (err) {
       setProgress(p => ({
         ...p,

@@ -39,12 +39,14 @@ export function useChat() {
   }, [messages, isStreaming])
 
   const messagesRef = useRef(messages)
-  messagesRef.current = messages
+  useEffect(() => {
+    messagesRef.current = messages
+  }, [messages])
 
   const sendMessage = useCallback(async (
     text: string,
     model: string = 'sonnet',
-    term: string = 'SP26',
+    term: string = 'FA26',
     completedCourses: string = '',
     geminiKey: string | null = null,
     anthropicKey: string | null = null,
